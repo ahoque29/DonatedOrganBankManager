@@ -11,16 +11,19 @@ namespace HospitalData
 			{
 				db.Add(new Patient()
 				{
-					Title = "Mr",
-					LastName = "Ramos",
-					FirstName = "Priya",
-					DateOfBirth = new DateTime(2016, 10, 22),
-					Address = "17 Lastingham Grove",
-					City = "Emerson Valley",
-					PostCode = "MK4 2EA",
-					BloodType = "B",
-					Phone = null,
+					Title = "Dr",
+					LastName = "Burris",
+					FirstName = "Joanne",
+					DateOfBirth = new DateTime(1968, 07, 22),
+					Address = "5 Church Street",
+					City = "Ashland",
+					PostCode = "MK6 4AR",
+					Phone = "01908 364751",
+					BloodType = "AB",
 				});
+
+				//var priya = db.Patients.Where(f => f.FirstName == "Priya").FirstOrDefault<Patient>();
+				//priya.Title = "Ms";
 
 				//var keaton = db.Patients.Find(1);
 				//keaton.Phone = "01582 635028";
