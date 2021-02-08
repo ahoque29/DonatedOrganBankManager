@@ -9,7 +9,7 @@ namespace HospitalData
 		public int MatchedDonationId { get; set; }
 
 		public int PatientId { get; set; }
-		public int DonationId { get; set; }
+		public int DonatedOrganId { get; set; }
 
 		public DateTime DateOfMatch { get; set; }
 

@@ -55,14 +55,26 @@ namespace HospitalData
 				//	DateOfEntry = DateTime.Now
 				//});
 
-				var valve = db.Organs.Where(f => f.Name == "Valve").FirstOrDefault<Organ>();
-				db.Add(new DonatedOrgan()
-				{
-					OrganId = valve.OrganId,
-					BloodType = "O",
-					DonorAge = 35,
-					DonationDate = new DateTime(2021, 02, 08),					
-				});
+				//var redCells = db.Organs.Where(n => n.Name == "Red Cells").FirstOrDefault<Organ>();
+				//db.Add(new DonatedOrgan()
+				//{
+				//	OrganId = redCells.OrganId,
+				//	BloodType = "AB",
+				//	DonorAge = null,
+				//	DonationDate = new DateTime(2021, 02, 04),					
+				//});
+
+				//var keaton = db.Patients.Where(f => f.FirstName == "Keaton" && f.LastName == "William").FirstOrDefault<Patient>();
+				//var valve = db.Organs.Where(n => n.Name == "Valve").FirstOrDefault<Organ>();
+				//var donatedValve = db.DonatedOrgans.Where(n => n.OrganId == valve.OrganId).FirstOrDefault<DonatedOrgan>();
+				//db.Add(new MatchedDonation()
+				//{
+				//	PatientId = keaton.PatientId,
+				//	DonatedOrganId = donatedValve.DonatedOrganId,
+				//	DateOfMatch = DateTime.Now
+				//});
+
+
 
 				db.SaveChanges();
 			}
