@@ -8,6 +8,7 @@ namespace HospitalData
 		public Organ()
 		{
 			Waitings = new HashSet<Waiting>();
+			DonatedOrgans = new HashSet<DonatedOrgan>();
 		}
 
 		public string Name { get; set; }
@@ -15,6 +16,7 @@ namespace HospitalData
 		public bool IsAgeChecked { get; set; } = true;
 
 		public virtual ICollection<Waiting> Waitings { get; set; }
+		public virtual ICollection<DonatedOrgan> DonatedOrgans { get; set; }
 
 	}
 }
