@@ -6,7 +6,7 @@ namespace HospitalData
 {
 	public partial class MatchedDonation
 	{
-		public int MatchedId { get; set; }
+		public int MatchedDonationId { get; set; }
 
 		public int PatientId { get; set; }
 		public int DonationId { get; set; }

@@ -11,6 +11,7 @@ namespace HospitalData
 			DonatedOrgans = new HashSet<DonatedOrgan>();
 		}
 
+		public int OrganId { get; set; }
 		public string Name { get; set; }
 		public string Type { get; set; }
 		public bool IsAgeChecked { get; set; } = true;

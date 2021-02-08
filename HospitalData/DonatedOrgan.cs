@@ -7,7 +7,7 @@ namespace HospitalData
 	{
 		public DonatedOrgan()
 		{
-
+			MatchedDonations = new HashSet<MatchedDonation>();
 		}
 
 		public int DonatedOrganId { get; set; }
@@ -20,7 +20,7 @@ namespace HospitalData
 		public bool IsDonated { get; set; }
 
 		public virtual Organ Organ { get; set; }
-		public virtual MatchedDonation MatchedDonation { get; set; }
+		public virtual ICollection<MatchedDonation> MatchedDonations { get; set; }
 		
 	}
 }
