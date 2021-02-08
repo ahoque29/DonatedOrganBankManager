@@ -14,7 +14,7 @@ namespace HospitalData
 
 		public int OrganId { get; set; }
 
-		public int BloodType { get; set; }
+		public string BloodType { get; set; }
 		public int? DonorAge { get; set; }
 		public DateTime DonationDate { get; set; }
 		public bool IsDonated { get; set; }
