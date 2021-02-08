@@ -7,13 +7,14 @@ namespace HospitalData
 	{
 		public Organ()
 		{
-
+			Waitings = new HashSet<Waiting>();
 		}
 
 		public string Name { get; set; }
 		public string Type { get; set; }
-
 		public bool IsAgeChecked { get; set; } = true;
+
+		public virtual ICollection<Waiting> Waitings { get; set; }
 
 	}
 }
