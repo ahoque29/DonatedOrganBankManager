@@ -11,15 +11,21 @@ namespace HospitalData
 			{
 				db.Add(new Patient()
 				{
-					Title = "",
-					LastName = "",
-					FirstName = "",
-					DateOfBirth = new DateTime(1, 1, 1),
-					Address = "",
-					City = "",
-					PostCode = "",
-					BloodType = "",
+					Title = "Mr",
+					LastName = "Ramos",
+					FirstName = "Priya",
+					DateOfBirth = new DateTime(2016, 10, 22),
+					Address = "17 Lastingham Grove",
+					City = "Emerson Valley",
+					PostCode = "MK4 2EA",
+					BloodType = "B",
+					Phone = null,
 				});
+
+				//var keaton = db.Patients.Find(1);
+				//keaton.Phone = "01582 635028";
+
+				db.SaveChanges();
 			}
 		}
 	}
