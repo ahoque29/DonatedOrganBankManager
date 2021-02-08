@@ -19,6 +19,7 @@ namespace HospitalData
 		public string Address { get; set; }
 		public string City { get; set; }
 		public string PostCode { get; set; }
+		public string Phone { get; set; }
 		public string BloodType { get; set; }
 
 		public virtual ICollection<Waiting> Waitings { get; set; }
