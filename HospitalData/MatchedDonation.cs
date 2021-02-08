@@ -11,6 +11,8 @@ namespace HospitalData
 		public int PatientId { get; set; }
 		public int DonationId { get; set; }
 
+		public DateTime DateOfMatch { get; set; }
+
 		public virtual Patient Patient { get; set; }
 		public virtual DonatedOrgan DonatedOrgan { get; set; }
 	}
