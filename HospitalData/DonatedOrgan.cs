@@ -20,6 +20,7 @@ namespace HospitalData
 		public bool IsDonated { get; set; }
 
 		public virtual Organ Organ { get; set; }
+		public virtual MatchedDonation MatchedDonation { get; set; }
 		
 	}
 }

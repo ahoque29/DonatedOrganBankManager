@@ -8,6 +8,7 @@ namespace HospitalData
 		public Patient()
 		{
 			Waitings = new HashSet<Waiting>();
+			MatchedDonations = new HashSet<MatchedDonation>();
 		}
 
 		public int PatientId { get; set; }
@@ -21,5 +22,6 @@ namespace HospitalData
 		public string BloodType { get; set; }
 
 		public virtual ICollection<Waiting> Waitings { get; set; }
+		public virtual ICollection<MatchedDonation> MatchedDonations { get; set; }
 	}
 }
