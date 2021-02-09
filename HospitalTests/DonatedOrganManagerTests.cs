@@ -94,6 +94,34 @@ namespace HospitalTests
 
 		#endregion
 
+		#region DeleteDonatedOrgan() tests
+
+		[Test]
+		public void WhenADonatedOrgansEntryIsDeleted_QueryThatSearchesItReturnsFalse()
+		{
+			_donatedOrganManager.CreateDonatedOrgan(5,
+				"T",
+				24,
+				new DateTime(2021, 01, 09));
+
+			DonatedOrgan testDonatedOrgan;
+
+			using (var db = new HospitalContext())
+			{
+				testDonatedOrgan = db.DonatedOrgans.Where(d => d.BloodType == "T").FirstOrDefault<DonatedOrgan>();
+			}
+
+			_donatedOrganManager.DeleteDonatedOrgan(testDonatedOrgan.DonatedOrganId);
+
+			using (var db = new HospitalContext())
+			{
+				var query = db.DonatedOrgans.Where(d => d.BloodType == "T").Any();
+				Assert.AreEqual(query, false);
+			}
+		}
+
+		#endregion
+
 		#region Teardown
 
 		[TearDown]

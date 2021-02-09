@@ -156,7 +156,7 @@ namespace HospitalTests
 		#region DeletePatient() tests
 
 		[Test]
-		public void WhenAnEntryIsDeleted_QueryThatSearchesForItReturnsFalse()
+		public void WhenAPatientsEntryIsDeleted_QueryThatSearchesForItReturnsFalse()
 		{
 			_patientManager.CreatePatient("Mr",
 				"Wang",
