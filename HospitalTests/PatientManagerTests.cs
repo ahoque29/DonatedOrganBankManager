@@ -43,6 +43,39 @@ namespace HospitalTests
 			}
 		}
 
+		[Test]
+		public void WhenAPatientsDetailsAreChanged_TheDatabaseIsUpdated()
+		{
+			using (var db = new HospitalContext())
+			{
+				_patientManager.Create("Mr",
+					"Wang",
+					"TestGuy",
+					new DateTime(2020, 01, 01),
+					"52 Badgers Way",
+					"Buckingham",
+					"MK18 7JB",
+					"01280 667866",
+					"B");
+
+				var testGuy = db.Patients.Where(f => f.FirstName == "TestGuy").FirstOrDefault<Patient>();
+				_patientManager.Update(testGuy.PatientId,
+					"Mr",
+					"Wang",
+					"TestGuy",
+					new DateTime(2020, 01, 01),
+					"52 Badgers Way",
+					"Bletchley",
+					"MK18 7JB",
+					"01280 667866",
+					"B"
+					);
+
+				var updatedPatient = db.Patients.Find(testGuy.PatientId);
+				Assert.AreEqual("Bletchley", updatedPatient.City);
+			}
+		}
+
 		[TearDown]
 		public void TearDown()
 		{
