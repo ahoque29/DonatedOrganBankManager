@@ -69,23 +69,33 @@ namespace HospitalTests
 			}
 				
 			_patientManager.UpdatePatient(testGuy.PatientId,
-				"Mr",
-				"Wang",
+				"Dr",
+				"Wangu",
 				"TestGuy",
-				new DateTime(2020, 01, 01),
-				"52 Badgers Way",
+				new DateTime(2020, 02, 01),
+				"1 Celina Close",
 				"Bletchley",
-				"MK18 7JB",
-				"01280 667866",
-				"B");
+				"MK2 3LS",
+				"07401 010414",
+				"AB");
 
 			using (var db = new HospitalContext())
 			{
 				var updatedPatient = db.Patients.Find(testGuy.PatientId);
+				Assert.AreEqual("Dr", updatedPatient.Title);
+				Assert.AreEqual("Wangu", updatedPatient.LastName);
+				Assert.AreEqual(new DateTime(2020, 02, 01), updatedPatient.DateOfBirth);
+				Assert.AreEqual("1 Celina Close", updatedPatient.Address);
 				Assert.AreEqual("Bletchley", updatedPatient.City);
+				Assert.AreEqual("MK2 3LS", updatedPatient.PostCode);
+				Assert.AreEqual("07401 010414", updatedPatient.Phone);
+				Assert.AreEqual("AB", updatedPatient.BloodType);
 			}
 		
 		}
+
+		[Test]
+
 
 		[TearDown]
 		public void TearDown()
