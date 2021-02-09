@@ -8,7 +8,10 @@ namespace HospitalTests
 {
 	public class PatientManagerTests
 	{
+		#region Initialisation and Setup
+
 		PatientManager _patientManager;
+
 		[SetUp]
 		public void Setup()
 		{
@@ -21,6 +24,10 @@ namespace HospitalTests
 				db.SaveChanges();
 			}
 		}
+
+		#endregion
+
+		#region CreatePatient() tests
 
 		[Test]
 		public void WhenANewPatientIsAdded_TheNumberOfPatientsIncreasesBy1()
@@ -47,6 +54,10 @@ namespace HospitalTests
 				Assert.AreEqual(numberOfPatientsBefore + 1, numberofPatientsAfter);
 			}
 		}
+
+		#endregion
+
+		#region UpdatePatient() tests
 
 		[Test]
 		public void WhenAPatientsDetailsAreChanged_TheDatabaseIsUpdated()
@@ -94,6 +105,10 @@ namespace HospitalTests
 		
 		}
 
+		#endregion
+
+		#region DeletePatient() tests
+
 		[Test]
 		public void WhenAnEntryIsDeleted_QueryThatSearchesForItReturnsFalse()
 		{
@@ -123,6 +138,9 @@ namespace HospitalTests
 			}
 		}
 
+		#endregion
+
+		#region Teardown
 
 		[TearDown]
 		public void TearDown()
@@ -134,5 +152,7 @@ namespace HospitalTests
 				db.SaveChanges();
 			}
 		}
+
+		#endregion
 	}
 }

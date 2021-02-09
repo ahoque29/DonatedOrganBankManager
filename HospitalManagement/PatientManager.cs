@@ -9,7 +9,7 @@ namespace HospitalManagement
 	{
 		public Patient SelectedPatient { get; set; }
 
-		public void Create(string title, 
+		public void CreatePatient(string title, 
 			string lastName, 
 			string firstName, 
 			DateTime dateOfBirth,
@@ -39,7 +39,7 @@ namespace HospitalManagement
 			}
 		}
 
-		public void Update(int patientId,
+		public void UpdatePatient(int patientId,
 			string title,
 			string lastName,
 			string firstName,
@@ -68,13 +68,21 @@ namespace HospitalManagement
 			}
 		}
 
-		public void Delete(int patientId)
+		public void DeletePatient(int patientId)
 		{
 			using (var db = new HospitalContext())
 			{
 				SelectedPatient = db.Patients.Where(p => p.PatientId == patientId).FirstOrDefault<Patient>();
 				db.Patients.RemoveRange(SelectedPatient);
 				db.SaveChanges();
+			}
+		}
+
+		public List<Patient> RetrieveAllPatients()
+		{
+			using (var db = new HospitalContext())
+			{
+				return db.Patients.ToList();
 			}
 		}
 	}

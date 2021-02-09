@@ -14,7 +14,7 @@ namespace HospitalManagement
 			string bloodType,
 			int DonorAge,
 			DateTime donationDate)
-		{
+		{						
 			var newDonatedOrgan = new DonatedOrgan()
 			{
 				OrganId = organId,
@@ -25,8 +25,16 @@ namespace HospitalManagement
 
 			using (var db = new HospitalContext())
 			{
-				db.DonatedOrgans.Add(newDonatedOrgan);
-				db.SaveChanges();
+				bool organExists = db.Organs.Any(o => o.OrganId == organId);
+				if (organExists)
+				{
+					db.DonatedOrgans.Add(newDonatedOrgan);
+					db.SaveChanges();
+				}
+				else
+				{
+					throw new ArgumentException();
+				}
 			}
 		}
 
@@ -38,18 +46,26 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault();
-
-				var newDonatedOrgan = new DonatedOrgan()
+				bool organExists = db.Organs.Any(o => o.Name == organName);
+				if (organExists)
 				{
-					OrganId = organ.OrganId,
-					BloodType = bloodType,
-					DonorAge = DonorAge,
-					DonationDate = donationDate,
-				};
+					var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault();
 
-				db.DonatedOrgans.Add(newDonatedOrgan);
-				db.SaveChanges();
+					var newDonatedOrgan = new DonatedOrgan()
+					{
+						OrganId = organ.OrganId,
+						BloodType = bloodType,
+						DonorAge = DonorAge,
+						DonationDate = donationDate,
+					};
+
+					db.DonatedOrgans.Add(newDonatedOrgan);
+					db.SaveChanges();
+				}
+				else
+				{
+					throw new ArgumentException();
+				}
 			}
 		}
 	}
