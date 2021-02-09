@@ -78,5 +78,13 @@ namespace HospitalManagement
 				db.SaveChanges();
 			}
 		}
+
+		public List<DonatedOrgan> RetrieveAllDonatedOrgans()
+		{
+			using (var db = new HospitalContext())
+			{
+				return db.DonatedOrgans.ToList();
+			}
+		}
 	}
 }
