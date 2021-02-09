@@ -74,13 +74,13 @@ namespace HospitalData
 				//	DateOfMatch = DateTime.Now
 				//});
 
-				var keaton = db.Patients.Where(f => f.FirstName == "Keaton" && f.LastName == "William").FirstOrDefault<Patient>();
-				var valve = db.Organs.Where(n => n.Name == "Valve").FirstOrDefault<Organ>();
-				var matchedDonation = db.MatchedDonations.Where(p => p.PatientId == keaton.PatientId).FirstOrDefault<MatchedDonation>();
-				var donatedValve = db.DonatedOrgans.Where(n => n.OrganId == valve.OrganId).FirstOrDefault<DonatedOrgan>();
+				//var keaton = db.Patients.Where(f => f.FirstName == "Keaton" && f.LastName == "William").FirstOrDefault<Patient>();
+				//var valve = db.Organs.Where(n => n.Name == "Valve").FirstOrDefault<Organ>();
+				//var matchedDonation = db.MatchedDonations.Where(p => p.PatientId == keaton.PatientId).FirstOrDefault<MatchedDonation>();
+				//var donatedValve = db.DonatedOrgans.Where(n => n.OrganId == valve.OrganId).FirstOrDefault<DonatedOrgan>();
 
-				var waitingQuery = db.Waitings.Where(p => p.PatientId == keaton.PatientId && p.OrganId == donatedValve.OrganId).FirstOrDefault<Waiting>();
-				db.RemoveRange(waitingQuery);
+				//var waitingQuery = db.Waitings.Where(p => p.PatientId == keaton.PatientId && p.OrganId == donatedValve.OrganId).FirstOrDefault<Waiting>();
+				//db.RemoveRange(waitingQuery);
 
 
 
