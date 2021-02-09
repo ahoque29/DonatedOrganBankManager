@@ -9,7 +9,16 @@ namespace HospitalManagement
 	{
 		static void Main(string[] args)
 		{
-			
+			//PatientManager patientManager = new PatientManager();
+			//patientManager.Create("Mr",
+			//	"Correa",
+			//	"Danyl",
+			//	new DateTime(2009, 04, 01),
+			//	"6 Granes End",
+			//	"Great Linford",
+			//	"MK14 5DX",
+			//	"01908822564",
+			//	"A");
 		}
 	}
 }

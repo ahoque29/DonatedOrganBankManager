@@ -5,7 +5,7 @@ using HospitalData;
 
 namespace HospitalManagement
 {
-	class PatientManager
+	public class PatientManager
 	{
 		public Patient SelectedPatient { get; set; }
 
@@ -15,7 +15,8 @@ namespace HospitalManagement
 			DateTime dateOfBirth,
 			string address,
 			string city,
-			string? phone,
+			string postCode,
+			string phone,
 			string bloodType)
 		{
 			var newPatient = new Patient()
@@ -26,6 +27,7 @@ namespace HospitalManagement
 				DateOfBirth = dateOfBirth,
 				Address = address,
 				City = city,
+				PostCode = postCode,
 				Phone = phone,
 				BloodType = bloodType
 			};
