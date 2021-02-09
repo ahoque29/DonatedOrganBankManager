@@ -95,6 +95,33 @@ namespace HospitalTests
 		}
 
 		[Test]
+		public void WhenAnEntryIsDeleted_QueryThatSearchesForItReturnsFalse()
+		{
+			_patientManager.CreatePatient("Mr",
+				"Wang",
+				"TestGuy",
+				new DateTime(2020, 01, 01),
+				"52 Badgers Way",
+				"Buckingham",
+				"MK18 7JB",
+				"01280 667866",
+				"B");
+
+			Patient testGuy;
+
+			using (var db = new HospitalContext())
+			{
+				testGuy = db.Patients.Where(f => f.FirstName == "TestGuy").FirstOrDefault<Patient>();
+			}
+
+			_patientManager.DeletePatient(testGuy.PatientId);
+
+			using (var db = new HospitalContext())
+			{
+				var query = db.Patients.Where(p => p.PatientId == testGuy.PatientId).Any();
+				Assert.AreEqual(query, false);
+			}
+		}
 
 
 		[TearDown]
