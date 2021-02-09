@@ -30,7 +30,7 @@ namespace HospitalTests
 		#region CreatePatient() tests
 
 		[Test]
-		public void WhenANewPatientIsAdded_TheNumberOfPatientsIncreasesBy1()
+		public void WhenANewPatientIsCreated_TheNumberOfPatientsIncreasesBy1()
 		{
 			int numberOfPatientsBefore;
 			using (var db = new HospitalContext())
@@ -53,6 +53,20 @@ namespace HospitalTests
 				var numberofPatientsAfter = db.Patients.Count();
 				Assert.AreEqual(numberOfPatientsBefore + 1, numberofPatientsAfter);
 			}
+		}
+
+		[Test]
+		public void WhenANewPatientIsCreatedWithInvalidBloodType_ThrowsArgumentException()
+		{
+			Assert.Throws<ArgumentException>(() => _patientManager.CreatePatient("Mr",
+				"Wang",
+				"TestGuy",
+				new DateTime(2020, 01, 01),
+				"52 Badgers Way",
+				"Buckingham",
+				"MK18 7JB",
+				"01280 667866",
+				"Banana"));
 		}
 
 		#endregion
@@ -103,6 +117,38 @@ namespace HospitalTests
 				Assert.AreEqual("AB", updatedPatient.BloodType);
 			}
 		
+		}
+
+		[Test]
+		public void WhenAPatientsDetailsAreChangedWithInvalidBloodType_ThrowArgumentException()
+		{
+			_patientManager.CreatePatient("Mr",
+				"Wang",
+				"TestGuy",
+				new DateTime(2020, 01, 01),
+				"52 Badgers Way",
+				"Buckingham",
+				"MK18 7JB",
+				"01280 667866",
+				"B");
+
+			Patient testGuy;
+
+			using (var db = new HospitalContext())
+			{
+				testGuy = db.Patients.Where(f => f.FirstName == "TestGuy").FirstOrDefault<Patient>();
+			}
+
+			Assert.Throws<ArgumentException>(() => _patientManager.UpdatePatient(testGuy.PatientId,
+				"Dr",
+				"Wangu",
+				"TestGuy",
+				new DateTime(2020, 02, 01),
+				"1 Celina Close",
+				"Bletchley",
+				"MK2 3LS",
+				"07401 010414",
+				"Apples"));
 		}
 
 		#endregion

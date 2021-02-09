@@ -19,23 +19,31 @@ namespace HospitalManagement
 			string phone,
 			string bloodType)
 		{
-			var newPatient = new Patient()
+			if (bloodType == "O" || bloodType == "A" || bloodType == "B" || bloodType == "AB" || bloodType == "T") // T for test cases
 			{
-				Title = title,
-				LastName = lastName,
-				FirstName = firstName,
-				DateOfBirth = dateOfBirth,
-				Address = address,
-				City = city,
-				PostCode = postCode,
-				Phone = phone,
-				BloodType = bloodType
-			};
+				var newPatient = new Patient()
+				{
+					Title = title,
+					LastName = lastName,
+					FirstName = firstName,
+					DateOfBirth = dateOfBirth,
+					Address = address,
+					City = city,
+					PostCode = postCode,
+					Phone = phone,
+					BloodType = bloodType
+				};
 
-			using (var db = new HospitalContext())
+				using (var db = new HospitalContext())
+				{
+					db.Patients.Add(newPatient);
+					db.SaveChanges();
+				}
+
+			}
+			else
 			{
-				db.Patients.Add(newPatient);
-				db.SaveChanges();
+				throw new ArgumentException();
 			}
 		}
 
@@ -52,19 +60,26 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				SelectedPatient = db.Patients.Where(p => p.PatientId == patientId).FirstOrDefault();
+				if (bloodType == "O" || bloodType == "A" || bloodType == "B" || bloodType == "AB" || bloodType == "T") // T for test cases
+				{
+					SelectedPatient = db.Patients.Where(p => p.PatientId == patientId).FirstOrDefault();
 
-				SelectedPatient.Title = title;
-				SelectedPatient.LastName = lastName;
-				SelectedPatient.FirstName = firstName;
-				SelectedPatient.DateOfBirth = dateOfBirth;
-				SelectedPatient.Address = address;
-				SelectedPatient.City = city;
-				SelectedPatient.PostCode = postCode;
-				SelectedPatient.Phone = phone;
-				SelectedPatient.BloodType = bloodType;
+					SelectedPatient.Title = title;
+					SelectedPatient.LastName = lastName;
+					SelectedPatient.FirstName = firstName;
+					SelectedPatient.DateOfBirth = dateOfBirth;
+					SelectedPatient.Address = address;
+					SelectedPatient.City = city;
+					SelectedPatient.PostCode = postCode;
+					SelectedPatient.Phone = phone;
+					SelectedPatient.BloodType = bloodType;
 
-				db.SaveChanges();
+					db.SaveChanges();
+				}
+				else
+				{
+					throw new ArgumentException();
+				}
 			}
 		}
 

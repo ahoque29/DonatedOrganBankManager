@@ -50,9 +50,8 @@ namespace HospitalTests
 			}
 		}
 
-		[TestCase(99)]
-		[TestCase(-5)]
-		public void WhenAnOrganIsDonated_TheNumberOfDonatedOrgansIncreasesBy1_WithOverload(int a)
+		[Test]
+		public void WhenAnOrganIsDonated_TheNumberOfDonatedOrgansIncreasesBy1_WithOverload()
 		{
 			int numberOfDonatedOrgansBefore;
 			using (var db = new HospitalContext())
@@ -62,7 +61,7 @@ namespace HospitalTests
 
 			_donatedOrganManager.CreateDonatedOrgan("Pancreas",
 				"T",
-				a,
+				12,
 				new DateTime(2021, 01, 01));
 
 			using (var db = new HospitalContext())
@@ -77,9 +76,9 @@ namespace HospitalTests
 		[TestCase(-1)]
 		public void WhenAnOrganIsDonatedAndOrganIdDoesNotExistInOrgans_ThrowsArgumentException(int a)
 		{
-			Assert.Throws<ArgumentException>(() =>_donatedOrganManager.CreateDonatedOrgan(99,
+			Assert.Throws<ArgumentException>(() =>_donatedOrganManager.CreateDonatedOrgan(a,
 				"T",
-				a,
+				12,
 				new DateTime(2021, 01, 01)));
 		}
 
@@ -109,6 +108,5 @@ namespace HospitalTests
 		}
 
 		#endregion
-
 	}
 }
