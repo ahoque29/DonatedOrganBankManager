@@ -68,5 +68,15 @@ namespace HospitalManagement
 				}
 			}
 		}
+
+		public void DeleteDonatedOrgan(int donatedOrganId)
+		{
+			using (var db = new HospitalContext())
+			{
+				SelectedDonatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault<DonatedOrgan>();
+				db.DonatedOrgans.RemoveRange(SelectedDonatedOrgan);
+				db.SaveChanges();
+			}
+		}
 	}
 }
