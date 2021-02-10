@@ -7,6 +7,35 @@ namespace HospitalManagement
 {
 	public class WaitingListManager
 	{
+		Waiting _SelectedWaiting { get; set; }
+
+		public void CreateWaiting(int patientId,
+			int organId,
+			DateTime dateOfEntry)
+		{
+			var newWaiting = new Waiting()
+			{
+				OrganId = organId,
+				PatientId = patientId,
+				DateOfEntry = dateOfEntry
+			};
+
+			using (var db = new HospitalContext())
+			{
+				bool patientExists = db.Patients.Any(p => p.PatientId == patientId);
+				bool organExists = db.Organs.Any(o => o.OrganId == organId);
+				if (patientExists && organExists)
+				{
+					db.Add(newWaiting);
+					db.SaveChanges();
+				}
+				else
+				{
+					throw new ArgumentException();
+				}
+			}
+		}
+		
 		public List<Waiting> RetrieveAllWaitings()
 		{
 			using (var db = new HospitalContext())
