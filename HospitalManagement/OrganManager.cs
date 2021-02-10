@@ -15,5 +15,6 @@ namespace HospitalManagement
 				return db.Organs.ToList();
 			}
 		}
+
 	}
 }
