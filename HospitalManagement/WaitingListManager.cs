@@ -75,5 +75,12 @@ namespace HospitalManagement
 				return "Adult";
 			}
 		}
+
+		// Method Overload
+		public string AgeRangeFinder(DateTime dateOfBirth)
+		{
+			int age = DateTime.Today.Year - dateOfBirth.Year;
+			return AgeRangeFinder(age);
+		}
 	}
 }
