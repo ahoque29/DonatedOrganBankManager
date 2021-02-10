@@ -122,6 +122,16 @@ namespace HospitalTests
 
 		#endregion
 
+		#region DonatedOrgansCount() tests
+
+		[Test]
+		public void IfTheOrganDoesNotExists_ThrowArgumentException()
+		{
+			Assert.Throws<ArgumentException>(() => _donatedOrganManager.DonatedOrgansCount("Grapefuit"));
+		}
+
+		#endregion
+
 		#region Teardown
 
 		[TearDown]
