@@ -87,7 +87,6 @@ namespace HospitalTests
 				"B");
 
 			Patient testGuy;
-
 			using (var db = new HospitalContext())
 			{
 				testGuy = db.Patients.Where(f => f.FirstName == "TestGuy").FirstOrDefault<Patient>();
@@ -193,8 +192,8 @@ namespace HospitalTests
 		{
 			using (var db = new HospitalContext())
 			{
-				var selectedPatients = db.Patients.Where(f => f.FirstName == "TestGuy");
-				db.Patients.RemoveRange(selectedPatients);
+				var testGuy = db.Patients.Where(f => f.FirstName == "TestGuy");
+				db.Patients.RemoveRange(testGuy);
 				db.SaveChanges();
 			}
 		}
