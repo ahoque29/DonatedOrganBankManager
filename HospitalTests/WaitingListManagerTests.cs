@@ -11,6 +11,7 @@ namespace HospitalTests
 		#region Initialisation and Setup
 
 		PatientManager _patientManager;
+		DonatedOrganManager _donatedOrganManager;
 		WaitingListManager _waitingListManager;
 
 		[SetUp]
@@ -18,6 +19,7 @@ namespace HospitalTests
 		{
 			_patientManager = new PatientManager();
 			_waitingListManager = new WaitingListManager();
+			_donatedOrganManager = new DonatedOrganManager();
 		}
 
 		#endregion
@@ -67,7 +69,6 @@ namespace HospitalTests
 		public void WhenAWaitingIsCreatedWithNonExistentOrganId_ThrowsArgumentException()
 		{
 			// Create a Patient
-			// Create a patient
 			_patientManager.CreatePatient("Mr",
 				"Wang",
 				"TestGuy",
@@ -93,6 +94,12 @@ namespace HospitalTests
 
 		#endregion
 
+		#region Compatibility Logic tests
+
+
+
+		#endregion
+
 		#region Teardown
 
 		[TearDown]
@@ -102,7 +109,9 @@ namespace HospitalTests
 			{
 				var testGuy = db.Patients.Where(p => p.FirstName == "TestGuy").FirstOrDefault<Patient>();
 				var testWaiting = db.Waitings.Where(w => w.PatientId == testGuy.PatientId);
+				var testDonatedOrgan = db.DonatedOrgans.Where(d => d.DonationDate == new DateTime(1900, 01, 01));
 
+				db.DonatedOrgans.RemoveRange(testDonatedOrgan);
 				db.Waitings.RemoveRange(testWaiting);
 				db.Patients.RemoveRange(testGuy);				
 				db.SaveChanges();

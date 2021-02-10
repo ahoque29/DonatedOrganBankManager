@@ -38,7 +38,7 @@ namespace HospitalTests
 
 		#endregion
 
-		#region AgeRangeFinder() tests
+		#region Compatibility Logic tests 2
 
 		[TestCase(0, "Newborn or Infant")]
 		[TestCase(1, "Newborn or Infant")]
@@ -73,6 +73,8 @@ namespace HospitalTests
 		{
 			var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _waitingListManager.AgeRangeFinder(-1));
 		}
+
+
 
 		#endregion
 	}

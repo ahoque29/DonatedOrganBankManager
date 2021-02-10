@@ -189,7 +189,7 @@ namespace HospitalManagement
 		}
 
 		// Listing the matches
-		public List<string> ListMatchedOrgans()
+		public List<Organ> ListMatchedOrgans()
 		{
 			using (var db = new HospitalContext())
 			{
@@ -201,9 +201,8 @@ namespace HospitalManagement
 							let bloodTypeCheck = BloodTypeCheck(w.WaitingId)
 							let ageCheck = AgeCheck(w.WaitingId)
 							where (hasOrgan == true) && (bloodTypeCheck == true) && (ageCheck == true)
-							select o.Name;
-
-				return query.ToList<string>();
+							select o;
+				return query.ToList();
 			}
 		}
 
