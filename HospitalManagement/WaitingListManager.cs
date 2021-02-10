@@ -5,13 +5,13 @@ using HospitalData;
 
 namespace HospitalManagement
 {
-	public class MatchedDonationManager
+	public class WaitingListManager
 	{
-		public List<MatchedDonation> RetrieveAllMatchedDonations()
+		public List<Waiting> RetrieveAllWaitings()
 		{
 			using (var db = new HospitalContext())
 			{
-				return db.MatchedDonations.ToList();
+				return db.Waitings.ToList();
 			}
 		}
 	}
