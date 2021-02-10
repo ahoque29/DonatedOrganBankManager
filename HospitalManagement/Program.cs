@@ -9,7 +9,6 @@ namespace HospitalManagement
 	{
 		static void Main(string[] args)
 		{
-			PatientManager patientManager = new PatientManager();
 
 			//PatientManager patientManager = new PatientManager();
 			//patientManager.Create("Mr",
@@ -44,6 +43,19 @@ namespace HospitalManagement
 			//		Console.WriteLine($"{entry.FirstName} - {entry.LastName}");
 			//	}
 			//}
+
+			WaitingListManager waitingListManager = new WaitingListManager();
+
+			//waitingListManager.CreateWaiting(5, 1, DateTime.Now);
+
+			//waitingListManager.CreateWaiting(6, 11, DateTime.Now);
+
+			DonatedOrganManager donatedOrganManager = new DonatedOrganManager();
+
+			PatientManager patientManager = new PatientManager();
+
+			
+			Console.WriteLine(waitingListManager.FindMatch(12));
 		}
 	}
 }

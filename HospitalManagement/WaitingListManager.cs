@@ -7,7 +7,9 @@ namespace HospitalManagement
 {
 	public class WaitingListManager
 	{
-		Waiting _SelectedWaiting { get; set; }
+		public Waiting SelectedWaiting { get; set; }
+
+		#region Create, Delete, Retrieve
 
 		// Create
 		public void CreateWaiting(int patientId,
@@ -46,13 +48,28 @@ namespace HospitalManagement
 			}
 		}
 
+		// Delete
+		public void DeleteWaiting(int waitingId)
+		{
+			using (var db = new HospitalContext())
+			{
+				SelectedWaiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+				db.Waitings.RemoveRange(SelectedWaiting);
+				db.SaveChanges();
+			}
+		}
+
+		#endregion
+
+		#region Compatibility Logic
+
 		//checked if the organ exists in the DonatedOrgans table
 		public bool HasOrgan(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
 				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
-				var hasOrgan = db.DonatedOrgans.Any(d => d.OrganId == waiting.OrganId);
+				var hasOrgan = db.DonatedOrgans.Any(d => d.IsDonated == false && d.OrganId == waiting.OrganId);
 
 				if (hasOrgan)
 				{
@@ -63,14 +80,14 @@ namespace HospitalManagement
 			}
 		}
 
-		// checks bloodtype compatibility (rhesus factor ignored)
+		// checks bloodtype compatibility (rhesus factor ignored!)
 		public bool BloodTypeCheck(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
 				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
 				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
-				var donatedOrgan = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
+				var donatedOrgan = db.DonatedOrgans.Where(d => d.IsDonated == false && d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
 
 				switch (donatedOrgan.BloodType)
 				{
@@ -146,7 +163,7 @@ namespace HospitalManagement
 			{
 				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
 				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
-				var donatedOrgan = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
+				var donatedOrgan = db.DonatedOrgans.Where(d => d.IsDonated == false && d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
 				var organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault<Organ>();
 
 				if (organ.IsAgeChecked)
@@ -171,39 +188,25 @@ namespace HospitalManagement
 			return false;
 		}
 
-		////The below code was refactored into the code above.
-		//// Finding a match
-		//public bool FindMatch(int waitingId)
-		//{
-		//	using (var db = new HospitalContext())
-		//	{
-		//		var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+		// Listing the matches
+		public List<string> ListMatchedOrgans()
+		{
+			using (var db = new HospitalContext())
+			{
+				var query = from o in db.Organs
+							join d in db.DonatedOrgans on o.OrganId equals d.OrganId
+							join w in db.Waitings on d.OrganId equals w.OrganId
+							join p in db.Patients on w.PatientId equals p.PatientId
+							let hasOrgan = HasOrgan(w.WaitingId)
+							let bloodTypeCheck = BloodTypeCheck(w.WaitingId)
+							let ageCheck = AgeCheck(w.WaitingId)
+							where (hasOrgan == true) && (bloodTypeCheck == true) && (ageCheck == true)
+							select o.Name;
 
-		//		//checks if the organ exists in the DonatedOrgans table
-		//		var hasOrgan = db.DonatedOrgans.Any(d => d.OrganId == waiting.OrganId);
-		//		if (hasOrgan)
-		//		{
-		//			// Check if the bloodType matches
-		//			var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
-		//			var donatedOrgan = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
-		//			if (BloodTypeCheck(donatedOrgan.BloodType, patient.BloodType))
-		//			{
-		//				// Check if the age needs to be checked
-		//				var organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault<Organ>();
-		//				if (!organ.IsAgeChecked)
-		//				{
-		//					return true;
-		//				}
+				return query.ToList<string>();
+			}
+		}
 
-		//				// if so, check that the AgeRange matches
-		//				if (AgeRangeFinder(patient.DateOfBirth) == AgeRangeFinder(donatedOrgan.DonationDate))
-		//				{
-		//					return true;
-		//				}
-		//			}
-		//		}
-		//		return false;
-		//	}
-		//}
+		#endregion
 	}
 }
