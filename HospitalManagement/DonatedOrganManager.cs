@@ -86,5 +86,23 @@ namespace HospitalManagement
 				return db.DonatedOrgans.ToList();
 			}
 		}
+
+		public int DonatedOrgansCount(string organName)
+		{
+			using (var db = new HospitalContext())
+			{
+				bool organExists = db.Organs.Any(o => o.Name == organName);
+				if (organExists)
+				{
+					var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault<Organ>();
+
+					return db.DonatedOrgans.Where(d => d.OrganId == organ.OrganId).Count();
+				}
+				else
+				{
+					throw new ArgumentException();
+				}
+			}
+		}
 	}
 }

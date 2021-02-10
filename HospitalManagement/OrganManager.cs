@@ -9,7 +9,7 @@ namespace HospitalManagement
 	public class OrganManager
 	{
 		public Organ SelectedOrgan { get; set; }
-
+		
 		public List<Organ> RetrieveAllOrgans()
 		{
 			using (var db = new HospitalContext())
