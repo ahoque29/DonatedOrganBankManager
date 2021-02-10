@@ -46,6 +46,60 @@ namespace HospitalManagement
 			}
 		}
 
+		//checked if the organ exists in the DonatedOrgans table
+		public bool HasOrgan(int waitingId)
+		{
+			using (var db = new HospitalContext())
+			{
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+				var hasOrgan = db.DonatedOrgans.Any(d => d.OrganId == waiting.OrganId);
+
+				if (hasOrgan)
+				{
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		// checks bloodtype compatibility (rhesus factor ignored)
+		public bool BloodTypeCheck(int waitingId)
+		{
+			using (var db = new HospitalContext())
+			{
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
+				var donatedOrgan = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
+
+				switch (donatedOrgan.BloodType)
+				{
+					case "O":
+						return true;
+					case "A":
+						if (patient.BloodType == "A" || patient.BloodType == "AB")
+						{
+							return true;
+						}
+						break;
+					case "B":
+						if (patient.BloodType == "B" || patient.BloodType == "AB")
+						{
+							return true;
+						}
+						break;
+					case "AB":
+						if (patient.BloodType == "AB")
+						{
+							return true;
+						}
+						break;
+				}
+				return false;
+			}
+		}
+
+
 		// AgeFinder
 		public string AgeRangeFinder(int? age)
 		{
@@ -86,69 +140,70 @@ namespace HospitalManagement
 			return AgeRangeFinder(age);
 		}
 
-		// checks bloodtype compatibility (rhesus factor ignored)
-		public bool BloodTypeCheck(string donorBloodType, string patientBloodType)
-		{
-			switch (donorBloodType)
-			{
-				case "O":
-					return true;
-				case "A":
-					if (patientBloodType == "A" || patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-				case "B":
-					if (patientBloodType == "B" || patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-				case "AB":
-					if (patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-			}			
-			return false;
-		}
-
-		
-
-		// Finding a match
-		public bool FindMatch(int waitingId)
+		public bool AgeCheck(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
 				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
+				var donatedOrgan = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
+				var organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault<Organ>();
 
-				//checks if the organ exists in the DonatedOrgans table
-				var hasOrgan = db.DonatedOrgans.Any(d => d.OrganId == waiting.OrganId);
-				if (hasOrgan)
-				{					
-					// Check if the bloodType matches
-					var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
-					var donatedOrgan = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
-					if (BloodTypeCheck(donatedOrgan.BloodType, patient.BloodType))
+				if (organ.IsAgeChecked)
+				{
+					if (AgeRangeFinder(patient.DateOfBirth) != AgeRangeFinder(donatedOrgan.DonationDate))
 					{
-						// Check if the age needs to be checked
-						var organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault<Organ>();
-						if (!organ.IsAgeChecked)
-						{
-							return true;
-						}
-
-						// if so, check that the AgeRange matches
-						if (AgeRangeFinder(patient.DateOfBirth) == AgeRangeFinder(donatedOrgan.DonationDate))
-						{
-							return true;
-						}
+						return false;
 					}
 				}
-				return false;
+				return true;
 			}
+
 		}
+
+		// Finding a match
+		public bool FindMatch(int waitingId)
+		{
+			if (HasOrgan(waitingId) && BloodTypeCheck(waitingId) && AgeCheck(waitingId))
+			{
+				return true;
+			}
+			return false;
+		}
+
+		////The below code was refactored into the code above.
+		//// Finding a match
+		//public bool FindMatch(int waitingId)
+		//{
+		//	using (var db = new HospitalContext())
+		//	{
+		//		var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+
+		//		//checks if the organ exists in the DonatedOrgans table
+		//		var hasOrgan = db.DonatedOrgans.Any(d => d.OrganId == waiting.OrganId);
+		//		if (hasOrgan)
+		//		{
+		//			// Check if the bloodType matches
+		//			var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
+		//			var donatedOrgan = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
+		//			if (BloodTypeCheck(donatedOrgan.BloodType, patient.BloodType))
+		//			{
+		//				// Check if the age needs to be checked
+		//				var organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault<Organ>();
+		//				if (!organ.IsAgeChecked)
+		//				{
+		//					return true;
+		//				}
+
+		//				// if so, check that the AgeRange matches
+		//				if (AgeRangeFinder(patient.DateOfBirth) == AgeRangeFinder(donatedOrgan.DonationDate))
+		//				{
+		//					return true;
+		//				}
+		//			}
+		//		}
+		//		return false;
+		//	}
+		//}
 	}
 }
