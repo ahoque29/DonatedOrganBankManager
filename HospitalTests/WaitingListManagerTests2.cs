@@ -1,8 +1,6 @@
 ﻿using System;
-using NUnit.Framework;
-using HospitalData;
 using HospitalManagement;
-using System.Linq;
+using NUnit.Framework;
 
 namespace HospitalTests
 {
@@ -15,7 +13,7 @@ namespace HospitalTests
 
 		#region Initialisation and Setup
 
-		WaitingListManager _waitingListManager;
+		private WaitingListManager _waitingListManager;
 
 		[SetUp]
 		public void Setup()
@@ -23,7 +21,7 @@ namespace HospitalTests
 			_waitingListManager = new WaitingListManager();
 		}
 
-		#endregion
+		#endregion Initialisation and Setup
 
 		#region CreateWaiting() tests 2
 
@@ -36,7 +34,7 @@ namespace HospitalTests
 				new DateTime(2021, 02, 10)));
 		}
 
-		#endregion
+		#endregion CreateWaiting() tests 2
 
 		#region Compatibility Logic tests 2
 
@@ -74,8 +72,6 @@ namespace HospitalTests
 			var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _waitingListManager.AgeRangeFinder(-1));
 		}
 
-
-
-		#endregion
+		#endregion Compatibility Logic tests 2
 	}
 }

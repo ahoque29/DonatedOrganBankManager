@@ -1,8 +1,8 @@
 using System;
-using NUnit.Framework;
+using System.Linq;
 using HospitalData;
 using HospitalManagement;
-using System.Linq;
+using NUnit.Framework;
 
 namespace HospitalTests
 {
@@ -10,7 +10,7 @@ namespace HospitalTests
 	{
 		#region Initialisation and Setup
 
-		PatientManager _patientManager;
+		private PatientManager _patientManager;
 
 		[SetUp]
 		public void Setup()
@@ -25,7 +25,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion Initialisation and Setup
 
 		#region CreatePatient() tests
 
@@ -69,7 +69,7 @@ namespace HospitalTests
 				"Banana"));
 		}
 
-		#endregion
+		#endregion CreatePatient() tests
 
 		#region UpdatePatient() tests
 
@@ -91,7 +91,7 @@ namespace HospitalTests
 			{
 				testGuy = db.Patients.Where(f => f.FirstName == "TestGuy").FirstOrDefault<Patient>();
 			}
-				
+
 			_patientManager.UpdatePatient(testGuy.PatientId,
 				"Dr",
 				"Wangu",
@@ -115,7 +115,6 @@ namespace HospitalTests
 				Assert.AreEqual("07401 010414", updatedPatient.Phone);
 				Assert.AreEqual("AB", updatedPatient.BloodType);
 			}
-		
 		}
 
 		[Test]
@@ -150,7 +149,7 @@ namespace HospitalTests
 				"Apples"));
 		}
 
-		#endregion
+		#endregion UpdatePatient() tests
 
 		#region DeletePatient() tests
 
@@ -183,7 +182,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion DeletePatient() tests
 
 		#region Teardown
 
@@ -198,6 +197,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion Teardown
 	}
 }

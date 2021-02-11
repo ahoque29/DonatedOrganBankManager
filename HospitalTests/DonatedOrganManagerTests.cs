@@ -1,8 +1,8 @@
 ﻿using System;
-using NUnit.Framework;
+using System.Linq;
 using HospitalData;
 using HospitalManagement;
-using System.Linq;
+using NUnit.Framework;
 
 namespace HospitalTests
 {
@@ -10,7 +10,7 @@ namespace HospitalTests
 	{
 		#region Initialisation and Setup
 
-		DonatedOrganManager _donatedOrganManager;
+		private DonatedOrganManager _donatedOrganManager;
 
 		[SetUp]
 		public void Setup()
@@ -25,7 +25,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion Initialisation and Setup
 
 		#region CreateDonatedOrgan() tests
 
@@ -76,7 +76,7 @@ namespace HospitalTests
 		[TestCase(-1)]
 		public void WhenAnOrganIsDonatedAndOrganIdDoesNotExistInOrgans_ThrowsArgumentException(int a)
 		{
-			Assert.Throws<ArgumentException>(() =>_donatedOrganManager.CreateDonatedOrgan(a,
+			Assert.Throws<ArgumentException>(() => _donatedOrganManager.CreateDonatedOrgan(a,
 				"T",
 				12,
 				new DateTime(2021, 01, 01)));
@@ -92,7 +92,7 @@ namespace HospitalTests
 				new DateTime(2021, 01, 01)));
 		}
 
-		#endregion
+		#endregion CreateDonatedOrgan() tests
 
 		#region DeleteDonatedOrgan() tests
 
@@ -120,7 +120,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion DeleteDonatedOrgan() tests
 
 		#region DonatedOrgansCount() tests
 
@@ -130,7 +130,7 @@ namespace HospitalTests
 			Assert.Throws<ArgumentException>(() => _donatedOrganManager.DonatedOrgansCount("Grapefuit"));
 		}
 
-		#endregion
+		#endregion DonatedOrgansCount() tests
 
 		#region Teardown
 
@@ -145,6 +145,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion Teardown
 	}
 }

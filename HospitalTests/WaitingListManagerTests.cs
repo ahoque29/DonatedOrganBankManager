@@ -1,8 +1,8 @@
 ﻿using System;
-using NUnit.Framework;
+using System.Linq;
 using HospitalData;
 using HospitalManagement;
-using System.Linq;
+using NUnit.Framework;
 
 namespace HospitalTests
 {
@@ -10,9 +10,9 @@ namespace HospitalTests
 	{
 		#region Initialisation and Setup
 
-		PatientManager _patientManager;
-		DonatedOrganManager _donatedOrganManager;
-		WaitingListManager _waitingListManager;
+		private PatientManager _patientManager;
+		private DonatedOrganManager _donatedOrganManager;
+		private WaitingListManager _waitingListManager;
 
 		[SetUp]
 		public void Setup()
@@ -22,7 +22,7 @@ namespace HospitalTests
 			_donatedOrganManager = new DonatedOrganManager();
 		}
 
-		#endregion
+		#endregion Initialisation and Setup
 
 		#region CreateWaiting() tests
 
@@ -57,7 +57,7 @@ namespace HospitalTests
 			_waitingListManager.CreateWaiting(testGuy.PatientId,
 				5,
 				new DateTime(2021, 02, 10));
-			
+
 			using (var db = new HospitalContext())
 			{
 				var numberOfWaitingsAfter = db.Waitings.Count();
@@ -92,13 +92,9 @@ namespace HospitalTests
 				new DateTime(2021, 02, 10)));
 		}
 
-		#endregion
-
-		#region Compatibility Logic tests
+		#endregion CreateWaiting() tests
 
 
-
-		#endregion
 
 		#region Teardown
 
@@ -113,11 +109,11 @@ namespace HospitalTests
 
 				db.DonatedOrgans.RemoveRange(testDonatedOrgan);
 				db.Waitings.RemoveRange(testWaiting);
-				db.Patients.RemoveRange(testGuy);				
+				db.Patients.RemoveRange(testGuy);
 				db.SaveChanges();
 			}
 		}
 
-		#endregion
+		#endregion Teardown
 	}
 }

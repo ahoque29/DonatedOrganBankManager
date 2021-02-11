@@ -21,6 +21,5 @@ namespace HospitalData
 
 		public virtual Organ Organ { get; set; }
 		public virtual ICollection<MatchedDonation> MatchedDonations { get; set; }
-		
 	}
 }

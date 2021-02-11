@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace HospitalData
 {
@@ -18,6 +17,5 @@ namespace HospitalData
 
 		public virtual ICollection<Waiting> Waitings { get; set; }
 		public virtual ICollection<DonatedOrgan> DonatedOrgans { get; set; }
-
 	}
 }

@@ -13,7 +13,7 @@ namespace HospitalManagement
 			string bloodType,
 			int DonorAge,
 			DateTime donationDate)
-		{						
+		{
 			var newDonatedOrgan = new DonatedOrgan()
 			{
 				OrganId = organId,

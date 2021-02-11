@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HospitalData;
-
 
 namespace HospitalManagement
 {
 	public class OrganManager
-	{		
+	{
 		public List<Organ> RetrieveAllOrgans()
 		{
 			using (var db = new HospitalContext())
@@ -15,6 +13,5 @@ namespace HospitalManagement
 				return db.Organs.ToList();
 			}
 		}
-
 	}
 }

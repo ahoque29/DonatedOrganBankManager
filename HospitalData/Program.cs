@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace HospitalData
+﻿namespace HospitalData
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			using (var db = new HospitalContext())
 			{
@@ -61,7 +58,7 @@ namespace HospitalData
 				//	OrganId = redCells.OrganId,
 				//	BloodType = "AB",
 				//	DonorAge = null,
-				//	DonationDate = new DateTime(2021, 02, 04),					
+				//	DonationDate = new DateTime(2021, 02, 04),
 				//});
 
 				//var keaton = db.Patients.Where(f => f.FirstName == "Keaton" && f.LastName == "William").FirstOrDefault<Patient>();
@@ -85,9 +82,6 @@ namespace HospitalData
 				//var valve = db.Organs.Where(n => n.Name == "Valve").FirstOrDefault<Organ>();
 				//var donatedValve = db.DonatedOrgans.Where(n => n.OrganId == valve.OrganId).FirstOrDefault<DonatedOrgan>();
 				//donatedValve.IsDonated = true;
-
-
-
 
 				db.SaveChanges();
 			}

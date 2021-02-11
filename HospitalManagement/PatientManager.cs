@@ -9,9 +9,9 @@ namespace HospitalManagement
 	{
 		public Patient SelectedPatient { get; set; }
 
-		public void CreatePatient(string title, 
-			string lastName, 
-			string firstName, 
+		public void CreatePatient(string title,
+			string lastName,
+			string firstName,
 			DateTime dateOfBirth,
 			string address,
 			string city,
@@ -39,7 +39,6 @@ namespace HospitalManagement
 					db.Patients.Add(newPatient);
 					db.SaveChanges();
 				}
-
 			}
 			else
 			{

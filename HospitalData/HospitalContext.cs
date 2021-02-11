@@ -19,6 +19,5 @@ namespace HospitalData
 				options.UseSqlServer(@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = HospitalProject;");
 			}
 		}
-
 	}
 }

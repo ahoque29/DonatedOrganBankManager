@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using HospitalData;
 
 namespace HospitalManagement
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
-
 			//PatientManager patientManager = new PatientManager();
 			//patientManager.Create("Mr",
 			//	"Correa",
@@ -54,7 +50,6 @@ namespace HospitalManagement
 
 			PatientManager patientManager = new PatientManager();
 
-			
 			Console.WriteLine(waitingListManager.FindMatch(12));
 		}
 	}
