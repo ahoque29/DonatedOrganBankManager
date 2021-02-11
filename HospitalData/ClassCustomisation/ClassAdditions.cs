@@ -19,4 +19,12 @@ namespace HospitalData
 			return $"{OrganId} - {BloodType} - {DonorAge}";
 		}
 	}
+
+	public partial class Patient
+	{
+		public override string ToString()
+		{
+			return $"{PatientId} - Blood Type: {BloodType} - {Title} - {LastName} - {FirstName} - {DateOfBirth.ToString("dd/MM/yyyy")} - {Address}, {City}, {PostCode} - ";
+		}
+	}
 }

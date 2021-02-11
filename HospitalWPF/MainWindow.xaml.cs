@@ -13,28 +13,17 @@ namespace HospitalWPF
 		public MainWindow()
 		{
 			InitializeComponent();
-			PopulateWaitingListBox();
-			PopulateDonatedOrgansListBox();
+			PopulateListBoxPatients();
 		}
 
-		private void PopulateWaitingListBox()
-		{
-			ListBoxWaitingList.ItemsSource = _waitingListManager.RetrieveAllWaitings();
-		}
-
-		private void PopulateDonatedOrgansListBox()
-		{
-			ListBoxDonatedOrgans.ItemsSource = _donatedOrganManager.RetrieveAllDonatedOrgans();
-		}
-
-		private void ListBoxWaitingList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		private void ListBoxPatients_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
 
 		}
 
-		private void ListBoxDonatedOrgans_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		private void PopulateListBoxPatients()
 		{
-
+			ListBoxPatients.ItemsSource = _patientManager.RetrieveAllPatients();
 		}
 	}
 }
