@@ -25,7 +25,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion Initialisation and Setup
+		#endregion
 
 		#region CreatePatient() tests
 
@@ -69,7 +69,7 @@ namespace HospitalTests
 				"Banana"));
 		}
 
-		#endregion CreatePatient() tests
+		#endregion
 
 		#region UpdatePatient() tests
 
@@ -149,7 +149,7 @@ namespace HospitalTests
 				"Apples"));
 		}
 
-		#endregion UpdatePatient() tests
+		#endregion
 
 		#region DeletePatient() tests
 
@@ -182,7 +182,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion DeletePatient() tests
+		#endregion
 
 		#region Teardown
 
@@ -197,6 +197,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion Teardown
+		#endregion
 	}
 }

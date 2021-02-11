@@ -1,0 +1,46 @@
+﻿<Window x:Class="HospitalWPF.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d"
+        Title="Hospital Manager" Height="450" Width="800">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+
+		<ListBox x:Name="ListBoxWaitingList"
+				 Background="AliceBlue"
+				 Grid.Column="0"
+				 SelectionChanged="ListBoxWaitingList_SelectionChanged">
+		</ListBox>
+
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+			<Button Grid.Row="2" 
+					Background="Orange" 
+					Content="FIND MATCH"
+					FontWeight="Black"></Button>
+
+			<Button Grid.Row="3" 
+					Background="LightBlue" 
+					Content="EXECUTE MATCH"
+					FontWeight="Black"></Button>
+		</Grid>
+
+		<ListBox x:Name="ListBoxDonatedOrgans"
+				 Background="AliceBlue"
+				 Grid.Column="2"
+				 SelectionChanged="ListBoxDonatedOrgans_SelectionChanged">
+		</ListBox>
+	</Grid>
+</Window>

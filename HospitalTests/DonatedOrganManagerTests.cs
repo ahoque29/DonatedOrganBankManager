@@ -120,7 +120,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion DeleteDonatedOrgan() tests
+		#endregion
 
 		#region DonatedOrgansCount() tests
 
@@ -130,7 +130,7 @@ namespace HospitalTests
 			Assert.Throws<ArgumentException>(() => _donatedOrganManager.DonatedOrgansCount("Grapefuit"));
 		}
 
-		#endregion DonatedOrgansCount() tests
+		#endregion
 
 		#region Teardown
 

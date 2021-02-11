@@ -60,6 +60,11 @@ namespace HospitalManagement
 			}
 		}
 
+		public void SetSelectedWaiting(object selectedItem)
+		{
+			SelectedWaiting = (Waiting)selectedItem;
+		}
+
 		#endregion Create, Delete, Retrieve
 
 		#region Compatibility Logic
@@ -121,7 +126,7 @@ namespace HospitalManagement
 		}
 
 		// AgeFinder
-		public string AgeRangeFinder(int? age)
+		public string AgeRangeFinder(int age)
 		{
 			if (age < 0)
 			{
@@ -156,7 +161,7 @@ namespace HospitalManagement
 		// AgeFinder() method overload
 		public string AgeRangeFinder(DateTime dateOfBirth)
 		{
-			int? age = DateTime.Today.Year - dateOfBirth.Year;
+			int age = DateTime.Today.Year - dateOfBirth.Year;
 			return AgeRangeFinder(age);
 		}
 
@@ -191,7 +196,7 @@ namespace HospitalManagement
 		}
 
 		// Listing the matches
-		public List<Organ> ListMatchedOrgans()
+		public List<DonatedOrgan> ListMatchedOrgans()
 		{
 			using (var db = new HospitalContext())
 			{
@@ -203,7 +208,7 @@ namespace HospitalManagement
 									let bloodTypeCheck = BloodTypeCheck(w.WaitingId)
 									let ageCheck = AgeCheck(w.WaitingId)
 									where (hasOrgan == true) && (bloodTypeCheck == true) && (ageCheck == true)
-									select o;
+									select d;
 				return organsMatched.ToList();
 			}
 		}
@@ -228,6 +233,6 @@ namespace HospitalManagement
 			}
 		}
 
-		#endregion Compatibility Logic
+		#endregion
 	}
 }
