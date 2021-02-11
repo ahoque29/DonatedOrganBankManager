@@ -69,8 +69,11 @@ namespace HospitalManagement
 			using (var db = new HospitalContext())
 			{
 				SelectedDonatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault<DonatedOrgan>();
-				db.DonatedOrgans.RemoveRange(SelectedDonatedOrgan);
-				db.SaveChanges();
+				if (!SelectedDonatedOrgan.IsDonated)
+				{
+					db.DonatedOrgans.RemoveRange(SelectedDonatedOrgan);
+					db.SaveChanges();
+				}
 			}
 		}
 
