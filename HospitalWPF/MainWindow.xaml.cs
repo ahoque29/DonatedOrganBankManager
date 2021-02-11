@@ -10,11 +10,14 @@ namespace HospitalWPF
 		private WaitingListManager _waitingListManager = new WaitingListManager();
 		private DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
 		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
+		private OrganManager _organManager = new OrganManager();
 
 		public MainWindow()
 		{
 			InitializeComponent();
 			PopulateListBoxPatients();
+			PopulateListBoxDonatedOrgans();
+			PopulateOrganNameComboBox();
 		}
 
 		#region Patient Manager Tab
@@ -35,7 +38,7 @@ namespace HospitalWPF
 				CityTextBox.Text,
 				PostCodeTextBox.Text,
 				PhoneTextBox.Text,
-				BloodTypeComboBox.Text);
+				BloodTypeComboBoxPM.Text);
 
 			// clear the text box
 			ListBoxPatients.ItemsSource = null;
@@ -51,9 +54,23 @@ namespace HospitalWPF
 				CityTextBox.Text =
 				PostCodeTextBox.Text =
 				PhoneTextBox.Text =
-				BloodTypeComboBox.Text = null;
+				BloodTypeComboBoxPM.Text = null;
 		}
 
-		#endregion Patient Manager Tab
+		#endregion
+
+		#region Donated Organ Manager
+
+		private void PopulateListBoxDonatedOrgans()
+		{
+			ListBoxDonatedOrgans.ItemsSource = _donatedOrganManager.RetrieveAllDonatedOrgans();
+		}
+
+		private void PopulateOrganNameComboBox()
+		{
+			OrganNameComboBox.ItemsSource = _organManager.RetrieveAllOrgans();
+		}
+
+		#endregion
 	}
 }

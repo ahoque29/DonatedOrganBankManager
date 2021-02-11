@@ -19,12 +19,12 @@
 					<ListBox x:Name="ListBoxPatients"
 							 Grid.Column="0"
 							 Margin="10"
-							 Background="#BBB6A5"/>
+							 Background="#BBB6A5" />
 
 					<StackPanel Grid.Column="1" Margin="0,-4,0,4">
 						<TextBlock Text="Patient Details"
 								   FontWeight="Bold"
-								   Margin="5"/>
+								   Margin="5" />
 						<Grid Margin="5">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition />
@@ -35,16 +35,15 @@
 
 							<TextBlock Text="Title"
 									   Grid.Column="0"
-									   TextAlignment="Center"/>
+									   TextAlignment="Center" />
 							<TextBox x:Name="TitleTextBox"
 									 Grid.Column="1"
-									 Background="#BBB6A5"/>
+									 Background="#BBB6A5" />
 							<TextBlock Text="Blood Type"
 									   Grid.Column="2"
-									   TextAlignment="Center"/>
-							<ComboBox x:Name="BloodTypeComboBox"
-									  Grid.Column="3"
-									  Background="#BBB6A5">
+									   TextAlignment="Center" />
+							<ComboBox x:Name="BloodTypeComboBoxPM"
+									  Grid.Column="3">
 								<ComboBoxItem>O</ComboBoxItem>
 								<ComboBoxItem>A</ComboBoxItem>
 								<ComboBoxItem>B</ComboBoxItem>
@@ -62,82 +61,154 @@
 
 							<TextBlock Text="Last Name"
 									   Grid.Column="0"
-									   TextAlignment="Center"/>
+									   TextAlignment="Center" />
 							<TextBox x:Name="LastNameTextBox"
 									 Grid.Column="1"
-									 Background="#BBB6A5"/>
+									 Background="#BBB6A5" />
 							<TextBlock Text="First Name"
 									   Grid.Column="2"
-									   TextAlignment="Center"/>
+									   TextAlignment="Center" />
 							<TextBox x:Name="FirstNameTextBox"
 									 Grid.Column="3"
-									 Background="#BBB6A5"/>
+									 Background="#BBB6A5" />
 						</Grid>
 
 						<Grid>
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="1.2*"/>
+								<ColumnDefinition Width="1.2*" />
 								<ColumnDefinition />
 							</Grid.ColumnDefinitions>
 
 							<StackPanel Grid.Column="0">
 								<TextBlock Text="Date of Birth"
-									   Margin="5 5 5 0"/>
+									   Margin="5 5 5 0" />
 								<Calendar x:Name="DobCalendar"
 										  HorizontalAlignment="Left"
-										  Margin="5 0 5 5"/>
+										  Margin="5 0 5 5" />
 							</StackPanel>
 
 							<StackPanel Grid.Column="1">
 								<TextBlock Text="Address"
-										   Margin="5 5 5 0"/>
+										   Margin="5 5 5 0" />
 								<TextBox x:Name="AddressTextBox"
-										 Background="#BBB6A5"/>
+										 Background="#BBB6A5" />
 
 								<TextBlock Text="City"
-										   Margin="5 5 5 0"/>
+										   Margin="5 5 5 0" />
 								<TextBox x:Name="CityTextBox"
-										 Background="#BBB6A5"/>
+										 Background="#BBB6A5" />
 
 								<TextBlock Text="Post Code"
-										   Margin="5 5 5 0"/>
+										   Margin="5 5 5 0" />
 								<TextBox x:Name="PostCodeTextBox"
-										 Background="#BBB6A5"/>
+										 Background="#BBB6A5" />
 
 								<TextBlock Text="Phone Number"
-										   Margin="5 5 5 0"/>
+										   Margin="5 5 5 0" />
 								<TextBox x:Name="PhoneTextBox"
-										 Background="#BBB6A5"/>
+										 Background="#BBB6A5" />
 
 								<Button x:Name="RegisterPatient"
 										Content="Register Patient"
 										Background="#8C9491"
 										Margin="5"
-										Padding="5" Click="RegisterPatient_Click"/>
+										Padding="5" Click="RegisterPatient_Click" />
 							</StackPanel>
 						</Grid>
-						
+
 						<Image Source="C:\Users\Ashib\source\repos\WPFEntityFrameworkProject\HospitalWPF\sparta-logo.png"
 							   Height="70"
 							   HorizontalAlignment="Right"
-							   Margin="0 10 10 0"
-							   />
+							   Margin="0 10 10 0" />
 					</StackPanel>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Donated Organs Manager">
 				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="1.25*" />
+						<ColumnDefinition Width="1.3*" />
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 
 					<ListBox x:Name="ListBoxDonatedOrgans"
 							 Grid.Column="0"
 							 Margin="10"
-							 Background="#BBB6A5"/>
-				</Grid>
+							 Background="#BBB6A5" />
 
+					<StackPanel Grid.Column="1">
+						<TextBlock Text="Donated Organ Details"
+								   FontWeight="Bold"
+								   Margin="5" />
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition/>
+								<ColumnDefinition Width="1.2*"/>
+							</Grid.ColumnDefinitions>
+							
+							<StackPanel Grid.Column="0">
+								<TextBlock Text="Organ Name"
+										   Margin="5 5 5 0"/>
+								<ComboBox x:Name="OrganNameComboBox"
+										  Margin="5 5 5 0"/>
+
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition/>
+										<ColumnDefinition/>
+									</Grid.ColumnDefinitions>
+
+									<TextBlock Text="Blood Type"
+											   Grid.Column="0"
+											   Margin="5 5 5 0"/>
+									<ComboBox x:Name="BloodTypeComboBoxDOM"
+											  Grid.Column="1"
+											  Margin="5 5 5 0">
+										<ComboBoxItem>O</ComboBoxItem>
+										<ComboBoxItem>A</ComboBoxItem>
+										<ComboBoxItem>B</ComboBoxItem>
+										<ComboBoxItem>AB</ComboBoxItem>
+									</ComboBox>
+								</Grid>
+
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition/>
+										<ColumnDefinition/>
+									</Grid.ColumnDefinitions>
+
+									<TextBlock Text="Donor Age"
+										   Margin="5 5 5 0"
+										   Grid.Column="0"/>
+									<TextBox x:Name="DonorAgeTextBox"
+										 Background="#8C9491"
+										 Margin="5 5 5 0"
+										 Grid.Column="1"/>
+								</Grid>
+
+								<Button x:Name="RegisterDonatedOrgan"
+										Content="Register Donated Organ"
+										Background="#8C9491"
+										Margin="5 20 5 0"
+										Height="50"/>
+
+							</StackPanel>
+
+							<StackPanel Grid.Column="1">
+								<TextBlock Text="DonationDate"
+									   Margin="5 5 5 0" />
+								<Calendar x:Name="DonationDateCalendar"
+										  HorizontalAlignment="Left"
+										  Margin="5 0 5 5" />
+							</StackPanel>
+						</Grid>
+						<Separator Margin="5 0 5 0"
+								   Background="#8C9491">
+							<Separator.RenderTransform>
+								<ScaleTransform ScaleY="3"/>
+							</Separator.RenderTransform>
+						</Separator>
+					</StackPanel>
+				</Grid>
 			</TabItem>
 			<TabItem></TabItem>
 		</TabControl>
