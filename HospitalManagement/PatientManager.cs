@@ -52,26 +52,19 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				if (bloodType == "O" || bloodType == "A" || bloodType == "B" || bloodType == "AB" || bloodType == "T") // T for test cases
-				{
-					SelectedPatient = db.Patients.Where(p => p.PatientId == patientId).FirstOrDefault();
+				SelectedPatient = db.Patients.Where(p => p.PatientId == patientId).FirstOrDefault();
 
-					SelectedPatient.Title = title;
-					SelectedPatient.LastName = lastName;
-					SelectedPatient.FirstName = firstName;
-					SelectedPatient.DateOfBirth = dateOfBirth;
-					SelectedPatient.Address = address;
-					SelectedPatient.City = city;
-					SelectedPatient.PostCode = postCode;
-					SelectedPatient.Phone = phone;
-					SelectedPatient.BloodType = bloodType;
+				SelectedPatient.Title = title;
+				SelectedPatient.LastName = lastName;
+				SelectedPatient.FirstName = firstName;
+				SelectedPatient.DateOfBirth = dateOfBirth;
+				SelectedPatient.Address = address;
+				SelectedPatient.City = city;
+				SelectedPatient.PostCode = postCode;
+				SelectedPatient.Phone = phone;
+				SelectedPatient.BloodType = bloodType;
 
-					db.SaveChanges();
-				}
-				else
-				{
-					throw new ArgumentException();
-				}
+				db.SaveChanges();
 			}
 		}
 

@@ -11,60 +11,56 @@ namespace HospitalManagement
 
 		public void CreateDonatedOrgan(int organId,
 			string bloodType,
-			int DonorAge,
+			int donorAge,
 			DateTime donationDate)
 		{
 			var newDonatedOrgan = new DonatedOrgan()
 			{
 				OrganId = organId,
 				BloodType = bloodType,
-				DonorAge = DonorAge,
+				DonorAge = donorAge,
 				DonationDate = donationDate,
 			};
 
 			using (var db = new HospitalContext())
 			{
-				bool organExists = db.Organs.Any(o => o.OrganId == organId);
-				if (organExists)
-				{
-					db.DonatedOrgans.Add(newDonatedOrgan);
-					db.SaveChanges();
-				}
-				else
-				{
-					throw new ArgumentException();
-				}
+				db.DonatedOrgans.Add(newDonatedOrgan);
+				db.SaveChanges();
 			}
 		}
 
 		// Method overload - allows DonatedOrgan creation with the name of the organ instead of organId
 		public void CreateDonatedOrgan(string organName,
 			string bloodType,
-			int DonorAge,
+			int donorAge,
 			DateTime donationDate)
 		{
 			using (var db = new HospitalContext())
 			{
-				bool organExists = db.Organs.Any(o => o.Name == organName);
-				if (organExists)
-				{
-					var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault();
+				var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault();
 
-					var newDonatedOrgan = new DonatedOrgan()
-					{
-						OrganId = organ.OrganId,
-						BloodType = bloodType,
-						DonorAge = DonorAge,
-						DonationDate = donationDate,
-					};
+				CreateDonatedOrgan(organ.OrganId,
+					bloodType,
+					donorAge,
+					donationDate);					
+			}
+		}
 
-					db.DonatedOrgans.Add(newDonatedOrgan);
-					db.SaveChanges();
-				}
-				else
-				{
-					throw new ArgumentException();
-				}
+		public void UpdateDonatedOrgan(int donatedOrganId,
+			string organName,
+			string bloodType,
+			int donorAge,
+			DateTime donationDate)
+		{
+			using (var db = new HospitalContext())
+			{
+				SelectedDonatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
+				var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault();
+
+				SelectedDonatedOrgan.OrganId = organ.OrganId;
+				SelectedDonatedOrgan.BloodType = bloodType;
+				SelectedDonatedOrgan.DonorAge = donorAge;
+				SelectedDonatedOrgan.DonationDate = donationDate;
 			}
 		}
 
