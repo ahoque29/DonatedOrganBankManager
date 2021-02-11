@@ -19,30 +19,23 @@ namespace HospitalManagement
 			string phone,
 			string bloodType)
 		{
-			if (bloodType == "O" || bloodType == "A" || bloodType == "B" || bloodType == "AB" || bloodType == "T") // T for test cases
+			var newPatient = new Patient()
 			{
-				var newPatient = new Patient()
-				{
-					Title = title,
-					LastName = lastName,
-					FirstName = firstName,
-					DateOfBirth = dateOfBirth,
-					Address = address,
-					City = city,
-					PostCode = postCode,
-					Phone = phone,
-					BloodType = bloodType
-				};
+				Title = title,
+				LastName = lastName,
+				FirstName = firstName,
+				DateOfBirth = dateOfBirth,
+				Address = address,
+				City = city,
+				PostCode = postCode,
+				Phone = phone,
+				BloodType = bloodType
+			};
 
-				using (var db = new HospitalContext())
-				{
-					db.Patients.Add(newPatient);
-					db.SaveChanges();
-				}
-			}
-			else
+			using (var db = new HospitalContext())
 			{
-				throw new ArgumentException();
+				db.Patients.Add(newPatient);
+				db.SaveChanges();
 			}
 		}
 

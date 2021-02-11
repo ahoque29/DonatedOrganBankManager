@@ -24,7 +24,7 @@ namespace HospitalData
 	{
 		public override string ToString()
 		{
-			return $"{PatientId} - Blood Type: {BloodType} - {Title} {LastName} {FirstName} - Blood Type: {BloodType} - {DateOfBirth:dd/MM/yyyy} - {Address}, {City}, {PostCode}";
+			return $"{PatientId} - {Title} {LastName} {FirstName} - Blood Type: {BloodType} - {DateOfBirth:dd/MM/yyyy} - {Address}, {City}, {PostCode}";
 		}
 	}
 }
