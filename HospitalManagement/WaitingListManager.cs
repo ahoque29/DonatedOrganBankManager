@@ -7,7 +7,7 @@ namespace HospitalManagement
 {
 	public class WaitingListManager
 	{
-		MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
+		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 		public Waiting SelectedWaiting { get; set; }
 
 		#region Create, Delete, Retrieve
@@ -39,7 +39,7 @@ namespace HospitalManagement
 				}
 			}
 		}
-		
+
 		// Read
 		public List<Waiting> RetrieveAllWaitings()
 		{
@@ -60,7 +60,7 @@ namespace HospitalManagement
 			}
 		}
 
-		#endregion
+		#endregion Create, Delete, Retrieve
 
 		#region Compatibility Logic
 
@@ -94,18 +94,21 @@ namespace HospitalManagement
 				{
 					case "O":
 						return true;
+
 					case "A":
 						if (patient.BloodType == "A" || patient.BloodType == "AB")
 						{
 							return true;
 						}
 						break;
+
 					case "B":
 						if (patient.BloodType == "B" || patient.BloodType == "AB")
 						{
 							return true;
 						}
 						break;
+
 					case "AB":
 						if (patient.BloodType == "AB")
 						{
@@ -116,7 +119,6 @@ namespace HospitalManagement
 				return false;
 			}
 		}
-
 
 		// AgeFinder
 		public string AgeRangeFinder(int? age)
@@ -176,7 +178,6 @@ namespace HospitalManagement
 				}
 				return true;
 			}
-
 		}
 
 		// Finding a match
@@ -195,14 +196,14 @@ namespace HospitalManagement
 			using (var db = new HospitalContext())
 			{
 				var organsMatched = from o in db.Organs
-								join d in db.DonatedOrgans on o.OrganId equals d.OrganId
-								join w in db.Waitings on d.OrganId equals w.OrganId
-								join p in db.Patients on w.PatientId equals p.PatientId
-								let hasOrgan = HasOrgan(w.WaitingId)
-								let bloodTypeCheck = BloodTypeCheck(w.WaitingId)
-								let ageCheck = AgeCheck(w.WaitingId)
-								where (hasOrgan == true) && (bloodTypeCheck == true) && (ageCheck == true)
-								select o;
+									join d in db.DonatedOrgans on o.OrganId equals d.OrganId
+									join w in db.Waitings on d.OrganId equals w.OrganId
+									join p in db.Patients on w.PatientId equals p.PatientId
+									let hasOrgan = HasOrgan(w.WaitingId)
+									let bloodTypeCheck = BloodTypeCheck(w.WaitingId)
+									let ageCheck = AgeCheck(w.WaitingId)
+									where (hasOrgan == true) && (bloodTypeCheck == true) && (ageCheck == true)
+									select o;
 				return organsMatched.ToList();
 			}
 		}
@@ -221,12 +222,12 @@ namespace HospitalManagement
 					var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
 					_matchedDonationManager.CreateMatchedDonation(waiting.PatientId, donatedOrganId, DateTime.Now);
 
-					// delete the waiting from the database 
+					// delete the waiting from the database
 					DeleteWaiting(waitingId);
 				}
 			}
 		}
 
-		#endregion
+		#endregion Compatibility Logic
 	}
 }
