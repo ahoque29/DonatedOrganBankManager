@@ -21,7 +21,7 @@
 							 Margin="10"
 							 Background="#BBB6A5"/>
 
-					<StackPanel Grid.Column="1">
+					<StackPanel Grid.Column="1" Margin="0,-4,0,4">
 						<TextBlock Text="Patient Details"
 								   FontWeight="Bold"
 								   Margin="5"/>
@@ -42,8 +42,9 @@
 							<TextBlock Text="Blood Type"
 									   Grid.Column="2"
 									   TextAlignment="Center"/>
-							<ComboBox x:Name="BloodTypeTextBox"
-									 Grid.Column="3">
+							<ComboBox x:Name="BloodTypeComboBox"
+									  Grid.Column="3"
+									  Background="#BBB6A5">
 								<ComboBoxItem>O</ComboBoxItem>
 								<ComboBoxItem>A</ComboBoxItem>
 								<ComboBoxItem>B</ComboBoxItem>
@@ -82,9 +83,9 @@
 							<StackPanel Grid.Column="0">
 								<TextBlock Text="Date of Birth"
 									   Margin="5 5 5 0"/>
-								<Calendar x:Name="Calendar"
-									  HorizontalAlignment="Left"
-									  Margin="5 0 5 5"/>
+								<Calendar x:Name="DobCalendar"
+										  HorizontalAlignment="Left"
+										  Margin="5 0 5 5"/>
 							</StackPanel>
 
 							<StackPanel Grid.Column="1">
@@ -105,24 +106,39 @@
 
 								<TextBlock Text="Phone Number"
 										   Margin="5 5 5 0"/>
-								<TextBox x:Name="PhoneNumber"
+								<TextBox x:Name="PhoneTextBox"
 										 Background="#BBB6A5"/>
 
-								<Button Content="Register Patient"
+								<Button x:Name="RegisterPatient"
+										Content="Register Patient"
 										Background="#8C9491"
 										Margin="5"
-										Padding="5"/>
+										Padding="5" Click="RegisterPatient_Click"/>
 							</StackPanel>
 						</Grid>
 						
 						<Image Source="C:\Users\Ashib\source\repos\WPFEntityFrameworkProject\HospitalWPF\sparta-logo.png"
 							   Height="70"
 							   HorizontalAlignment="Right"
-							   Margin="0 10 10 0"/>
+							   Margin="0 10 10 0"
+							   />
 					</StackPanel>
 				</Grid>
 			</TabItem>
-			<TabItem></TabItem>
+			<TabItem Header="Donated Organs Manager">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="1.25*" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+
+					<ListBox x:Name="ListBoxDonatedOrgans"
+							 Grid.Column="0"
+							 Margin="10"
+							 Background="#BBB6A5"/>
+				</Grid>
+
+			</TabItem>
 			<TabItem></TabItem>
 		</TabControl>
 	</Border>

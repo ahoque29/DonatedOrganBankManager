@@ -6,6 +6,14 @@ namespace HospitalManagement
 	{
 		private static void Main(string[] args)
 		{
+
+
+			WaitingListManager _waitingListManager = new WaitingListManager();
+			DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
+			PatientManager _patientManager = new PatientManager();
+
+			_patientManager.DeletePatient(135);
+
 			//PatientManager patientManager = new PatientManager();
 			//patientManager.Create("Mr",
 			//	"Correa",
@@ -39,18 +47,6 @@ namespace HospitalManagement
 			//		Console.WriteLine($"{entry.FirstName} - {entry.LastName}");
 			//	}
 			//}
-
-			WaitingListManager waitingListManager = new WaitingListManager();
-
-			//waitingListManager.CreateWaiting(5, 1, DateTime.Now);
-
-			//waitingListManager.CreateWaiting(6, 11, DateTime.Now);
-
-			DonatedOrganManager donatedOrganManager = new DonatedOrganManager();
-
-			PatientManager patientManager = new PatientManager();
-
-			Console.WriteLine(waitingListManager.FindMatch(12));
 		}
 	}
 }
