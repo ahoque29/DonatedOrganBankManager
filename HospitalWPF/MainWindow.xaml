@@ -6,20 +6,120 @@
 		mc:Ignorable="d"
         Title="Hospital Manager" Height="450" Width="800">
 
-	<Border Padding="10">
+	<Border Padding="10"
+			Background="#2A2F33">
 		<TabControl>
 			<TabItem Header="Patient Manager">
 				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
+						<ColumnDefinition Width="1.25*" />
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 
 					<ListBox x:Name="ListBoxPatients"
 							 Grid.Column="0"
-							 Background="LightBlue"
-							 SelectionChanged="ListBoxPatients_SelectionChanged">
-					</ListBox>
+							 Margin="10"
+							 Background="#BBB6A5"/>
+
+					<StackPanel Grid.Column="1">
+						<TextBlock Text="Patient Details"
+								   FontWeight="Bold"
+								   Margin="5"/>
+						<Grid Margin="5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<TextBlock Text="Title"
+									   Grid.Column="0"
+									   TextAlignment="Center"/>
+							<TextBox x:Name="TitleTextBox"
+									 Grid.Column="1"
+									 Background="#BBB6A5"/>
+							<TextBlock Text="Blood Type"
+									   Grid.Column="2"
+									   TextAlignment="Center"/>
+							<ComboBox x:Name="BloodTypeTextBox"
+									 Grid.Column="3">
+								<ComboBoxItem>O</ComboBoxItem>
+								<ComboBoxItem>A</ComboBoxItem>
+								<ComboBoxItem>B</ComboBoxItem>
+								<ComboBoxItem>AB</ComboBoxItem>
+							</ComboBox>
+						</Grid>
+
+						<Grid Margin="5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<TextBlock Text="Last Name"
+									   Grid.Column="0"
+									   TextAlignment="Center"/>
+							<TextBox x:Name="LastNameTextBox"
+									 Grid.Column="1"
+									 Background="#BBB6A5"/>
+							<TextBlock Text="First Name"
+									   Grid.Column="2"
+									   TextAlignment="Center"/>
+							<TextBox x:Name="FirstNameTextBox"
+									 Grid.Column="3"
+									 Background="#BBB6A5"/>
+						</Grid>
+
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="1.2*"/>
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<StackPanel Grid.Column="0">
+								<TextBlock Text="Date of Birth"
+									   Margin="5 5 5 0"/>
+								<Calendar x:Name="Calendar"
+									  HorizontalAlignment="Left"
+									  Margin="5 0 5 5"/>
+							</StackPanel>
+
+							<StackPanel Grid.Column="1">
+								<TextBlock Text="Address"
+										   Margin="5 5 5 0"/>
+								<TextBox x:Name="AddressTextBox"
+										 Background="#BBB6A5"/>
+
+								<TextBlock Text="City"
+										   Margin="5 5 5 0"/>
+								<TextBox x:Name="CityTextBox"
+										 Background="#BBB6A5"/>
+
+								<TextBlock Text="Post Code"
+										   Margin="5 5 5 0"/>
+								<TextBox x:Name="PostCodeTextBox"
+										 Background="#BBB6A5"/>
+
+								<TextBlock Text="Phone Number"
+										   Margin="5 5 5 0"/>
+								<TextBox x:Name="PhoneNumber"
+										 Background="#BBB6A5"/>
+
+								<Button Content="Register Patient"
+										Background="#8C9491"
+										Margin="5"
+										Padding="5"/>
+							</StackPanel>
+						</Grid>
+						
+						<Image Source="C:\Users\Ashib\source\repos\WPFEntityFrameworkProject\HospitalWPF\sparta-logo.png"
+							   Height="70"
+							   HorizontalAlignment="Right"
+							   Margin="0 10 10 0"/>
+					</StackPanel>
 				</Grid>
 			</TabItem>
 			<TabItem></TabItem>

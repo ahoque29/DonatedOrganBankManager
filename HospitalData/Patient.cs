@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HospitalData
 {
-	public class Patient
+	public partial class Patient
 	{
 		public Patient()
 		{
