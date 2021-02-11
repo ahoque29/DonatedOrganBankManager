@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
 
 namespace HospitalData
 {
@@ -16,7 +14,17 @@ namespace HospitalData
 	{
 		public override string ToString()
 		{
-			return $"{OrganId} - {BloodType} - {DonorAge}";
+			DonatedOrgan donatedOrgan;
+			Organ organ;
+			using (var db = new HospitalContext())
+			{
+				donatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == this.DonatedOrganId).FirstOrDefault();
+				organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
+			}
+
+			var availability = donatedOrgan.IsDonated ? "No" : "Yes";
+
+			return $"Id: {DonatedOrganId} - Availability: {availability} - Organ: {organ.Name} - Blood Type: {BloodType} - Age at Donation: {DonorAge}";
 		}
 	}
 
@@ -25,6 +33,14 @@ namespace HospitalData
 		public override string ToString()
 		{
 			return $"{PatientId} - {Title} {LastName} {FirstName} - Blood Type: {BloodType} - {DateOfBirth:dd/MM/yyyy} - {Address}, {City}, {PostCode}";
+		}
+	}
+
+	public partial class Organ
+	{
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }
