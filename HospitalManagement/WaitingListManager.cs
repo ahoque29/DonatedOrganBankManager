@@ -7,6 +7,7 @@ namespace HospitalManagement
 {
 	public class WaitingListManager
 	{
+		MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 		public Waiting SelectedWaiting { get; set; }
 
 		#region Create, Delete, Retrieve
@@ -193,16 +194,36 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				var query = from o in db.Organs
-							join d in db.DonatedOrgans on o.OrganId equals d.OrganId
-							join w in db.Waitings on d.OrganId equals w.OrganId
-							join p in db.Patients on w.PatientId equals p.PatientId
-							let hasOrgan = HasOrgan(w.WaitingId)
-							let bloodTypeCheck = BloodTypeCheck(w.WaitingId)
-							let ageCheck = AgeCheck(w.WaitingId)
-							where (hasOrgan == true) && (bloodTypeCheck == true) && (ageCheck == true)
-							select o;
-				return query.ToList();
+				var organsMatched = from o in db.Organs
+								join d in db.DonatedOrgans on o.OrganId equals d.OrganId
+								join w in db.Waitings on d.OrganId equals w.OrganId
+								join p in db.Patients on w.PatientId equals p.PatientId
+								let hasOrgan = HasOrgan(w.WaitingId)
+								let bloodTypeCheck = BloodTypeCheck(w.WaitingId)
+								let ageCheck = AgeCheck(w.WaitingId)
+								where (hasOrgan == true) && (bloodTypeCheck == true) && (ageCheck == true)
+								select o;
+				return organsMatched.ToList();
+			}
+		}
+
+		public void ExecuteMatch(int waitingId, int donatedOrganId)
+		{
+			if (FindMatch(waitingId))
+			{
+				using (var db = new HospitalContext())
+				{
+					// mark the donated organ as donated
+					var donatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
+					donatedOrgan.IsDonated = true;
+
+					// add an entry to the matched donations table
+					var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+					_matchedDonationManager.CreateMatchedDonation(waiting.PatientId, donatedOrganId, DateTime.Now);
+
+					// delete the waiting from the database 
+					DeleteWaiting(waitingId);
+				}
 			}
 		}
 
