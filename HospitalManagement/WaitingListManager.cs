@@ -26,17 +26,8 @@ namespace HospitalManagement
 
 			using (var db = new HospitalContext())
 			{
-				bool patientExists = db.Patients.Any(p => p.PatientId == patientId);
-				bool organExists = db.Organs.Any(o => o.OrganId == organId);
-				if (patientExists && organExists)
-				{
-					db.Add(newWaiting);
-					db.SaveChanges();
-				}
-				else
-				{
-					throw new ArgumentException();
-				}
+				db.Add(newWaiting);
+				db.SaveChanges();
 			}
 		}
 

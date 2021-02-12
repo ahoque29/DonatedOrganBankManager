@@ -85,5 +85,10 @@ namespace HospitalManagement
 				return db.Patients.ToList();
 			}
 		}
+
+		public void SetSelectedPatient(object selectedItem)
+		{
+			SelectedPatient = (Patient)selectedItem;
+		}
 	}
 }

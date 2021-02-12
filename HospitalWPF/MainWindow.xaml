@@ -16,7 +16,7 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 
-					<ListBox x:Name="ListBoxPatients"
+					<ListBox x:Name="ListBoxPatientsPM"
 							 Grid.Column="0"
 							 Margin="10"
 							 Background="#BBB6A5" />
@@ -149,7 +149,7 @@
 							<StackPanel Grid.Column="0">
 								<TextBlock Text="Organ Name"
 										   Margin="5 5 5 0" />
-								<ComboBox x:Name="OrganNameComboBox"
+								<ComboBox x:Name="OrganNameComboBoxDOM"
 										  Margin="5 5 5 0" />
 
 								<Grid>
@@ -216,16 +216,63 @@
 
 						<Button Content="Delete Organ"
 								Margin="100 0 100 0"
-								Click="DeleteOrganButton_Click"/>
+								Click="DeleteOrganButton_Click" />
 
 						<TextBlock Text="* Please note that only Donated Organs that are available can be deleted."
 								   TextWrapping="WrapWithOverflow"
 								   HorizontalAlignment="Center"
-								   Margin="5"/>
+								   Margin="5" />
 
+						<Image Source="C:\Users\Ashib\source\repos\WPFEntityFrameworkProject\HospitalWPF\sparta-logo.png"
+							   Height="45"
+							   HorizontalAlignment="Right"
+							   Margin="0 -5 10 0" />
 					</StackPanel>
 				</Grid>
 			</TabItem>
+			<TabItem Header="Waiting List Manager">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+
+					<ListBox x:Name="ListBoxPatientsWM"
+							 Grid.Column="0"
+							 Margin="10"
+							 Background="#BBB6A5" 
+							 SelectionChanged="ListBoxPatientsWM_SelectionChanged"/>
+
+					<StackPanel Grid.Column="1">
+						<TextBlock Text="&#x2190; Select Patient from list"
+								 FontWeight="Black"
+								 Margin="5 50 5 5"/>
+
+						<TextBlock Text="OrganRequired"
+								 Margin="5 5 5 0"/>
+
+						<ComboBox x:Name="OrganNameComboBoxWM"
+								  Margin="5 5 5 0"
+								  SelectionChanged="OrganNameComboBoxWM_SelectionChanged"/>
+
+						<Button x:Name="SendToWaitingList"
+								Content="Send to Waiting List &#x2794;"
+								FontSize="15"
+								FontWeight="Black"
+								Height="80"
+								Margin="25 25 25 0"
+								Background="#8C9491"
+								Click="SendToWaitingList_Click"/>
+					</StackPanel>
+
+					<ListBox x:Name="ListBoxWaitingWM"
+							 Grid.Column="2"
+							 Margin="10"
+							 Background="#BBB6A5" />
+				</Grid>
+			</TabItem>
+			<TabItem></TabItem>
 			<TabItem></TabItem>
 		</TabControl>
 	</Border>

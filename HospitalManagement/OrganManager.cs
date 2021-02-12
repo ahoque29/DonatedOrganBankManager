@@ -6,6 +6,8 @@ namespace HospitalManagement
 {
 	public class OrganManager
 	{
+		public Organ SelectedOrgan { get; set; }
+
 		public List<Organ> RetrieveAllOrgans()
 		{
 			using (var db = new HospitalContext())
@@ -13,5 +15,13 @@ namespace HospitalManagement
 				return db.Organs.ToList();
 			}
 		}
+
+		public void SetSelectedOrgan(object selectedItem)
+		{
+			SelectedOrgan = (Organ)selectedItem;
+		}
+
 	}
+
+
 }

@@ -17,14 +17,17 @@ namespace HospitalWPF
 			InitializeComponent();
 			PopulateListBoxPatients();
 			PopulateListBoxDonatedOrgans();
-			PopulateOrganNameComboBox();
+			PopulateOrganNameComboBoxDOM();
+			PopulateListBoxPatientsWM();
+			PopulateListBoxWaitingWM();
+			PopulateOrganNameComboBoxWM();
 		}
 
 		#region Patient Manager Tab
 
 		private void PopulateListBoxPatients()
 		{
-			ListBoxPatients.ItemsSource = _patientManager.RetrieveAllPatients();
+			ListBoxPatientsPM.ItemsSource = _patientManager.RetrieveAllPatients();
 		}
 
 		private void RegisterPatient_Click(object sender, RoutedEventArgs e)
@@ -41,7 +44,7 @@ namespace HospitalWPF
 				BloodTypeComboBoxPM.Text);
 
 			// clear the list box
-			ListBoxPatients.ItemsSource = null;
+			ListBoxPatientsPM.ItemsSource = null;
 
 			// repopulate the textbox with the new patient
 			PopulateListBoxPatients();
@@ -66,15 +69,15 @@ namespace HospitalWPF
 			ListBoxDonatedOrgans.ItemsSource = _donatedOrganManager.RetrieveAllDonatedOrgans();
 		}
 
-		private void PopulateOrganNameComboBox()
+		private void PopulateOrganNameComboBoxDOM()
 		{
-			OrganNameComboBox.ItemsSource = _organManager.RetrieveAllOrgans();
+			OrganNameComboBoxDOM.ItemsSource = _organManager.RetrieveAllOrgans();
 		}
 
 		private void RegisterDonatedOrgan_Click(object sender, RoutedEventArgs e)
 		{
 			// create new organ
-			_donatedOrganManager.CreateDonatedOrgan(OrganNameComboBox.Text,
+			_donatedOrganManager.CreateDonatedOrgan(OrganNameComboBoxDOM.Text,
 				BloodTypeComboBoxDOM.Text,
 				Int32.Parse(DonorAgeTextBox.Text),
 				(DateTime)DonationDateCalendar.SelectedDate);
@@ -86,7 +89,7 @@ namespace HospitalWPF
 			PopulateListBoxDonatedOrgans();
 
 			//reinitialise the textboxes
-			OrganNameComboBox.Text =
+			OrganNameComboBoxDOM.Text =
 				BloodTypeComboBoxDOM.Text =
 				DonorAgeTextBox.Text = null;
 		}
@@ -98,7 +101,6 @@ namespace HospitalWPF
 				_donatedOrganManager.SetSelectedDonatedOrgan(ListBoxDonatedOrgans.SelectedItem);
 			}
 		}
-
 
 		private void DeleteOrganButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -117,5 +119,54 @@ namespace HospitalWPF
 
 		#endregion
 
+		#region Waiting List Manager
+
+		private void PopulateListBoxPatientsWM()
+		{
+			ListBoxPatientsWM.ItemsSource = _patientManager.RetrieveAllPatients();
+		}
+
+		private void PopulateListBoxWaitingWM()
+		{
+			ListBoxWaitingWM.ItemsSource = _waitingListManager.RetrieveAllWaitings();
+		}
+
+		private void ListBoxPatientsWM_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			if (ListBoxPatientsWM.SelectedItem != null)
+			{
+				_patientManager.SetSelectedPatient(ListBoxPatientsWM.SelectedItem);
+			}
+		}
+
+		private void OrganNameComboBoxWM_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			if (OrganNameComboBoxWM.SelectedItem != null)
+			{
+				_organManager.SetSelectedOrgan(OrganNameComboBoxWM.SelectedItem);
+			}
+		}
+
+		private void PopulateOrganNameComboBoxWM()
+		{
+			OrganNameComboBoxWM.ItemsSource = _organManager.RetrieveAllOrgans();
+		}
+
+		private void SendToWaitingList_Click(object sender, RoutedEventArgs e)
+		{
+			//create a waiting
+			if (ListBoxPatientsWM.SelectedItem != null && OrganNameComboBoxWM.SelectedItem != null)
+				_waitingListManager.CreateWaiting(_patientManager.SelectedPatient.PatientId,
+					_organManager.SelectedOrgan.OrganId,
+					DateTime.Now);
+
+			// clear the list box
+			ListBoxWaitingWM.ItemsSource = null;
+
+			// repopulate
+			PopulateListBoxWaitingWM();
+		}
+
+		#endregion
 	}
 }
