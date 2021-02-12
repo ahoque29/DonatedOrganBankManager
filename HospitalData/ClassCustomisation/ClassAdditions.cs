@@ -6,7 +6,17 @@ namespace HospitalData
 	{
 		public override string ToString()
 		{
-			return $"Id: {WaitingId} - {PatientId} needs {OrganId}";
+			Waiting waiting;
+			Patient patient;
+			Organ organ;
+			using (var db = new HospitalContext())
+			{
+				waiting = db.Waitings.Where(w => w.WaitingId == this.WaitingId).FirstOrDefault();
+				patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
+				organ = db.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
+			}
+			
+			return $"Id: {WaitingId} - {patient.Title} {patient.FirstName} {patient.LastName} needs {organ.Name}";
 		}
 	}
 
