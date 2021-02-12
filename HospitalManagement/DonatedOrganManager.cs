@@ -102,5 +102,10 @@ namespace HospitalManagement
 				}
 			}
 		}
+
+		public void SetSelectedDonatedOrgan(object selectedItem)
+		{
+			SelectedDonatedOrgan = (DonatedOrgan)selectedItem;
+		}
 	}
 }

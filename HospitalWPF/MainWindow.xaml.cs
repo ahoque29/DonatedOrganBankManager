@@ -91,6 +91,31 @@ namespace HospitalWPF
 				DonorAgeTextBox.Text = null;
 		}
 
+		private void ListBoxDonatedOrgans_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			if (ListBoxDonatedOrgans.SelectedItem != null)
+			{
+				_donatedOrganManager.SetSelectedDonatedOrgan(ListBoxDonatedOrgans.SelectedItem);
+			}
+		}
+
+
+		private void DeleteOrganButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (ListBoxDonatedOrgans.SelectedItem != null)
+			{
+				// delete the entry
+				_donatedOrganManager.DeleteDonatedOrgan(_donatedOrganManager.SelectedDonatedOrgan.DonatedOrganId);
+
+				// clear the list box
+				ListBoxDonatedOrgans.ItemsSource = null;
+
+				// repopulate with the new donated organ
+				PopulateListBoxDonatedOrgans();
+			}
+		}
+
 		#endregion
+
 	}
 }

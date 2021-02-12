@@ -133,7 +133,8 @@
 					<ListBox x:Name="ListBoxDonatedOrgans"
 							 Grid.Column="0"
 							 Margin="10"
-							 Background="#BBB6A5" />
+							 Background="#BBB6A5"
+							 SelectionChanged="ListBoxDonatedOrgans_SelectionChanged" />
 
 					<StackPanel Grid.Column="1">
 						<TextBlock Text="Donated Organ Details"
@@ -141,25 +142,25 @@
 								   Margin="5" />
 						<Grid>
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition/>
-								<ColumnDefinition Width="1.2*"/>
+								<ColumnDefinition />
+								<ColumnDefinition Width="1.2*" />
 							</Grid.ColumnDefinitions>
-							
+
 							<StackPanel Grid.Column="0">
 								<TextBlock Text="Organ Name"
-										   Margin="5 5 5 0"/>
+										   Margin="5 5 5 0" />
 								<ComboBox x:Name="OrganNameComboBox"
-										  Margin="5 5 5 0"/>
+										  Margin="5 5 5 0" />
 
 								<Grid>
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition/>
-										<ColumnDefinition/>
+										<ColumnDefinition />
+										<ColumnDefinition />
 									</Grid.ColumnDefinitions>
 
 									<TextBlock Text="Blood Type"
 											   Grid.Column="0"
-											   Margin="5 5 5 0"/>
+											   Margin="5 5 5 0" />
 									<ComboBox x:Name="BloodTypeComboBoxDOM"
 											  Grid.Column="1"
 											  Margin="5 5 5 0">
@@ -172,17 +173,17 @@
 
 								<Grid>
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition/>
-										<ColumnDefinition/>
+										<ColumnDefinition />
+										<ColumnDefinition />
 									</Grid.ColumnDefinitions>
 
 									<TextBlock Text="Donor Age"
 										   Margin="5 5 5 0"
-										   Grid.Column="0"/>
+										   Grid.Column="0" />
 									<TextBox x:Name="DonorAgeTextBox"
 										 Background="#8C9491"
 										 Margin="5 5 5 0"
-										 Grid.Column="1"/>
+										 Grid.Column="1" />
 								</Grid>
 
 								<Button x:Name="RegisterDonatedOrgan"
@@ -190,8 +191,7 @@
 										Background="#8C9491"
 										Margin="5 20 5 0"
 										Height="50"
-										Click="RegisterDonatedOrgan_Click"/>
-
+										Click="RegisterDonatedOrgan_Click" />
 							</StackPanel>
 
 							<StackPanel Grid.Column="1">
@@ -205,9 +205,24 @@
 						<Separator Margin="5 0 5 0"
 								   Background="#8C9491">
 							<Separator.RenderTransform>
-								<ScaleTransform ScaleY="3"/>
+								<ScaleTransform ScaleY="3" />
 							</Separator.RenderTransform>
 						</Separator>
+
+						<TextBlock Text="Delete selected Donated Organ"
+								   HorizontalAlignment="Center"
+								   FontWeight="Bold"
+								   Margin="10" />
+
+						<Button Content="Delete Organ"
+								Margin="100 0 100 0"
+								Click="DeleteOrganButton_Click"/>
+
+						<TextBlock Text="* Please note that only Donated Organs that are available can be deleted."
+								   TextWrapping="WrapWithOverflow"
+								   HorizontalAlignment="Center"
+								   Margin="5"/>
+
 					</StackPanel>
 				</Grid>
 			</TabItem>
