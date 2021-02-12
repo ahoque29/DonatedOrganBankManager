@@ -24,7 +24,7 @@ namespace HospitalData
 
 			var availability = donatedOrgan.IsDonated ? "No" : "Yes";
 
-			return $"Id: {DonatedOrganId} - Availability: {availability} - Organ: {organ.Name} - Blood Type: {BloodType} - Age at Donation: {DonorAge}";
+			return $"Id: {DonatedOrganId} - Availability: {availability} - Organ: {organ.Name} - Blood Type: {BloodType} - Age at Donation: {DonorAge} - Donated on: {DonationDate:dd/MM/yyyy}";
 		}
 	}
 

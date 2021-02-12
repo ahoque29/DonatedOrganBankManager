@@ -189,7 +189,8 @@
 										Content="Register Donated Organ"
 										Background="#8C9491"
 										Margin="5 20 5 0"
-										Height="50"/>
+										Height="50"
+										Click="RegisterDonatedOrgan_Click"/>
 
 							</StackPanel>
 

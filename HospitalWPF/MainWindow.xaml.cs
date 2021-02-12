@@ -40,7 +40,7 @@ namespace HospitalWPF
 				PhoneTextBox.Text,
 				BloodTypeComboBoxPM.Text);
 
-			// clear the text box
+			// clear the list box
 			ListBoxPatients.ItemsSource = null;
 
 			// repopulate the textbox with the new patient
@@ -69,6 +69,26 @@ namespace HospitalWPF
 		private void PopulateOrganNameComboBox()
 		{
 			OrganNameComboBox.ItemsSource = _organManager.RetrieveAllOrgans();
+		}
+
+		private void RegisterDonatedOrgan_Click(object sender, RoutedEventArgs e)
+		{
+			// create new organ
+			_donatedOrganManager.CreateDonatedOrgan(OrganNameComboBox.Text,
+				BloodTypeComboBoxDOM.Text,
+				Int32.Parse(DonorAgeTextBox.Text),
+				(DateTime)DonationDateCalendar.SelectedDate);
+
+			// clear the list box
+			ListBoxDonatedOrgans.ItemsSource = null;
+
+			// repopulate with the new donated organ
+			PopulateListBoxDonatedOrgans();
+
+			//reinitialise the textboxes
+			OrganNameComboBox.Text =
+				BloodTypeComboBoxDOM.Text =
+				DonorAgeTextBox.Text = null;
 		}
 
 		#endregion
