@@ -187,20 +187,26 @@ namespace HospitalManagement
 		}
 
 		// Listing the matches
-		public List<DonatedOrgan> ListMatchedOrgans()
+		public List<DonatedOrgan> ListMatchedOrgans(int waitingID)
 		{
 			using (var db = new HospitalContext())
 			{
-				var organsMatched = from o in db.Organs
-									join d in db.DonatedOrgans on o.OrganId equals d.OrganId
-									join w in db.Waitings on d.OrganId equals w.OrganId
-									join p in db.Patients on w.PatientId equals p.PatientId
-									let hasOrgan = HasOrgan(w.WaitingId)
-									let bloodTypeCheck = BloodTypeCheck(w.WaitingId)
-									let ageCheck = AgeCheck(w.WaitingId)
-									where (hasOrgan == true) && (bloodTypeCheck == true) && (ageCheck == true)
-									select d;
-				return organsMatched.ToList();
+				if (FindMatch(waitingID))
+				{
+					var organsMatched = (from o in db.Organs
+										 join d in db.DonatedOrgans on o.OrganId equals d.OrganId
+										 join w in db.Waitings on d.OrganId equals w.OrganId
+										 join p in db.Patients on w.PatientId equals p.PatientId
+										 where d.IsDonated == false && w.WaitingId == waitingID
+										 select d).AsEnumerable();
+					return organsMatched.ToList();
+				}
+				else
+				{
+					List<DonatedOrgan> emptyList = new List<DonatedOrgan>();
+					return emptyList;
+				}
+
 			}
 		}
 

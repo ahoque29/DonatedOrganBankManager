@@ -65,32 +65,6 @@ namespace HospitalTests
 			}
 		}
 
-		[Test]
-		public void WhenAWaitingIsCreatedWithNonExistentOrganId_ThrowsArgumentException()
-		{
-			// Create a Patient
-			_patientManager.CreatePatient("Mr",
-				"Wang",
-				"TestGuy",
-				new DateTime(2020, 01, 01),
-				"52 Badgers Way",
-				"Buckingham",
-				"MK18 7JB",
-				"01280 667866",
-				"B");
-
-			// storing above patient in a variable to retrieve its PatientId
-			Patient testGuy;
-			using (var db = new HospitalContext())
-			{
-				testGuy = db.Patients.Where(f => f.FirstName == "TestGuy").FirstOrDefault<Patient>();
-			}
-
-			// waiting with inexistent organId with the patientId of testGuy
-			Assert.Throws<ArgumentException>(() => _waitingListManager.CreateWaiting(testGuy.PatientId,
-				500,
-				new DateTime(2021, 02, 10)));
-		}
 
 		#endregion CreateWaiting() tests
 

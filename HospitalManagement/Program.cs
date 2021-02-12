@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HospitalData;
 
 namespace HospitalManagement
 {
@@ -8,11 +11,19 @@ namespace HospitalManagement
 		{
 
 
-			WaitingListManager _waitingListManager = new WaitingListManager();
-			DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
-			PatientManager _patientManager = new PatientManager();
+			//WaitingListManager _waitingListManager = new WaitingListManager();
+			//DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
+			//PatientManager _patientManager = new PatientManager();
+			//MatchedDonationManager matchedDonationManager = new MatchedDonationManager();
 
-			_patientManager.DeletePatient(135);
+			//using (var db = new HospitalContext())
+			//{
+			//	var ex = db.MatchedDonations.Find(3);
+			//	db.MatchedDonations.RemoveRange(ex);
+			//	db.SaveChanges();
+			//}
+
+			
 
 			//PatientManager patientManager = new PatientManager();
 			//patientManager.Create("Mr",

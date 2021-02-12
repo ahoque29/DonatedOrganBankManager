@@ -264,6 +264,12 @@
 								Margin="25 25 25 0"
 								Background="#8C9491"
 								Click="SendToWaitingList_Click"/>
+
+						<Image Source="C:\Users\Ashib\source\repos\WPFEntityFrameworkProject\HospitalWPF\sparta-logo.png"
+							   Height="70"
+							   HorizontalAlignment="Center"
+							   Margin="0 30 0 0" />
+
 					</StackPanel>
 
 					<ListBox x:Name="ListBoxWaitingWM"
@@ -272,8 +278,65 @@
 							 Background="#BBB6A5" />
 				</Grid>
 			</TabItem>
-			<TabItem></TabItem>
-			<TabItem></TabItem>
+			
+			<TabItem Header="Organ Match Finder">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<ListBox x:Name="ListBoxWaitingMF"
+							 Grid.Column="0"
+							 Margin="10"
+							 Background="#BBB6A5"
+							 SelectionChanged="ListBoxWaitingMF_SelectionChanged"/>
+
+					<Grid Grid.Column="1">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="2*"/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+
+						<StackPanel Grid.Row="0">
+							<TextBlock Text="&#x2190; Select Waiting List Entry"
+									   FontWeight="Black"
+									   Margin="5"/>
+
+							<Button x:Name="FindMatch"
+									Content="Find Match"
+									Margin="5"
+									Click="FindMatch_Click"/>
+
+							<TextBlock Text="Select Match &#x2192; "
+									   FontWeight="Black"
+									   Margin="5"
+									   HorizontalAlignment="Right"/>
+
+							<Button x:Name="ExecuteMatch"
+									Content="Execute Match"
+									Margin="5"
+									Click="ExecuteMatch_Click"/>
+
+
+						</StackPanel>
+
+						<ListBox x:Name="ListBoxMatchDonations"
+							 Grid.Row="1"
+							 Margin="10"
+							 Background="#BBB6A5"/>
+					</Grid>
+
+					<ListBox x:Name="ListBoxMatchedOrgans"
+							 Grid.Column="2"
+							 Margin="10"
+							 Background="#BBB6A5"
+							 SelectionChanged="ListBoxMatchedOrgans_SelectionChanged"/>
+
+				</Grid>
+				
+			</TabItem>
 		</TabControl>
 	</Border>
 </Window>

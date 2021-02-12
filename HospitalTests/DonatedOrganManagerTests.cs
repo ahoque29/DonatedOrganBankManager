@@ -25,7 +25,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion Initialisation and Setup
+		#endregion
 
 		#region CreateDonatedOrgan() tests
 
@@ -71,26 +71,6 @@ namespace HospitalTests
 			}
 		}
 
-		[TestCase(int.MaxValue)]
-		[TestCase(0)]
-		[TestCase(-1)]
-		public void WhenAnOrganIsDonatedAndOrganIdDoesNotExistInOrgans_ThrowsArgumentException(int a)
-		{
-			Assert.Throws<ArgumentException>(() => _donatedOrganManager.CreateDonatedOrgan(a,
-				"T",
-				12,
-				new DateTime(2021, 01, 01)));
-		}
-
-		[TestCase("Brain")]
-		[TestCase("Keyboard")]
-		public void WhenAnOrganIsDonatedAndOrganNameDoesNotExistInOrgans_ThrowsArgumentException(string a)
-		{
-			Assert.Throws<ArgumentException>(() => _donatedOrganManager.CreateDonatedOrgan(a,
-				"T",
-				12,
-				new DateTime(2021, 01, 01)));
-		}
 
 		#endregion CreateDonatedOrgan() tests
 
@@ -145,6 +125,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion Teardown
+		#endregion 
 	}
 }

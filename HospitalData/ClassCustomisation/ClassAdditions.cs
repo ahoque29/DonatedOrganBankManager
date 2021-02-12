@@ -53,4 +53,22 @@ namespace HospitalData
 			return Name;
 		}
 	}
+
+	public partial class MatchedDonation
+	{
+		public override string ToString()
+		{
+			Patient patient;
+			DonatedOrgan donatedOrgan;
+			Organ organ;
+			using (var db = new HospitalContext())
+			{
+				patient = db.Patients.Where(p => p.PatientId == this.PatientId).FirstOrDefault();
+				donatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == this.DonatedOrganId).FirstOrDefault();
+				organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
+			}
+
+			return $"{MatchedDonationId} - {patient.FirstName} {patient.LastName} has received {organ.Name} on {DateOfMatch:dd/MM/yyyy}.";
+		}
+	}
 }

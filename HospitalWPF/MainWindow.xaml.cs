@@ -21,6 +21,8 @@ namespace HospitalWPF
 			PopulateListBoxPatientsWM();
 			PopulateListBoxWaitingWM();
 			PopulateOrganNameComboBoxWM();
+			PopulateListBoxWaitingMF();
+			PopulateListBoxMatchedDonations();
 		}
 
 		#region Patient Manager Tab
@@ -168,5 +170,58 @@ namespace HospitalWPF
 		}
 
 		#endregion
+
+		#region Organ Match Finder
+
+		private void PopulateListBoxWaitingMF()
+		{
+			ListBoxWaitingMF.ItemsSource = _waitingListManager.RetrieveAllWaitings();
+		}
+
+		private void PopulateListBoxMatchedDonations()
+		{
+			ListBoxMatchDonations.ItemsSource = _matchedDonationManager.RetrieveAllMatchedDonations();
+		}
+
+		private void FindMatch_Click(object sender, RoutedEventArgs e)
+		{
+			if (ListBoxWaitingMF.SelectedItem != null)
+			{
+				ListBoxMatchedOrgans.ItemsSource = _waitingListManager.ListMatchedOrgans(_waitingListManager.SelectedWaiting.WaitingId);
+			}
+		}
+
+		private void ListBoxWaitingMF_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			if (ListBoxWaitingMF.SelectedItem != null)
+			{
+				_waitingListManager.SetSelectedWaiting(ListBoxWaitingMF.SelectedItem);
+			}
+		}
+
+		private void ListBoxMatchedOrgans_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			if (ListBoxMatchedOrgans.SelectedItem != null)
+			{
+				_donatedOrganManager.SetSelectedDonatedOrgan(ListBoxMatchedOrgans.SelectedItem);
+			}
+		}
+
+
+		private void ExecuteMatch_Click(object sender, RoutedEventArgs e)
+		{
+			if (ListBoxWaitingMF.SelectedItem != null && ListBoxMatchedOrgans.SelectedItem != null)
+			{
+				_waitingListManager.ExecuteMatch(_waitingListManager.SelectedWaiting.WaitingId,
+					_donatedOrganManager.SelectedDonatedOrgan.DonatedOrganId);
+
+				ListBoxMatchDonations.ItemsSource = null;
+
+				PopulateListBoxMatchedDonations();
+			}
+		}
+
+		#endregion
+
 	}
 }

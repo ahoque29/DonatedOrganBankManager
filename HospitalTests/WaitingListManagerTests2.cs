@@ -25,14 +25,6 @@ namespace HospitalTests
 
 		#region CreateWaiting() tests 2
 
-		[Test]
-		public void WhenAWaitingIsCreatedWithNonExistentPatientId_ThrowsArgumentException()
-		{
-			// waiting with max value patientid but valid organId
-			Assert.Throws<ArgumentException>(() => _waitingListManager.CreateWaiting(int.MaxValue,
-				5,
-				new DateTime(2021, 02, 10)));
-		}
 
 		#endregion CreateWaiting() tests 2
 
