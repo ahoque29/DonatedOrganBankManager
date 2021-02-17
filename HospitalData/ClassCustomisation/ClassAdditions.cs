@@ -15,7 +15,7 @@ namespace HospitalData
 				patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
 				organ = db.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
 			}
-			
+
 			return $"Id: {WaitingId} - {patient.Title} {patient.FirstName} {patient.LastName} needs {organ.Name}";
 		}
 	}

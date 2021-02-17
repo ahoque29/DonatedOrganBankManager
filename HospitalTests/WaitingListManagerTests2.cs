@@ -23,10 +23,7 @@ namespace HospitalTests
 
 		#endregion Initialisation and Setup
 
-		#region CreateWaiting() tests 2
 
-
-		#endregion CreateWaiting() tests 2
 
 		#region Compatibility Logic tests 2
 

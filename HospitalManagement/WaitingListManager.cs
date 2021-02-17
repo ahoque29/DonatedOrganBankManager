@@ -56,7 +56,7 @@ namespace HospitalManagement
 			SelectedWaiting = (Waiting)selectedItem;
 		}
 
-		#endregion 
+		#endregion
 
 		#region Compatibility Logic
 
@@ -206,7 +206,6 @@ namespace HospitalManagement
 					List<DonatedOrgan> emptyList = new List<DonatedOrgan>();
 					return emptyList;
 				}
-
 			}
 		}
 

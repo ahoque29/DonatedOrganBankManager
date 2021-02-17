@@ -20,8 +20,5 @@ namespace HospitalManagement
 		{
 			SelectedOrgan = (Organ)selectedItem;
 		}
-
 	}
-
-
 }

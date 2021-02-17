@@ -212,7 +212,6 @@ namespace HospitalWPF
 			}
 		}
 
-
 		private void ExecuteMatch_Click(object sender, RoutedEventArgs e)
 		{
 			if (ListBoxWaitingMF.SelectedItem != null && ListBoxMatchedOrgans.SelectedItem != null)

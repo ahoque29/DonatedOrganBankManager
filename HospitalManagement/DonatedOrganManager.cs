@@ -43,7 +43,7 @@ namespace HospitalManagement
 				CreateDonatedOrgan(organ.OrganId,
 					bloodType,
 					donorAge,
-					donationDate);					
+					donationDate);
 			}
 		}
 

@@ -65,10 +65,7 @@ namespace HospitalTests
 			}
 		}
 
-
 		#endregion CreateWaiting() tests
-
-
 
 		#region Teardown
 

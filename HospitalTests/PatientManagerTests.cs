@@ -55,7 +55,6 @@ namespace HospitalTests
 			}
 		}
 
-
 		#endregion
 
 		#region UpdatePatient() tests
@@ -103,7 +102,6 @@ namespace HospitalTests
 				Assert.AreEqual("AB", updatedPatient.BloodType);
 			}
 		}
-
 
 		#endregion
 

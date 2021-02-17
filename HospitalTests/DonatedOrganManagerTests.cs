@@ -71,7 +71,6 @@ namespace HospitalTests
 			}
 		}
 
-
 		#endregion CreateDonatedOrgan() tests
 
 		#region DeleteDonatedOrgan() tests
@@ -125,6 +124,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion 
+		#endregion
 	}
 }
