@@ -45,7 +45,7 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				SelectedWaiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+				SelectedWaiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>(); // add a method to call these specific queries
 				db.Waitings.RemoveRange(SelectedWaiting);
 				db.SaveChanges();
 			}
@@ -56,7 +56,7 @@ namespace HospitalManagement
 			SelectedWaiting = (Waiting)selectedItem;
 		}
 
-		#endregion Create, Delete, Retrieve
+		#endregion 
 
 		#region Compatibility Logic
 
@@ -65,7 +65,7 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>(); // add a method to call these specific queries
 				var hasOrgan = db.DonatedOrgans.Any(d => d.IsDonated == false && d.OrganId == waiting.OrganId);
 
 				if (hasOrgan)
@@ -82,7 +82,7 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();  // add a method to call these specific queries
 				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
 				var donatedOrgan = db.DonatedOrgans.Where(d => d.IsDonated == false && d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
 

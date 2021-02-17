@@ -15,6 +15,8 @@ namespace HospitalWPF
 		public MainWindow()
 		{
 			InitializeComponent();
+			// what were you thinking?
+			// have a populate method.
 			PopulateListBoxPatients();
 			PopulateListBoxDonatedOrgans();
 			PopulateOrganNameComboBoxDOM();
@@ -45,6 +47,7 @@ namespace HospitalWPF
 				PhoneTextBox.Text,
 				BloodTypeComboBoxPM.Text);
 
+			// not sure if necessary
 			// clear the list box
 			ListBoxPatientsPM.ItemsSource = null;
 
@@ -89,6 +92,7 @@ namespace HospitalWPF
 
 			// repopulate with the new donated organ
 			PopulateListBoxDonatedOrgans();
+			PopulateListBoxPatientsWM();
 
 			//reinitialise the textboxes
 			OrganNameComboBoxDOM.Text =
@@ -167,6 +171,7 @@ namespace HospitalWPF
 
 			// repopulate
 			PopulateListBoxWaitingWM();
+			PopulateListBoxWaitingMF();
 		}
 
 		#endregion
@@ -218,10 +223,12 @@ namespace HospitalWPF
 				ListBoxMatchDonations.ItemsSource = null;
 
 				PopulateListBoxMatchedDonations();
+				PopulateListBoxWaitingMF();
+				PopulateListBoxPatientsWM();
+				PopulateListBoxWaitingWM();
 			}
 		}
 
 		#endregion
-
 	}
 }

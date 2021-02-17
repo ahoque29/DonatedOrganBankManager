@@ -29,6 +29,7 @@ namespace HospitalManagement
 			}
 		}
 
+		// unused method!!
 		// Method overload - allows DonatedOrgan creation with the name of the organ instead of organId
 		public void CreateDonatedOrgan(string organName,
 			string bloodType,
@@ -46,6 +47,7 @@ namespace HospitalManagement
 			}
 		}
 
+		// unused
 		public void UpdateDonatedOrgan(int donatedOrganId,
 			string organName,
 			string bloodType,
@@ -64,6 +66,7 @@ namespace HospitalManagement
 			}
 		}
 
+		//unused
 		public void DeleteDonatedOrgan(int donatedOrganId)
 		{
 			using (var db = new HospitalContext())
@@ -85,6 +88,7 @@ namespace HospitalManagement
 			}
 		}
 
+		// unused
 		public int DonatedOrgansCount(string organName)
 		{
 			using (var db = new HospitalContext())
