@@ -53,6 +53,7 @@ namespace HospitalWPF
 
 			// repopulate the textbox with the new patient
 			PopulateListBoxPatients();
+			PopulateListBoxPatientsWM();
 
 			// reinitialise the textboxes
 			TitleTextBox.Text =

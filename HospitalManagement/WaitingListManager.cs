@@ -45,7 +45,7 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				SelectedWaiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>(); // add a method to call these specific queries
+				SelectedWaiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
 				db.Waitings.RemoveRange(SelectedWaiting);
 				db.SaveChanges();
 			}
@@ -60,13 +60,13 @@ namespace HospitalManagement
 
 		#region Compatibility Logic
 
-		//checked if the organ exists in the DonatedOrgans table
+		// checks if the organ exists in the DonatedOrgans table
 		public bool HasOrgan(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>(); // add a method to call these specific queries
-				var hasOrgan = db.DonatedOrgans.Any(d => d.IsDonated == false && d.OrganId == waiting.OrganId);
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+				var hasOrgan = db.DonatedOrgans.Any(d => d.OrganId == waiting.OrganId);
 
 				if (hasOrgan)
 				{
@@ -77,40 +77,57 @@ namespace HospitalManagement
 			}
 		}
 
-		// checks bloodtype compatibility (rhesus factor ignored!)
-		public bool BloodTypeCheck(int waitingId)
+		// blood type compatibility check
+		public bool BloodTypeCheck(string patientBloodType, string donorBloodType)
+		{
+			switch (donorBloodType)
+			{
+				case "O":
+					return true;
+
+				case "A":
+					if (patientBloodType == "A" || patientBloodType == "AB")
+					{
+						return true;
+					}
+					break;
+
+				case "B":
+					if (patientBloodType == "B" || patientBloodType == "AB")
+					{
+						return true;
+					}
+					break;
+
+				case "AB":
+					if (patientBloodType == "AB")
+					{
+						return true;
+					}
+					break;
+			}
+			return false;
+		}
+
+		// method that is run after HasOrgan() returns true to check if the donated organs' blood types match.
+		public bool BloodTypeMatch(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();  // add a method to call these specific queries
-				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
-				var donatedOrgan = db.DonatedOrgans.Where(d => d.IsDonated == false && d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault(); 
+				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
+				var patientBloodType = patient.BloodType;
+				var donatedOrgans = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId && d.IsDonated == false).ToList();
 
-				switch (donatedOrgan.BloodType)
+				foreach (var donatedOrgan in donatedOrgans)
 				{
-					case "O":
+					var donorBloodType = donatedOrgan.BloodType;
+					var bloodTypeCheck = BloodTypeCheck(patientBloodType, donorBloodType);
+
+					if (bloodTypeCheck)
+					{
 						return true;
-
-					case "A":
-						if (patient.BloodType == "A" || patient.BloodType == "AB")
-						{
-							return true;
-						}
-						break;
-
-					case "B":
-						if (patient.BloodType == "B" || patient.BloodType == "AB")
-						{
-							return true;
-						}
-						break;
-
-					case "AB":
-						if (patient.BloodType == "AB")
-						{
-							return true;
-						}
-						break;
+					}
 				}
 				return false;
 			}
@@ -149,37 +166,47 @@ namespace HospitalManagement
 			}
 		}
 
-		// AgeFinder() method overload
+		// AgeRangeFinder() method overload
 		public string AgeRangeFinder(DateTime dateOfBirth)
 		{
 			int age = DateTime.Today.Year - dateOfBirth.Year;
 			return AgeRangeFinder(age);
 		}
-
+		
+		// method that is run after BloodTypeMatch() returns true to check if the donated organs's age range matches.
 		public bool AgeCheck(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
-				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault<Patient>();
-				var donatedOrgan = db.DonatedOrgans.Where(d => d.IsDonated == false && d.OrganId == waiting.OrganId).FirstOrDefault<DonatedOrgan>();
-				var organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault<Organ>();
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
+				var donatedOrgans = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId && d.IsDonated == false).ToList();
 
-				if (organ.IsAgeChecked)
+				foreach (var donatedOrgan in donatedOrgans)
 				{
-					if (AgeRangeFinder(patient.DateOfBirth) != AgeRangeFinder(donatedOrgan.DonationDate))
+					var organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
+					var organAgeChecked = organ.IsAgeChecked;
+
+					if (organAgeChecked)
 					{
-						return false;
+						var ageRangePatient = AgeRangeFinder(patient.DateOfBirth);
+						var ageRangeDonor = AgeRangeFinder((int)donatedOrgan.DonorAge);
+
+						if (ageRangePatient != ageRangeDonor)
+						{
+							return false;
+						}
 					}
 				}
+
 				return true;
 			}
 		}
 
 		// Finding a match
-		public bool FindMatch(int waitingId)
+		public bool MatchExists(int waitingId)
 		{
-			if (HasOrgan(waitingId) && BloodTypeCheck(waitingId) && AgeCheck(waitingId))
+			if (HasOrgan(waitingId) && BloodTypeMatch(waitingId) && AgeCheck(waitingId))
 			{
 				return true;
 			}
@@ -187,19 +214,18 @@ namespace HospitalManagement
 		}
 
 		// Listing the matches
-		public List<DonatedOrgan> ListMatchedOrgans(int waitingID)
+		public List<DonatedOrgan> ListMatchedOrgans(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
-				if (FindMatch(waitingID))
+				if (MatchExists(waitingId))
 				{
-					var organsMatched = (from o in db.Organs
-										 join d in db.DonatedOrgans on o.OrganId equals d.OrganId
-										 join w in db.Waitings on d.OrganId equals w.OrganId
-										 join p in db.Patients on w.PatientId equals p.PatientId
-										 where d.IsDonated == false && w.WaitingId == waitingID
-										 select d).AsEnumerable();
-					return organsMatched.ToList();
+					var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+					var matchedOrgans = db.DonatedOrgans
+						.Where(d => d.IsDonated == false && d.OrganId == waiting.OrganId)
+						.ToList();
+
+					return matchedOrgans;
 				}
 				else
 				{
@@ -211,13 +237,14 @@ namespace HospitalManagement
 
 		public void ExecuteMatch(int waitingId, int donatedOrganId)
 		{
-			if (FindMatch(waitingId))
+			if (MatchExists(waitingId))
 			{
 				using (var db = new HospitalContext())
 				{
-					// mark the donated organ as donated
+					// mark the donated organ as donated and save changes
 					var donatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
 					donatedOrgan.IsDonated = true;
+					db.SaveChanges();
 
 					// add an entry to the matched donations table
 					var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();

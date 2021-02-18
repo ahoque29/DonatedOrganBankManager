@@ -249,7 +249,7 @@
 								 FontWeight="Black"
 								 Margin="5 50 5 5" />
 
-						<TextBlock Text="OrganRequired"
+						<TextBlock Text="Organ Required"
 								 Margin="5 5 5 0" />
 
 						<ComboBox x:Name="OrganNameComboBoxWM"
@@ -294,8 +294,8 @@
 
 					<Grid Grid.Column="1">
 						<Grid.RowDefinitions>
-							<RowDefinition Height="2*" />
 							<RowDefinition />
+							<RowDefinition Height="2*" />
 						</Grid.RowDefinitions>
 
 						<StackPanel Grid.Row="0">
