@@ -201,6 +201,7 @@ namespace HospitalWPF
 		{
 			if (ListBoxWaitingMF.SelectedItem != null)
 			{
+				ListBoxMatchedOrgans.ItemsSource = null;
 				_waitingListManager.SetSelectedWaiting(ListBoxWaitingMF.SelectedItem);
 			}
 		}

@@ -23,8 +23,6 @@ namespace HospitalTests
 
 		#endregion Initialisation and Setup
 
-
-
 		#region Compatibility Logic tests 2
 
 		[TestCase(0, "Newborn or Infant")]
