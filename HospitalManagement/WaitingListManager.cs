@@ -60,77 +60,24 @@ namespace HospitalManagement
 
 		#region Compatibility Logic
 
-		// checks if the organ exists in the DonatedOrgans table
-		public bool HasOrgan(int waitingId)
+		// returns a list of donated organs with same OrganId the waiting list entry, if the donated organ is available
+		public List<DonatedOrgan> HasOrganList(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
 				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
-				var hasOrgan = db.DonatedOrgans.Any(d => d.OrganId == waiting.OrganId);
+				var hasOrganList = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId && d.IsDonated == false).ToList();
 
-				if (hasOrgan)
-				{
-					return true;
-				}
-
-				return false;
+				return hasOrganList;
 			}
 		}
 
-		// blood type compatibility check
-		public bool BloodTypeCheck(string patientBloodType, string donorBloodType)
+		// returns true if HasOrganList is not null
+		public bool HasOrgan(int waitingId)
 		{
-			switch (donorBloodType)
-			{
-				case "O":
-					return true;
+			var hasOrgan = HasOrganList(waitingId).Any();
 
-				case "A":
-					if (patientBloodType == "A" || patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-
-				case "B":
-					if (patientBloodType == "B" || patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-
-				case "AB":
-					if (patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-			}
-			return false;
-		}
-
-		// method that is run after HasOrgan() returns true to check if the donated organs' blood types match.
-		public bool BloodTypeMatch(int waitingId)
-		{
-			using (var db = new HospitalContext())
-			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault(); 
-				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
-				var patientBloodType = patient.BloodType;
-				var donatedOrgans = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId && d.IsDonated == false).ToList();
-
-				foreach (var donatedOrgan in donatedOrgans)
-				{
-					var donorBloodType = donatedOrgan.BloodType;
-					var bloodTypeCheck = BloodTypeCheck(patientBloodType, donorBloodType);
-
-					if (bloodTypeCheck)
-					{
-						return true;
-					}
-				}
-				return false;
-			}
+			return hasOrgan;
 		}
 
 		// AgeFinder
@@ -166,47 +113,127 @@ namespace HospitalManagement
 			}
 		}
 
-		// AgeRangeFinder() method overload
+		// AgeRangeFinder() method overload that takes in date of birth as parameter
 		public string AgeRangeFinder(DateTime dateOfBirth)
 		{
 			int age = DateTime.Today.Year - dateOfBirth.Year;
 			return AgeRangeFinder(age);
 		}
-		
-		// method that is run after BloodTypeMatch() returns true to check if the donated organs's age range matches.
+
+		// returns list of donated organs where the age ranges match
+		public List<DonatedOrgan> AgeCheckList(int waitingId)
+		{
+			using (var db = new HospitalContext())
+			{
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+				var organ = db.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
+				var organAgeChecked = organ.IsAgeChecked;
+				var donatedOrgans = HasOrganList(waitingId);
+
+				if (organAgeChecked)
+				{
+					var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
+					var ageRangePatient = AgeRangeFinder(patient.DateOfBirth);
+
+					List<DonatedOrgan> ageCheckList = new List<DonatedOrgan>();
+
+					foreach (var donatedOrgan in donatedOrgans)
+					{
+						var ageRangeDonor = AgeRangeFinder((int)donatedOrgan.DonorAge);
+
+						if (ageRangePatient == ageRangeDonor)
+						{
+							ageCheckList.Add(donatedOrgan);
+						}
+					}
+
+					return ageCheckList;
+				}
+
+				return donatedOrgans;
+			}
+		}
+
+		// returns true if HasOrganList is not null
 		public bool AgeCheck(int waitingId)
+		{
+			var AgeCheck = AgeCheckList(waitingId).Any();
+
+			return AgeCheck;
+		}
+
+		// blood type compatibility check
+		public bool BloodTypeCheck(string patientBloodType, string donorBloodType)
+		{
+			switch (donorBloodType)
+			{
+				case "O":
+					return true;
+
+				case "A":
+					if (patientBloodType == "A" || patientBloodType == "AB")
+					{
+						return true;
+					}
+					break;
+
+				case "B":
+					if (patientBloodType == "B" || patientBloodType == "AB")
+					{
+						return true;
+					}
+					break;
+
+				case "AB":
+					if (patientBloodType == "AB")
+					{
+						return true;
+					}
+					break;
+			}
+			return false;
+		}
+
+		// returns list of donated organs where the blood types is compatible
+		public List<DonatedOrgan> BloodTypeMatchList(int waitingId)
 		{
 			using (var db = new HospitalContext())
 			{
 				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
 				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
-				var donatedOrgans = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId && d.IsDonated == false).ToList();
+				var patientBloodType = patient.BloodType;
+
+				var donatedOrgans = AgeCheckList(waitingId);
+
+				List<DonatedOrgan> donatedOrgansCorrectBloodType = new List<DonatedOrgan>();
 
 				foreach (var donatedOrgan in donatedOrgans)
 				{
-					var organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
-					var organAgeChecked = organ.IsAgeChecked;
+					var donorBloodType = donatedOrgan.BloodType;
+					var bloodTypeCheck = BloodTypeCheck(patientBloodType, donorBloodType);
 
-					if (organAgeChecked)
+					if (bloodTypeCheck)
 					{
-						var ageRangePatient = AgeRangeFinder(patient.DateOfBirth);
-						var ageRangeDonor = AgeRangeFinder((int)donatedOrgan.DonorAge);
-
-						if (ageRangePatient != ageRangeDonor)
-						{
-							return false;
-						}
+						donatedOrgansCorrectBloodType.Add(donatedOrgan);
 					}
 				}
 
-				return true;
+				return donatedOrgansCorrectBloodType;
 			}
+		}
+
+		// returns true if BloodTypeMatchList is not null
+		public bool BloodTypeMatch(int waitingId)
+		{
+			var bloodTypeMatch = BloodTypeMatchList(waitingId).Any();
+
+			return bloodTypeMatch;
 		}
 
 		// Finding a match
 		public bool MatchExists(int waitingId)
 		{
-			if (HasOrgan(waitingId) && BloodTypeMatch(waitingId) && AgeCheck(waitingId))
+			if (HasOrgan(waitingId) && AgeCheck(waitingId) && BloodTypeMatch(waitingId))
 			{
 				return true;
 			}
@@ -216,23 +243,15 @@ namespace HospitalManagement
 		// Listing the matches
 		public List<DonatedOrgan> ListMatchedOrgans(int waitingId)
 		{
-			using (var db = new HospitalContext())
+			if (MatchExists(waitingId))
 			{
-				if (MatchExists(waitingId))
-				{
-					var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
-					var matchedOrgans = db.DonatedOrgans
-						.Where(d => d.IsDonated == false && d.OrganId == waiting.OrganId)
-						.ToList();
+				var matchedOrgans = BloodTypeMatchList(waitingId);
 
-					return matchedOrgans;
-				}
-				else
-				{
-					List<DonatedOrgan> emptyList = new List<DonatedOrgan>();
-					return emptyList;
-				}
+				return matchedOrgans;
 			}
+
+			List<DonatedOrgan> emptyList = new List<DonatedOrgan>();
+			return emptyList;
 		}
 
 		public void ExecuteMatch(int waitingId, int donatedOrganId)
