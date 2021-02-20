@@ -39,45 +39,6 @@ namespace HospitalManagement
 			}
 		}
 
-		public void UpdatePatient(int patientId,
-			string title,
-			string lastName,
-			string firstName,
-			DateTime dateOfBirth,
-			string address,
-			string city,
-			string postCode,
-			string phone,
-			string bloodType)
-		{
-			using (var db = new HospitalContext())
-			{
-				SelectedPatient = db.Patients.Where(p => p.PatientId == patientId).FirstOrDefault();
-
-				SelectedPatient.Title = title;
-				SelectedPatient.LastName = lastName;
-				SelectedPatient.FirstName = firstName;
-				SelectedPatient.DateOfBirth = dateOfBirth;
-				SelectedPatient.Address = address;
-				SelectedPatient.City = city;
-				SelectedPatient.PostCode = postCode;
-				SelectedPatient.Phone = phone;
-				SelectedPatient.BloodType = bloodType;
-
-				db.SaveChanges();
-			}
-		}
-
-		public void DeletePatient(int patientId)
-		{
-			using (var db = new HospitalContext())
-			{
-				SelectedPatient = db.Patients.Where(p => p.PatientId == patientId).FirstOrDefault<Patient>();
-				db.Patients.RemoveRange(SelectedPatient);
-				db.SaveChanges();
-			}
-		}
-
 		public List<Patient> RetrieveAllPatients()
 		{
 			using (var db = new HospitalContext())
