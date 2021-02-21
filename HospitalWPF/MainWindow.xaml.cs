@@ -9,14 +9,19 @@ namespace HospitalWPF
 		private PatientManager _patientManager = new PatientManager();
 		private WaitingListManager _waitingListManager = new WaitingListManager();
 		private DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
-		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
+		private OrganMatchFinder _organMatchFinder = new OrganMatchFinder();
 		private OrganManager _organManager = new OrganManager();
 
 		public MainWindow()
 		{
 			InitializeComponent();
-			// what were you thinking?
-			// have a populate method.
+			PopulateAllListBoxes();
+		}
+
+		#region Patient Manager Tab
+
+		private void PopulateAllListBoxes()
+		{
 			PopulateListBoxPatients();
 			PopulateListBoxDonatedOrgans();
 			PopulateOrganNameComboBoxDOM();
@@ -26,8 +31,6 @@ namespace HospitalWPF
 			PopulateListBoxWaitingMF();
 			PopulateListBoxMatchedDonations();
 		}
-
-		#region Patient Manager Tab
 
 		private void PopulateListBoxPatients()
 		{
@@ -186,14 +189,14 @@ namespace HospitalWPF
 
 		private void PopulateListBoxMatchedDonations()
 		{
-			ListBoxMatchDonations.ItemsSource = _matchedDonationManager.RetrieveAllMatchedDonations();
+			ListBoxMatchDonations.ItemsSource = _organMatchFinder.RetrieveAllMatchedDonations();
 		}
 
 		private void FindMatch_Click(object sender, RoutedEventArgs e)
 		{
 			if (ListBoxWaitingMF.SelectedItem != null)
 			{
-				ListBoxMatchedOrgans.ItemsSource = _waitingListManager.ListMatchedOrgans(_waitingListManager.SelectedWaiting.WaitingId);
+				ListBoxMatchedOrgans.ItemsSource = _organMatchFinder.ListMatchedOrgans(_waitingListManager.SelectedWaiting.WaitingId);
 			}
 		}
 
@@ -218,15 +221,19 @@ namespace HospitalWPF
 		{
 			if (ListBoxWaitingMF.SelectedItem != null && ListBoxMatchedOrgans.SelectedItem != null)
 			{
-				_waitingListManager.ExecuteMatch(_waitingListManager.SelectedWaiting.WaitingId,
+				// execute match
+				_organMatchFinder.ExecuteMatch(_waitingListManager.SelectedWaiting.WaitingId,
 					_donatedOrganManager.SelectedDonatedOrgan.DonatedOrganId);
 
+				// reset the matched donation list box
 				ListBoxMatchDonations.ItemsSource = null;
 
+				// repopulate the updated list boxes
 				PopulateListBoxMatchedDonations();
 				PopulateListBoxWaitingMF();
 				PopulateListBoxPatientsWM();
 				PopulateListBoxWaitingWM();
+				PopulateListBoxDonatedOrgans();
 			}
 		}
 
