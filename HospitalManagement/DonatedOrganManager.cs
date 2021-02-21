@@ -9,6 +9,8 @@ namespace HospitalManagement
 	{
 		public DonatedOrgan SelectedDonatedOrgan { get; set; }
 
+		#region Create, Delete, Retrieve, Set
+
 		public void CreateDonatedOrgan(string organName,
 			string bloodType,
 			int donorAge,
@@ -56,5 +58,7 @@ namespace HospitalManagement
 		{
 			SelectedDonatedOrgan = (DonatedOrgan)selectedItem;
 		}
+
+		#endregion
 	}
 }
