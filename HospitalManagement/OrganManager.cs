@@ -8,6 +8,8 @@ namespace HospitalManagement
 	{
 		public Organ SelectedOrgan { get; set; }
 
+		#region Retrieve, Set
+
 		public List<Organ> RetrieveAllOrgans()
 		{
 			using (var db = new HospitalContext())
@@ -20,5 +22,7 @@ namespace HospitalManagement
 		{
 			SelectedOrgan = (Organ)selectedItem;
 		}
+
+		#endregion
 	}
 }
