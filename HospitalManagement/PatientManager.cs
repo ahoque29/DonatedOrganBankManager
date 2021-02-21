@@ -9,6 +9,7 @@ namespace HospitalManagement
 	{
 		public Patient SelectedPatient { get; set; }
 
+		#region Create, Retrieve Set
 		public void CreatePatient(string title,
 			string lastName,
 			string firstName,
@@ -51,5 +52,7 @@ namespace HospitalManagement
 		{
 			SelectedPatient = (Patient)selectedItem;
 		}
+
+		#endregion
 	}
 }
