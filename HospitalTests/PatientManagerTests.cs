@@ -8,7 +8,7 @@ namespace HospitalTests
 {
 	public class PatientManagerTests
 	{
-		#region Initialisation and SetUp
+		#region Initialization and SetUp
 
 		private PatientManager _patientManager = new PatientManager();
 
