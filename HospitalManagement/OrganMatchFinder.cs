@@ -8,36 +8,7 @@ namespace HospitalManagement
 	public class OrganMatchFinder
 	{
 		private WaitingListManager _waitingListManager = new WaitingListManager();
-
-		#region Create, Retrieve
-
-		public void CreateMatchedDonation(int patientId,
-			int donatedOrganId,
-			DateTime dateOfMatch)
-		{
-			var newMatchedDonation = new MatchedDonation()
-			{
-				PatientId = patientId,
-				DonatedOrganId = donatedOrganId,
-				DateOfMatch = dateOfMatch
-			};
-
-			using (var db = new HospitalContext())
-			{
-				db.Add(newMatchedDonation);
-				db.SaveChanges();
-			}
-		}
-
-		public List<MatchedDonation> RetrieveAllMatchedDonations()
-		{
-			using (var db = new HospitalContext())
-			{
-				return db.MatchedDonations.ToList();
-			}
-		}
-
-		#endregion
+		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 
 		#region Compatibility Logic
 
@@ -248,7 +219,7 @@ namespace HospitalManagement
 
 					// add an entry to the matched donations table
 					var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
-					CreateMatchedDonation(waiting.PatientId, donatedOrganId, DateTime.Now);
+					_matchedDonationManager.CreateMatchedDonation(waiting.PatientId, donatedOrganId, DateTime.Now);
 
 					// delete the waiting from the database
 					_waitingListManager.DeleteWaiting(waitingId);

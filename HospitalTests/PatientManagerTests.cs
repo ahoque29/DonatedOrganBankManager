@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace HospitalTests
 {
+	[TestFixture]
 	public class PatientManagerTests
 	{
 		#region Initialization and SetUp
@@ -32,7 +33,7 @@ namespace HospitalTests
 		public void WhenANewPatientIsCreated_NumberOfPatientsIncreaseByOne()
 		{
 			using var db = new HospitalContext();
-			
+
 			var numberOfPatientsBefore = db.Patients.Count();
 
 			// Create test patient

@@ -6,10 +6,13 @@ namespace HospitalWPF
 {
 	public partial class MainWindow : Window
 	{
+		#region Initialization
+
 		private PatientManager _patientManager = new PatientManager();
 		private WaitingListManager _waitingListManager = new WaitingListManager();
 		private DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
 		private OrganMatchFinder _organMatchFinder = new OrganMatchFinder();
+		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 		private OrganManager _organManager = new OrganManager();
 
 		public MainWindow()
@@ -17,6 +20,8 @@ namespace HospitalWPF
 			InitializeComponent();
 			PopulateAllListBoxes();
 		}
+
+		#endregion
 
 		#region Patient Manager Tab
 
@@ -71,7 +76,7 @@ namespace HospitalWPF
 
 		#endregion
 
-		#region Donated Organ Manager
+		#region Donated Organ Manager Tab
 
 		private void PopulateListBoxDonatedOrgans()
 		{
@@ -129,7 +134,7 @@ namespace HospitalWPF
 
 		#endregion
 
-		#region Waiting List Manager
+		#region Waiting List Manager Tab
 
 		private void PopulateListBoxPatientsWM()
 		{
@@ -180,7 +185,7 @@ namespace HospitalWPF
 
 		#endregion
 
-		#region Organ Match Finder
+		#region Organ Match Finder Tab
 
 		private void PopulateListBoxWaitingMF()
 		{
@@ -189,7 +194,7 @@ namespace HospitalWPF
 
 		private void PopulateListBoxMatchedDonations()
 		{
-			ListBoxMatchDonations.ItemsSource = _organMatchFinder.RetrieveAllMatchedDonations();
+			ListBoxMatchDonations.ItemsSource = _matchedDonationManager.RetrieveAllMatchedDonations();
 		}
 
 		private void FindMatch_Click(object sender, RoutedEventArgs e)

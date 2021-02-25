@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace HospitalTests
 {
+	[TestFixture]
 	public class DonatedOrganManagerTests
 	{
 		#region Initialization and SetUp
