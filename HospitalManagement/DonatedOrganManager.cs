@@ -16,6 +16,11 @@ namespace HospitalManagement
 			int donorAge,
 			DateTime donationDate)
 		{
+			if (donorAge < 0)
+			{
+				throw new ArgumentOutOfRangeException();
+			}
+			
 			using (var db = new HospitalContext())
 			{
 				var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault();
