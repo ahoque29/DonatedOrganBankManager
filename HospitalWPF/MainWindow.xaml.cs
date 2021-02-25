@@ -90,23 +90,31 @@ namespace HospitalWPF
 
 		private void RegisterDonatedOrgan_Click(object sender, RoutedEventArgs e)
 		{
-			// create new organ
-			_donatedOrganManager.CreateDonatedOrgan(OrganNameComboBoxDOM.Text,
-				BloodTypeComboBoxDOM.Text,
-				Int32.Parse(DonorAgeTextBox.Text),
-				(DateTime)DonationDateCalendar.SelectedDate);
+			try
+			{
+				// create new organ
+				_donatedOrganManager.CreateDonatedOrgan(OrganNameComboBoxDOM.Text,
+					BloodTypeComboBoxDOM.Text,
+					Int32.Parse(DonorAgeTextBox.Text),
+					(DateTime)DonationDateCalendar.SelectedDate);
 
-			// clear the list box
-			ListBoxDonatedOrgans.ItemsSource = null;
+				// clear the list box
+				ListBoxDonatedOrgans.ItemsSource = null;
 
-			// repopulate with the new donated organ
-			PopulateListBoxDonatedOrgans();
-			PopulateListBoxPatientsWM();
+				// repopulate with the new donated organ
+				PopulateListBoxDonatedOrgans();
+				PopulateListBoxPatientsWM();
 
-			//reinitialise the textboxes
-			OrganNameComboBoxDOM.Text =
-				BloodTypeComboBoxDOM.Text =
-				DonorAgeTextBox.Text = null;
+				//reinitialise the textboxes
+				OrganNameComboBoxDOM.Text =
+					BloodTypeComboBoxDOM.Text =
+					DonorAgeTextBox.Text = null;
+
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+				MessageBox.Show("Age cannot be negative");
+			}
 		}
 
 		private void ListBoxDonatedOrgans_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
