@@ -35,11 +35,7 @@ namespace HospitalManagement
 		// AgeFinder
 		public string AgeRangeFinder(int age)
 		{
-			if (age < 0)
-			{
-				throw new ArgumentOutOfRangeException();
-			}
-			else if (age <= 1)
+			if (age <= 1)
 			{
 				return "Newborn or Infant";
 			}

@@ -20,6 +20,11 @@ namespace HospitalManagement
 			string phone,
 			string bloodType)
 		{
+			if (dateOfBirth > DateTime.Today)
+			{
+				throw new ArgumentException();
+			}
+			
 			var newPatient = new Patient()
 			{
 				Title = title,

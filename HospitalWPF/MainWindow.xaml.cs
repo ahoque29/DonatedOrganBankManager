@@ -21,10 +21,6 @@ namespace HospitalWPF
 			PopulateAllListBoxes();
 		}
 
-		#endregion
-
-		#region Patient Manager Tab
-
 		private void PopulateAllListBoxes()
 		{
 			PopulateListBoxPatients();
@@ -37,6 +33,11 @@ namespace HospitalWPF
 			PopulateListBoxMatchedDonations();
 		}
 
+		#endregion
+
+		#region Patient Manager Tab
+
+
 		private void PopulateListBoxPatients()
 		{
 			ListBoxPatientsPM.ItemsSource = _patientManager.RetrieveAllPatients();
@@ -44,34 +45,42 @@ namespace HospitalWPF
 
 		private void RegisterPatient_Click(object sender, RoutedEventArgs e)
 		{
-			// create new patient
-			_patientManager.CreatePatient(TitleTextBox.Text,
-				LastNameTextBox.Text,
-				FirstNameTextBox.Text,
-				(DateTime)DobCalendar.SelectedDate,
-				AddressTextBox.Text,
-				CityTextBox.Text,
-				PostCodeTextBox.Text,
-				PhoneTextBox.Text,
-				BloodTypeComboBoxPM.Text);
+			try
+			{
+				// create new patient
+				_patientManager.CreatePatient(TitleTextBox.Text,
+					LastNameTextBox.Text,
+					FirstNameTextBox.Text,
+					(DateTime)DobCalendar.SelectedDate,
+					AddressTextBox.Text,
+					CityTextBox.Text,
+					PostCodeTextBox.Text,
+					PhoneTextBox.Text,
+					BloodTypeComboBoxPM.Text);
 
-			// not sure if necessary
-			// clear the list box
-			ListBoxPatientsPM.ItemsSource = null;
+				// not sure if necessary
+				// clear the list box
+				ListBoxPatientsPM.ItemsSource = null;
 
-			// repopulate the textbox with the new patient
-			PopulateListBoxPatients();
-			PopulateListBoxPatientsWM();
+				// repopulate the textbox with the new patient
+				PopulateListBoxPatients();
+				PopulateListBoxPatientsWM();
 
-			// reinitialise the textboxes
-			TitleTextBox.Text =
-				LastNameTextBox.Text =
-				FirstNameTextBox.Text =
-				AddressTextBox.Text =
-				CityTextBox.Text =
-				PostCodeTextBox.Text =
-				PhoneTextBox.Text =
-				BloodTypeComboBoxPM.Text = null;
+				// reinitialise the textboxes
+				TitleTextBox.Text =
+					LastNameTextBox.Text =
+					FirstNameTextBox.Text =
+					AddressTextBox.Text =
+					CityTextBox.Text =
+					PostCodeTextBox.Text =
+					PhoneTextBox.Text =
+					BloodTypeComboBoxPM.Text = null;
+			}
+			catch (ArgumentException)
+			{
+				MessageBox.Show("Cannot a pick a date into the future!");
+			}
+
 		}
 
 		#endregion
