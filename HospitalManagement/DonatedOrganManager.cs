@@ -18,7 +18,7 @@ namespace HospitalManagement
 		{
 			if (donorAge < 0)
 			{
-				throw new ArgumentOutOfRangeException();
+				throw new ArgumentException();
 			}
 			
 			using (var db = new HospitalContext())

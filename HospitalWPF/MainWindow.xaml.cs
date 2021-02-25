@@ -111,7 +111,7 @@ namespace HospitalWPF
 					DonorAgeTextBox.Text = null;
 
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (ArgumentException)
 			{
 				MessageBox.Show("Age cannot be negative");
 			}

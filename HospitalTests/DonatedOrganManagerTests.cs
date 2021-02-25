@@ -47,6 +47,16 @@ namespace HospitalTests
 			Assert.That(numberOfDonatedOrgansBefore + 1, Is.EqualTo(numberOfDonatedOrgansAfter));
 		}
 
+		[Test]
+		public void WhenAnOrganIsCreatedWithNegativeAge_ThrowsArgumentOutOfRangeException()
+		{
+			Assert.That(() => _donatedOrganManager.CreateDonatedOrgan("Pancreas",
+				"TestBloodType",
+				-6,
+				new DateTime(2021, 01, 01)), Throws.ArgumentException);
+
+		}
+
 		#endregion
 
 		#region DeleteDonatedOrgan() Tests
