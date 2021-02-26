@@ -48,7 +48,7 @@ namespace HospitalTests
 		}
 
 		[Test]
-		public void WhenAnOrganIsCreatedWithNegativeAge_ThrowsArgumentOutOfRangeException()
+		public void WhenAnOrganIsCreatedWithNegativeAge_ThrowsArgumentException()
 		{
 			Assert.That(() => _donatedOrganManager.CreateDonatedOrgan("Pancreas",
 				"TestBloodType",
