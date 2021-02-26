@@ -52,6 +52,20 @@ namespace HospitalTests
 			Assert.That(numberOfPatientsBefore + 1, Is.EqualTo(numberOfPatientsAfter));
 		}
 
+		[Test]
+		public void WhenAPatientIsCreatedWithANegativeAge_ArgumentExceptionIsThrown()
+		{
+			Assert.That(() => _patientManager.CreatePatient("Mr",
+				"GuyTest",
+				"TestGuy",
+				new DateTime(3000, 01, 01),
+				"00 TestAddress",
+				"TestCity",
+				"TestPostcode",
+				"TestPhone",
+				"B") , Throws.ArgumentException);
+		}
+
 		#endregion
 
 		#region TearDown
