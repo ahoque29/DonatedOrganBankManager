@@ -9,7 +9,7 @@ namespace HospitalData
 		public DbSet<Patient> Patients { get; set; }
 		public DbSet<Organ> Organs { get; set; }
 		public DbSet<Waiting> Waitings { get; set; }
-		public DbSet<DonatedOrgan> DonatedOrgans { get; set; }
+		public DbSet<DonatedOrgan> DonatedOrgans { get; set; } 
 		public DbSet<MatchedDonation> MatchedDonations { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
