@@ -8,7 +8,25 @@ namespace HospitalManagement
 	{
 		public Organ SelectedOrgan { get; set; }
 
-		#region Retrieve, Set
+		#region Create, Retrieve, Set
+
+		public static void CreateOrgan(string name,
+			string type,
+			bool isAgeChecked = true)
+		{
+			var newOrgan = new Organ()
+			{
+				Name = name,
+				Type = type,
+				IsAgeChecked = isAgeChecked
+			};
+
+			using (var db = new HospitalContext())
+			{
+				db.Organs.Add(newOrgan);
+				db.SaveChanges();
+			}
+		}
 
 		public List<Organ> RetrieveAllOrgans()
 		{
