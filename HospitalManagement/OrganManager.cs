@@ -20,6 +20,12 @@ namespace HospitalManagement
 				Type = type,
 				IsAgeChecked = isAgeChecked
 			};
+
+			using (var db = new HospitalContext())
+			{
+				db.Organs.Add(newOrgan);
+				db.SaveChanges();
+			}
 		}
 
 		public List<Organ> RetrieveAllOrgans()
