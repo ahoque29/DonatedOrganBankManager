@@ -218,7 +218,7 @@
 								Margin="100 0 100 0"
 								Click="DeleteOrganButton_Click" />
 
-						<TextBlock Text="* Please note that only Donated Organs that are available can be deleted."
+						<TextBlock Text="* Please note that only Donated Organs that are available (not donated) can be deleted."
 								   TextWrapping="WrapWithOverflow"
 								   HorizontalAlignment="Center"
 								   Margin="5" />
