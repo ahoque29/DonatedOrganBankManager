@@ -2,11 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using HospitalData;
+using HospitalData.Services;
 
 namespace HospitalManagement
 {
 	public class PatientManager
 	{
+		private IPatientService _service;
+
+		public PatientManager(IPatientService service)
+		{
+			_service = service;
+		}
+
+		public PatientManager()
+		{
+			_service = new PatientService();
+		}
+
 		public Patient SelectedPatient { get; set; }
 
 		#region Create, Retrieve, Set
@@ -38,19 +51,12 @@ namespace HospitalManagement
 				BloodType = bloodType
 			};
 
-			using (var db = new HospitalContext())
-			{
-				db.Patients.Add(newPatient);
-				db.SaveChanges();
-			}
+			_service.AddPatient(newPatient);
 		}
 
 		public List<Patient> RetrieveAllPatients()
 		{
-			using (var db = new HospitalContext())
-			{
-				return db.Patients.ToList();
-			}
+			return _service.GetPatientList();
 		}
 
 		public void SetSelectedPatient(object selectedItem)

@@ -4,7 +4,9 @@ using System.Text;
 
 namespace HospitalData.Services
 {
-	interface IPatientService
+	public interface IPatientService
 	{
+		public void AddPatient(Patient patient);
+		List<Patient> GetPatientList();
 	}
 }
