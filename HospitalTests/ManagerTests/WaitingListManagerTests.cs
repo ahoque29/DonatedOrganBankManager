@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using HospitalData;
+﻿using HospitalData;
 using HospitalManagement;
 using NUnit.Framework;
+using System;
+using System.Linq;
 
 namespace HospitalTests
 {
@@ -14,7 +14,7 @@ namespace HospitalTests
 		private PatientManager _patientManager = new PatientManager();
 		private WaitingListManager _waitingListManager = new WaitingListManager();
 
-		#endregion
+		#endregion Initialization and SetUp
 
 		#region CreateWaiting Tests
 
@@ -48,7 +48,7 @@ namespace HospitalTests
 			Assert.That(numberOfWaitingsBefore + 1, Is.EqualTo(numberOfWaitingAfter));
 		}
 
-		#endregion
+		#endregion CreateWaiting Tests
 
 		#region DeleteWaiting() Tests
 
@@ -84,7 +84,7 @@ namespace HospitalTests
 			Assert.That(query, Is.False);
 		}
 
-		#endregion
+		#endregion DeleteWaiting() Tests
 
 		#region TearDown
 
@@ -102,6 +102,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion TearDown
 	}
 }

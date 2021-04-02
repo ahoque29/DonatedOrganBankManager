@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using HospitalData;
+﻿using HospitalData;
 using HospitalManagement;
 using NUnit.Framework;
+using System;
+using System.Linq;
 
 namespace HospitalTests
 {
@@ -25,7 +25,7 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion Initialization and SetUp
 
 		#region CreateDonatedOrgan() Tests
 
@@ -54,10 +54,9 @@ namespace HospitalTests
 				"TestBloodType",
 				-6,
 				new DateTime(2021, 01, 01)), Throws.ArgumentException);
-
 		}
 
-		#endregion
+		#endregion CreateDonatedOrgan() Tests
 
 		#region DeleteDonatedOrgan() Tests
 
@@ -82,7 +81,7 @@ namespace HospitalTests
 			Assert.That(query, Is.False);
 		}
 
-		#endregion
+		#endregion DeleteDonatedOrgan() Tests
 
 		#region TearDown
 
@@ -96,6 +95,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion TearDown
 	}
 }

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace HospitalData
+﻿namespace HospitalData
 {
 	internal class Program
 	{

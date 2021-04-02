@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
-using HospitalData;
-using HospitalManagement;
+﻿using HospitalManagement;
 using NUnit.Framework;
+using System;
 
 namespace HospitalTests
 {
@@ -13,7 +11,7 @@ namespace HospitalTests
 
 		private OrganMatchFinder _organMatchFinder = new OrganMatchFinder();
 
-		#endregion
+		#endregion Initialization and SetUp
 
 		#region AgeRangeFinder() Tests
 
@@ -45,6 +43,6 @@ namespace HospitalTests
 			Assert.AreEqual(result, expectedResult);
 		}
 
-		#endregion
+		#endregion AgeRangeFinder() Tests
 	}
 }

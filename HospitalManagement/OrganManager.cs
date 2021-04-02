@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using HospitalData;
+using System.Collections.Generic;
 using System.Linq;
-using HospitalData;
 
 namespace HospitalManagement
 {
@@ -41,6 +41,6 @@ namespace HospitalManagement
 			SelectedOrgan = (Organ)selectedItem;
 		}
 
-		#endregion
+		#endregion Create, Retrieve, Set
 	}
 }

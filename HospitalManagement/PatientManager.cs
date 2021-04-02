@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using HospitalData;
+﻿using HospitalData;
 using HospitalData.Services;
+using System;
+using System.Collections.Generic;
 
 namespace HospitalManagement
 {
@@ -68,7 +67,7 @@ namespace HospitalManagement
 			{
 				throw new ArgumentException("Date of Birth cannot be in the future!");
 			}
-			
+
 			var newPatient = new Patient()
 			{
 				Title = title,
@@ -108,6 +107,6 @@ namespace HospitalManagement
 			SelectedPatient = (Patient)selectedItem;
 		}
 
-		#endregion
+		#endregion Create, Retrieve, Set
 	}
 }

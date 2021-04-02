@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using HospitalData;
+﻿using HospitalData;
 using HospitalManagement;
 using NUnit.Framework;
+using System;
+using System.Linq;
 
 namespace HospitalTests
 {
@@ -17,7 +17,7 @@ namespace HospitalTests
 		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 		private OrganMatchFinder _organMatchFinder = new OrganMatchFinder();
 
-		#endregion
+		#endregion Initialization and SetUp
 
 		#region HasOrganList() and HasOrgan() Tests
 
@@ -97,7 +97,7 @@ namespace HospitalTests
 			Assert.That(hasOrgan);
 		}
 
-		#endregion
+		#endregion HasOrganList() and HasOrgan() Tests
 
 		#region TearDown
 
@@ -116,6 +116,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion TearDown
 	}
 }

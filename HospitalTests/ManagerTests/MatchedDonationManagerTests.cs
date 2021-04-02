@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using HospitalData;
+﻿using HospitalData;
 using HospitalManagement;
 using NUnit.Framework;
+using System;
+using System.Linq;
 
 namespace HospitalTests
 {
@@ -15,7 +15,7 @@ namespace HospitalTests
 		private DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
 		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 
-		#endregion
+		#endregion Initialization and SetUp
 
 		#region CreateMatchedDonation() Tests
 
@@ -57,7 +57,7 @@ namespace HospitalTests
 			Assert.That(numberOfMatchedDonationsBefore + 1, Is.EqualTo(numberOfMatchedDonationsAfter));
 		}
 
-		#endregion
+		#endregion CreateMatchedDonation() Tests
 
 		#region TearDown
 
@@ -77,6 +77,6 @@ namespace HospitalTests
 			}
 		}
 
-		#endregion
+		#endregion TearDown
 	}
 }

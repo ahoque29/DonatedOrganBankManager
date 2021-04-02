@@ -76,7 +76,6 @@ namespace HospitalData
 
 			return hash.ToHashCode();
 		}
-
 	}
 
 	public partial class Organ

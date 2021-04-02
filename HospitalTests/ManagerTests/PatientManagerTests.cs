@@ -1,13 +1,12 @@
-using System;
-using System.Linq;
 using HospitalData;
-using HospitalManagement;
-using NUnit.Framework;
 using HospitalData.Services;
+using HospitalManagement;
 using Moq;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
-namespace HospitalTests
+namespace HospitalTests.ManagerTests
 {
 	[TestFixture]
 	public class PatientManagerTests
@@ -17,7 +16,7 @@ namespace HospitalTests
 		{
 			var mockPatientServive = new Mock<IPatientService>();
 			var _patientManager = new PatientManager(mockPatientServive.Object);
-			
+
 			Assert.That(() => _patientManager.CreatePatient("Mr",
 			"GuyTest",
 			"TestGuy",

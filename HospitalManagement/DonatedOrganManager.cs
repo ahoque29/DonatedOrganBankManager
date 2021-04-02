@@ -1,7 +1,7 @@
-﻿using System;
+﻿using HospitalData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using HospitalData;
 
 namespace HospitalManagement
 {
@@ -20,7 +20,7 @@ namespace HospitalManagement
 			{
 				throw new ArgumentException();
 			}
-			
+
 			using (var db = new HospitalContext())
 			{
 				var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault();
@@ -64,6 +64,6 @@ namespace HospitalManagement
 			SelectedDonatedOrgan = (DonatedOrgan)selectedItem;
 		}
 
-		#endregion
+		#endregion Create, Delete, Retrieve, Set
 	}
 }

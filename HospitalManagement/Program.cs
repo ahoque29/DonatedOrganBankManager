@@ -1,7 +1,4 @@
-﻿using HospitalData;
-using System.Linq;
-
-namespace HospitalManagement
+﻿namespace HospitalManagement
 {
 	internal class Program
 	{

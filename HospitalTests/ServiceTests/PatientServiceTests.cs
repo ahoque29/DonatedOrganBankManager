@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using HospitalData;
+﻿using HospitalData;
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace HospitalTests
+namespace HospitalTests.ServiceTests
 {
 	public class PatientServiceTests
 	{
@@ -38,7 +37,7 @@ namespace HospitalTests
 				Phone = "TestSeedPhone1",
 				BloodType = "O"
 			});
-			
+
 			_patientService.AddPatient(new Patient()
 			{
 				Title = "Mrs",
@@ -65,7 +64,7 @@ namespace HospitalTests
 				BloodType = "B"
 			});
 
-			#endregion
+			#endregion Populate the InMemory Database
 		}
 
 		[Test]

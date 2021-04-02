@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace HospitalData.Services
 {
 	public interface IPatientService
 	{
 		public void AddPatient(Patient patient);
+
 		List<Patient> GetPatientList();
 	}
 }

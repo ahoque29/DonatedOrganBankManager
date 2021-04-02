@@ -1,6 +1,6 @@
-﻿using System;
+﻿using HospitalManagement;
+using System;
 using System.Windows;
-using HospitalManagement;
 
 namespace HospitalWPF
 {
@@ -33,10 +33,9 @@ namespace HospitalWPF
 			PopulateListBoxMatchedDonations();
 		}
 
-		#endregion
+		#endregion Initialization
 
 		#region Patient Manager Tab
-
 
 		private void PopulateListBoxPatients()
 		{
@@ -80,10 +79,9 @@ namespace HospitalWPF
 			{
 				MessageBox.Show("Cannot a pick a date into the future!");
 			}
-
 		}
 
-		#endregion
+		#endregion Patient Manager Tab
 
 		#region Donated Organ Manager Tab
 
@@ -118,7 +116,6 @@ namespace HospitalWPF
 				OrganNameComboBoxDOM.Text =
 					BloodTypeComboBoxDOM.Text =
 					DonorAgeTextBox.Text = null;
-
 			}
 			catch (ArgumentException)
 			{
@@ -149,7 +146,7 @@ namespace HospitalWPF
 			}
 		}
 
-		#endregion
+		#endregion Donated Organ Manager Tab
 
 		#region Waiting List Manager Tab
 
@@ -200,7 +197,7 @@ namespace HospitalWPF
 			PopulateListBoxWaitingMF();
 		}
 
-		#endregion
+		#endregion Waiting List Manager Tab
 
 		#region Organ Match Finder Tab
 
@@ -259,6 +256,6 @@ namespace HospitalWPF
 			}
 		}
 
-		#endregion
+		#endregion Organ Match Finder Tab
 	}
 }

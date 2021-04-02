@@ -1,7 +1,7 @@
-﻿using System;
+﻿using HospitalData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using HospitalData;
 
 namespace HospitalManagement
 {
@@ -55,6 +55,6 @@ namespace HospitalManagement
 			SelectedWaiting = (Waiting)selectedItem;
 		}
 
-		#endregion
+		#endregion Create, Delete, Retrieve, Set
 	}
 }
