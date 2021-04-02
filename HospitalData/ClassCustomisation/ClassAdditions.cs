@@ -45,6 +45,19 @@ namespace HospitalData
 		{
 			return $"{PatientId} - {Title} {LastName} {FirstName} - Blood Type: {BloodType} - {DateOfBirth:dd/MM/yyyy} - {Address}, {City}, {PostCode}";
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (!(obj is Patient))
+			{
+				return false;
+			}
+
+			var p = (Patient)obj;
+
+			return LastName == p.LastName && FirstName == p.FirstName;
+		}
+
 	}
 
 	public partial class Organ

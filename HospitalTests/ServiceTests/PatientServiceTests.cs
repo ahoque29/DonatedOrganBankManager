@@ -95,5 +95,13 @@ namespace HospitalTests
 			_db.Patients.RemoveRange(testGuy);
 			_db.SaveChanges();
 		}
+
+		[Test]
+		public void GetPatientList_ReturnsCorrectListOfPatients()
+		{
+			
+		}
+
+
 	}
 }
