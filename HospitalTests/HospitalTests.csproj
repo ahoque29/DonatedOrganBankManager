@@ -18,4 +18,8 @@
     <ProjectReference Include="..\HospitalManagement\HospitalManagement.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ServiceTests\" />
+  </ItemGroup>
+
 </Project>
