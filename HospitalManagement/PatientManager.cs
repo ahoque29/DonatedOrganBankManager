@@ -36,7 +36,7 @@ namespace HospitalManagement
 		{
 			if (dateOfBirth > DateTime.Today)
 			{
-				throw new ArgumentException();
+				throw new ArgumentException("Date of Birth cannot be in the future!");
 			}
 			
 			var newPatient = new Patient()

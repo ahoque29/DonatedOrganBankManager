@@ -5,6 +5,7 @@ using NUnit.Framework;
 using HospitalData;
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace HospitalTests
 {
@@ -67,5 +68,32 @@ namespace HospitalTests
 			#endregion
 		}
 
+		[Test]
+		public void WhenANewPatientIsCreated_NumberOfPatientsIsIncreasedByOne()
+		{
+			var numberOfPatientsBefore = _db.Patients.Count();
+
+			_patientService.AddPatient(new Patient()
+			{
+				Title = "Mr",
+				LastName = "GuyTest",
+				FirstName = "TestGuy",
+				DateOfBirth = new DateTime(2020, 01, 01),
+				Address = "00 TestAddress",
+				City = "TestCity",
+				PostCode = "TestPostcode",
+				Phone = "TestPhone",
+				BloodType = "AB"
+			});
+
+			var numberOfPatientsAfter = _db.Patients.Count();
+
+			Assert.That(numberOfPatientsBefore + 1, Is.EqualTo(numberOfPatientsAfter));
+
+			// Remove
+			var testGuy = _db.Patients.Where(f => f.FirstName == "TestGuy");
+			_db.Patients.RemoveRange(testGuy);
+			_db.SaveChanges();
+		}
 	}
 }
