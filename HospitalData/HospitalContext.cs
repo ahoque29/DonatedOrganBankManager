@@ -4,7 +4,15 @@ namespace HospitalData
 {
 	public partial class HospitalContext : DbContext
 	{
-		public static HospitalContext Instance { get; } = new HospitalContext();
+		public HospitalContext()
+		{
+
+		}
+
+		public HospitalContext(DbContextOptions<HospitalContext> options) : base(options)
+		{
+
+		}
 
 		public DbSet<Patient> Patients { get; set; }
 		public DbSet<Organ> Organs { get; set; }
