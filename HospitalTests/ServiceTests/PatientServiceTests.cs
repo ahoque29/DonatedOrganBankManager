@@ -143,7 +143,5 @@ namespace HospitalTests
 
 			Assert.That(result, Is.EquivalentTo(manualListOfPatients));
 		}
-
-
 	}
 }
