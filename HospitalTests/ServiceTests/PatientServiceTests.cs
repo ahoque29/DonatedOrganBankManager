@@ -99,7 +99,49 @@ namespace HospitalTests
 		[Test]
 		public void GetPatientList_ReturnsCorrectListOfPatients()
 		{
-			
+			var manualListOfPatients = new List<Patient>
+			{
+				new Patient()
+				{
+					Title = "Mr",
+					LastName = "TestSeedLastName1",
+					FirstName = "TestSeedFirstName1",
+					DateOfBirth = new DateTime(1934, 02, 06),
+					Address = "TestSeedAddress1",
+					City = "TestSeedCity1",
+					PostCode = "TestSeedPostCode1",
+					Phone = "TestSeedPhone1",
+					BloodType = "O"
+				},
+				new Patient()
+				{
+					Title = "Mrs",
+					LastName = "TestSeedLastName2",
+					FirstName = "TestSeedFirstName2",
+					DateOfBirth = new DateTime(1948, 03, 08),
+					Address = "TestSeedAddress2",
+					City = "TestSeedCity2",
+					PostCode = "TestSeedPostCode2",
+					Phone = "TestSeedPhone2",
+					BloodType = "A"
+				},
+				new Patient()
+				{
+					Title = "Ms",
+					LastName = "TestSeedLastName3",
+					FirstName = "TestSeedFirstName3",
+					DateOfBirth = new DateTime(2015, 09, 04),
+					Address = "TestSeedAddress3",
+					City = "TestSeedCity3",
+					PostCode = "TestSeedPostCode3",
+					Phone = "TestSeedPhone3",
+					BloodType = "B"
+				}
+			};
+
+			var result = _patientService.GetPatientList();
+
+			Assert.That(result, Is.EquivalentTo(manualListOfPatients));
 		}
 
 

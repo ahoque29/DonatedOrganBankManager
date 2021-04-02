@@ -48,14 +48,33 @@ namespace HospitalData
 
 		public override bool Equals(object obj)
 		{
-			if (!(obj is Patient))
-			{
-				return false;
-			}
+			return obj is Patient patient &&
+				   Title == patient.Title &&
+				   LastName == patient.LastName &&
+				   FirstName == patient.FirstName &&
+				   DateOfBirth == patient.DateOfBirth &&
+				   Address == patient.Address &&
+				   City == patient.City &&
+				   PostCode == patient.PostCode &&
+				   Phone == patient.Phone &&
+				   BloodType == patient.BloodType;
+		}
 
-			var p = (Patient)obj;
+		public override int GetHashCode()
+		{
+			System.HashCode hash = new System.HashCode();
+			hash.Add(PatientId);
+			hash.Add(Title);
+			hash.Add(LastName);
+			hash.Add(FirstName);
+			hash.Add(DateOfBirth);
+			hash.Add(Address);
+			hash.Add(City);
+			hash.Add(PostCode);
+			hash.Add(Phone);
+			hash.Add(BloodType);
 
-			return LastName == p.LastName && FirstName == p.FirstName;
+			return hash.ToHashCode();
 		}
 
 	}
