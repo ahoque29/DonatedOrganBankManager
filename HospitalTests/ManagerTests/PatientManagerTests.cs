@@ -11,12 +11,6 @@ namespace HospitalTests
 	[TestFixture]
 	public class PatientManagerTests
 	{
-		#region Initialization and SetUp
-
-		#endregion Initialization and SetUp
-
-		#region CreatePatient() Tests
-
 		[Test]
 		public void WhenAPatientIsCreatedWithANegativeAge_ArgumentExceptionIsThrown() //manager
 		{
@@ -33,7 +27,5 @@ namespace HospitalTests
 			"TestPhone",
 			"B"), Throws.ArgumentException.With.Message.EqualTo("Date of Birth cannot be in the future!"));
 		}
-
-		#endregion CreatePatient() Tests
 	}
 }
