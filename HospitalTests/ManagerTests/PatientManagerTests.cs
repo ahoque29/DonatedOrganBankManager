@@ -30,7 +30,7 @@ namespace HospitalTests
 		#region CreatePatient() Tests
 
 		[Test]
-		public void WhenANewPatientIsCreated_NumberOfPatientsIncreaseByOne()
+		public void WhenANewPatientIsCreated_NumberOfPatientsIncreaseByOne() //service
 		{
 			using var db = new HospitalContext();
 
@@ -53,7 +53,7 @@ namespace HospitalTests
 		}
 
 		[Test]
-		public void WhenAPatientIsCreatedWithANegativeAge_ArgumentExceptionIsThrown()
+		public void WhenAPatientIsCreatedWithANegativeAge_ArgumentExceptionIsThrown() //manager
 		{
 			Assert.That(() => _patientManager.CreatePatient("Mr",
 				"GuyTest",
