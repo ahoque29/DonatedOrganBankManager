@@ -19,6 +19,12 @@ namespace HospitalData.Services
 			_context = context;
 		}
 
+		public int GetOrganId(string organName)
+		{
+			var organ = _context.Organs.Where(o => o.Name == organName).FirstOrDefault();
+			return organ.OrganId;
+		}
+
 		/// <summary>
 		/// Adds the donated organ entry into the database and saves.
 		/// </summary>

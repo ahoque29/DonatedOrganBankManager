@@ -1,4 +1,5 @@
 ﻿using HospitalData;
+using HospitalData.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,19 @@ namespace HospitalManagement
 {
 	public class DonatedOrganManager
 	{
+		private readonly IDonatedOrganService _service;
+		
 		public DonatedOrgan SelectedDonatedOrgan { get; set; }
+
+		public DonatedOrganManager()
+		{
+			_service = new DonatedOrganService();
+		}
+
+		public DonatedOrganManager(IDonatedOrganService service)
+		{
+			_service = service;
+		}
 
 		public void CreateDonatedOrgan(string organName,
 			string bloodType,
@@ -19,34 +32,22 @@ namespace HospitalManagement
 				throw new ArgumentException("Age cannot be negative!");
 			}
 
-			using (var db = new HospitalContext())
+			var organId = _service.GetOrganId(organName);
+
+			var newDonatedOrgan = new DonatedOrgan()
 			{
-				var organ = db.Organs.Where(o => o.Name == organName).FirstOrDefault();
+				OrganId = organId,
+				BloodType = bloodType,
+				DonorAge = donorAge,
+				DonationDate = donationDate,
+			};
 
-				var newDonatedOrgan = new DonatedOrgan()
-				{
-					OrganId = organ.OrganId,
-					BloodType = bloodType,
-					DonorAge = donorAge,
-					DonationDate = donationDate,
-				};
-
-				db.DonatedOrgans.Add(newDonatedOrgan);
-				db.SaveChanges();
-			}
+			_service.AddDonatedOrgan(newDonatedOrgan);
 		}
 
 		public void DeleteDonatedOrgan(int donatedOrganId)
 		{
-			using (var db = new HospitalContext())
-			{
-				SelectedDonatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault<DonatedOrgan>();
-				if (!SelectedDonatedOrgan.IsDonated)
-				{
-					db.DonatedOrgans.RemoveRange(SelectedDonatedOrgan);
-					db.SaveChanges();
-				}
-			}
+			_service.RemoveDonatedOrgan(donatedOrganId);
 		}
 
 		public List<DonatedOrgan> RetrieveAllDonatedOrgans()
