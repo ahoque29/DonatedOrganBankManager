@@ -4,12 +4,23 @@ using HospitalManagement;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System;
 
 namespace HospitalTests.ManagerTests
 {
 	[TestFixture]
 	public class WaitingListManagerTests
 	{
+		[Test]
+		public void WhenAWaitingListEntryIsCreatedWithAnEntryDateInTheFuture_ThrowsException()
+		{
+			var mockWaitingService = new Mock<IWaitingService>();
+			var _waitingListManager = new WaitingListManager(mockWaitingService.Object);
+
+			Assert.That(() => _waitingListManager.CreateWaiting(3, 5, new DateTime(3000, 01, 01)),
+				Throws.ArgumentException.With.Message.EqualTo("Date Of Entry cannot be in the future!"));
+		}
+		
 		[Test]
 		public void RetrieveWaitingList_ReturnsWaitingList()
 		{

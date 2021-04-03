@@ -21,8 +21,6 @@ namespace HospitalManagement
 			_service = service;
 		}
 
-		#region Create, Retrieve, Set
-
 		/// <summary>
 		/// Creates a new patient.
 		/// </summary>
@@ -106,7 +104,5 @@ namespace HospitalManagement
 		{
 			SelectedPatient = (Patient)selectedItem;
 		}
-
-		#endregion Create, Retrieve, Set
 	}
 }
