@@ -21,7 +21,6 @@ namespace HospitalManagement
 			_service = service;
 		}
 
-
 		#region Create, Retrieve, Set
 
 		/// <summary>

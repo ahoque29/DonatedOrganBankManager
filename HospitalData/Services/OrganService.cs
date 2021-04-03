@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HospitalData.Services
 {
@@ -32,7 +30,7 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database context to return a list of all the organs. 
+		/// Calls the database context to return a list of all the organs.
 		/// </summary>
 		/// <returns>
 		/// List of all organs.

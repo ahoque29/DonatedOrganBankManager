@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace HospitalTests.ServiceTests
 {
+	[TestFixture]
 	public class PatientServiceTests
 	{
 		private HospitalContext _context;

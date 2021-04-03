@@ -19,6 +19,19 @@ namespace HospitalData
 
 			return $"Id: {WaitingId} - {patient.Title} {patient.FirstName} {patient.LastName} of Blood Type {patient.BloodType} needs {organ.Name}";
 		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is Waiting waiting &&
+				   PatientId == waiting.PatientId &&
+				   OrganId == waiting.OrganId &&
+				   DateOfEntry == waiting.DateOfEntry;
+		}
+
+		public override int GetHashCode()
+		{
+			return System.HashCode.Combine(WaitingId, PatientId, OrganId, DateOfEntry);
+		}
 	}
 
 	public partial class DonatedOrgan
