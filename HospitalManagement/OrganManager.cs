@@ -1,4 +1,5 @@
 ﻿using HospitalData;
+using HospitalData.Services;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,11 +7,23 @@ namespace HospitalManagement
 {
 	public class OrganManager
 	{
+		private readonly IOrganService _service;
+
 		public Organ SelectedOrgan { get; set; }
+
+		public OrganManager()
+		{
+			_service = new OrganService();
+		}
+
+		public OrganManager(IOrganService service)
+		{
+			_service = service;
+		}
 
 		#region Create, Retrieve, Set
 
-		public static void CreateOrgan(string name,
+		public void CreateOrgan(string name,
 			string type,
 			bool isAgeChecked = true)
 		{
@@ -26,14 +39,13 @@ namespace HospitalManagement
 				db.Organs.Add(newOrgan);
 				db.SaveChanges();
 			}
+
+			_service.AddOrgan(newOrgan);
 		}
 
 		public List<Organ> RetrieveAllOrgans()
 		{
-			using (var db = new HospitalContext())
-			{
-				return db.Organs.ToList();
-			}
+			return _service.GetOrganList();
 		}
 
 		public void SetSelectedOrgan(object selectedItem)

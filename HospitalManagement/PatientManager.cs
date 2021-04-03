@@ -9,17 +9,18 @@ namespace HospitalManagement
 	{
 		private readonly IPatientService _service;
 
-		public PatientManager(IPatientService service)
-		{
-			_service = service;
-		}
+		public Patient SelectedPatient { get; set; }
 
 		public PatientManager()
 		{
 			_service = new PatientService();
 		}
 
-		public Patient SelectedPatient { get; set; }
+		public PatientManager(IPatientService service)
+		{
+			_service = service;
+		}
+
 
 		#region Create, Retrieve, Set
 
