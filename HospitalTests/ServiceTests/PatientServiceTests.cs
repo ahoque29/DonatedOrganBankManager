@@ -10,7 +10,7 @@ namespace HospitalTests.ServiceTests
 {
 	public class PatientServiceTests
 	{
-		private HospitalContext _db;
+		private HospitalContext _context;
 		private PatientService _patientService;
 
 		[OneTimeSetUp]
@@ -20,8 +20,8 @@ namespace HospitalTests.ServiceTests
 				.UseInMemoryDatabase(databaseName: "Hospital_Fake")
 				.Options;
 
-			_db = new HospitalContext(options);
-			_patientService = new PatientService(_db);
+			_context = new HospitalContext(options);
+			_patientService = new PatientService(_context);
 
 			#region Populate the InMemory Database
 
@@ -70,7 +70,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void WhenANewPatientIsCreated_NumberOfPatientsIsIncreasedByOne()
 		{
-			var numberOfPatientsBefore = _db.Patients.Count();
+			var numberOfPatientsBefore = _context.Patients.Count();
 
 			_patientService.AddPatient(new Patient()
 			{
@@ -85,14 +85,20 @@ namespace HospitalTests.ServiceTests
 				BloodType = "AB"
 			});
 
-			var numberOfPatientsAfter = _db.Patients.Count();
+			var numberOfPatientsAfter = _context.Patients.Count();
 
 			Assert.That(numberOfPatientsBefore + 1, Is.EqualTo(numberOfPatientsAfter));
 
 			// Remove
-			var testGuy = _db.Patients.Where(f => f.FirstName == "TestGuy");
-			_db.Patients.RemoveRange(testGuy);
-			_db.SaveChanges();
+			var testGuy = _context.Patients.Where(f => f.FirstName == "TestGuy");
+			_context.Patients.RemoveRange(testGuy);
+			_context.SaveChanges();
+		}
+
+		[Test]
+		public void GetPatientList_ReturnsCorrectNumberOfPatients()
+		{
+			Assert.That(_patientService.GetPatientList().Count(), Is.EqualTo(3));
 		}
 
 		[Test]

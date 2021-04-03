@@ -4,7 +4,7 @@ namespace HospitalData.Services
 {
 	public interface IPatientService
 	{
-		public void AddPatient(Patient patient);
+		void AddPatient(Patient patient);
 
 		List<Patient> GetPatientList();
 	}

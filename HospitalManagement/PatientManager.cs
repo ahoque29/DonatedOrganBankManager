@@ -7,7 +7,7 @@ namespace HospitalManagement
 {
 	public class PatientManager
 	{
-		private IPatientService _service;
+		private readonly IPatientService _service;
 
 		public PatientManager(IPatientService service)
 		{
