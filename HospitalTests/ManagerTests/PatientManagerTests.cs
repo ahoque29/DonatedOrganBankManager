@@ -12,7 +12,7 @@ namespace HospitalTests.ManagerTests
 	public class PatientManagerTests
 	{
 		[Test]
-		public void WhenAPatientIsCreatedWithANegativeAge_ArgumentExceptionIsThrown() //manager
+		public void WhenAPatientIsCreatedWithANegativeAge_ArgumentExceptionIsThrown()
 		{
 			var mockPatientServive = new Mock<IPatientService>();
 			var _patientManager = new PatientManager(mockPatientServive.Object);
