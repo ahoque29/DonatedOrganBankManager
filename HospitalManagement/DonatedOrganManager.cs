@@ -9,8 +9,6 @@ namespace HospitalManagement
 	{
 		public DonatedOrgan SelectedDonatedOrgan { get; set; }
 
-		#region Create, Delete, Retrieve, Set
-
 		public void CreateDonatedOrgan(string organName,
 			string bloodType,
 			int donorAge,
@@ -18,7 +16,7 @@ namespace HospitalManagement
 		{
 			if (donorAge < 0)
 			{
-				throw new ArgumentException();
+				throw new ArgumentException("Age cannot be negative!");
 			}
 
 			using (var db = new HospitalContext())
@@ -63,7 +61,5 @@ namespace HospitalManagement
 		{
 			SelectedDonatedOrgan = (DonatedOrgan)selectedItem;
 		}
-
-		#endregion Create, Delete, Retrieve, Set
 	}
 }

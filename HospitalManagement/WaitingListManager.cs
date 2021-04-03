@@ -20,8 +20,6 @@ namespace HospitalManagement
 			_service = service;
 		}
 
-		#region Create, Delete, Retrieve, Set
-
 		/// <summary>
 		/// Creates a new waiting list entry.
 		/// </summary>
@@ -81,7 +79,5 @@ namespace HospitalManagement
 		{
 			SelectedWaiting = (Waiting)selectedItem;
 		}
-
-		#endregion Create, Delete, Retrieve, Set
 	}
 }
