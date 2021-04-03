@@ -2,7 +2,6 @@
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,7 +43,7 @@ namespace HospitalTests.ServiceTests
 				Type = "TestSeedType3",
 			});
 
-			#endregion
+			#endregion Populate the InMemoryDatabase
 		}
 
 		[Test]

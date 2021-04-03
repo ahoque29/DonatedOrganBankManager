@@ -9,7 +9,7 @@ using System.Linq;
 namespace HospitalTests.ServiceTests
 {
 	[TestFixture]
-	public class WaitingListServiceTests
+	public class WaitingServiceTests
 	{
 		private HospitalContext _context;
 		private WaitingService _waitingService;
@@ -47,7 +47,7 @@ namespace HospitalTests.ServiceTests
 				DateOfEntry = new DateTime(2021, 02, 15)
 			});
 
-			#endregion
+			#endregion Populate the InMemoryDatabase
 		}
 
 		[Test]

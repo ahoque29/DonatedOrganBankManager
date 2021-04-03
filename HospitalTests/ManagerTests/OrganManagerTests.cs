@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using HospitalData;
+﻿using HospitalData;
 using HospitalData.Services;
 using HospitalManagement;
 using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace HospitalTests.ManagerTests
 {
