@@ -55,7 +55,7 @@ namespace HospitalManagement
 		/// <returns>
 		/// Waiting list.
 		/// </returns>
-		public List<Waiting> RetrieveAllWaitings()
+		public List<Waiting> RetrieveWaitingList()
 		{
 			return _service.GetWaitingList();
 		}

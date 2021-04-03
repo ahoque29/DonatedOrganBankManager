@@ -1,107 +1,93 @@
-﻿using HospitalData;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using HospitalData;
+using HospitalData.Services;
 using HospitalManagement;
+using Moq;
 using NUnit.Framework;
-using System;
-using System.Linq;
 
-namespace HospitalTests
+namespace HospitalTests.ManagerTests
 {
 	[TestFixture]
 	public class WaitingListManagerTests
 	{
-		#region Initialization and SetUp
-
 		private PatientManager _patientManager = new PatientManager();
-		private WaitingListManager _waitingListManager = new WaitingListManager();
-
-		#endregion Initialization and SetUp
-
-		#region CreateWaiting Tests
 
 		[Test]
-		public void WhenAWaitingIsCreated_TheNumberOfWaitingsIncreasesByOne()
+		public void RetrieveWaitingList_ReturnsWaitingList()
 		{
-			using var db = new HospitalContext();
+			var mockWaitingService = new Mock<IWaitingService>(MockBehavior.Strict);
+			mockWaitingService.Setup(w => w.GetWaitingList())
+				.Returns(new List<Waiting>());
 
-			var numberOfWaitingsBefore = db.Waitings.Count();
+			var _waitingListManager = new WaitingListManager(mockWaitingService.Object);
+			var result = _waitingListManager.RetrieveWaitingList();
 
-			// Create test patient
-			_patientManager.CreatePatient("Mr",
-				"GuyTest",
-				"TestGuy",
-				new DateTime(2020, 01, 01),
-				"00 TestAddress",
-				"TestCity",
-				"TestPostcode",
-				"TestPhone",
-				"B");
-
-			var testGuy = db.Patients.Where(p => p.FirstName == "TestGuy").FirstOrDefault();
-
-			// Create a test waiting
-			_waitingListManager.CreateWaiting(testGuy.PatientId,
-				5,
-				new DateTime(2021, 01, 01));
-
-			var numberOfWaitingAfter = db.Waitings.Count();
-
-			Assert.That(numberOfWaitingsBefore + 1, Is.EqualTo(numberOfWaitingAfter));
+			Assert.That(result, Is.TypeOf<List<Waiting>>());
 		}
 
-		#endregion CreateWaiting Tests
+		//[Test]
+		//public void WhenAWaitingIsCreated_TheNumberOfWaitingsIncreasesByOne() // service
+		//{
+		//	using var db = new HospitalContext();
 
-		#region DeleteWaiting() Tests
+		//	var numberOfWaitingsBefore = db.Waitings.Count();
 
-		[Test]
-		public void WhenAWaitingIsDeleted_QueryThatSearchesForItReturnsFalse()
-		{
-			using var db = new HospitalContext();
+		//	// Create test patient
+		//	_patientManager.CreatePatient("Mr",
+		//		"GuyTest",
+		//		"TestGuy",
+		//		new DateTime(2020, 01, 01),
+		//		"00 TestAddress",
+		//		"TestCity",
+		//		"TestPostcode",
+		//		"TestPhone",
+		//		"B");
 
-			// Create test patient
-			_patientManager.CreatePatient("Mr",
-				"GuyTest",
-				"TestGuy",
-				new DateTime(2020, 01, 01),
-				"00 TestAddress",
-				"TestCity",
-				"TestPostcode",
-				"TestPhone",
-				"B");
+		//	var testGuy = db.Patients.Where(p => p.FirstName == "TestGuy").FirstOrDefault();
 
-			var testGuy = db.Patients.Where(p => p.FirstName == "TestGuy").FirstOrDefault();
+		//	// Create a test waiting
+		//	_waitingListManager.CreateWaiting(testGuy.PatientId,
+		//		5,
+		//		new DateTime(2021, 01, 01));
 
-			// Create a test waiting
-			_waitingListManager.CreateWaiting(testGuy.PatientId,
-				5,
-				new DateTime(1999, 01, 01));
+		//	var numberOfWaitingAfter = db.Waitings.Count();
 
-			var testWaiting = db.Waitings.Where(w => w.DateOfEntry == new DateTime(1999, 01, 01)).FirstOrDefault();
+		//	Assert.That(numberOfWaitingsBefore + 1, Is.EqualTo(numberOfWaitingAfter));
+		//}
 
-			_waitingListManager.DeleteWaiting(testWaiting.WaitingId);
+		//[Test]
+		//public void WhenAWaitingIsDeleted_QueryThatSearchesForItReturnsFalse() // service
+		//{
+		//	using var db = new HospitalContext();
 
-			var query = db.Waitings.Where(w => w.DateOfEntry == new DateTime(1999, 01, 01)).Any();
+		//	// Create test patient
+		//	_patientManager.CreatePatient("Mr",
+		//		"GuyTest",
+		//		"TestGuy",
+		//		new DateTime(2020, 01, 01),
+		//		"00 TestAddress",
+		//		"TestCity",
+		//		"TestPostcode",
+		//		"TestPhone",
+		//		"B");
 
-			Assert.That(query, Is.False);
-		}
+		//	var testGuy = db.Patients.Where(p => p.FirstName == "TestGuy").FirstOrDefault();
 
-		#endregion DeleteWaiting() Tests
+		//	// Create a test waiting
+		//	_waitingListManager.CreateWaiting(testGuy.PatientId,
+		//		5,
+		//		new DateTime(1999, 01, 01));
 
-		#region TearDown
+		//	var testWaiting = db.Waitings.Where(w => w.DateOfEntry == new DateTime(1999, 01, 01)).FirstOrDefault();
 
-		[TearDown]
-		public void TearDown()
-		{
-			using (var db = new HospitalContext())
-			{
-				var testGuy = db.Patients.Where(p => p.FirstName == "TestGuy").FirstOrDefault();
-				var testWaiting = db.Waitings.Where(w => w.PatientId == testGuy.PatientId);
+		//	_waitingListManager.DeleteWaiting(testWaiting.WaitingId);
 
-				db.Waitings.RemoveRange(testWaiting);
-				db.Patients.RemoveRange(testGuy);
-				db.SaveChanges();
-			}
-		}
+		//	var query = db.Waitings.Where(w => w.DateOfEntry == new DateTime(1999, 01, 01)).Any();
 
-		#endregion TearDown
+		//	Assert.That(query, Is.False);
+		//}
+
 	}
 }

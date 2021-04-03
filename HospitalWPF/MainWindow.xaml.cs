@@ -157,7 +157,7 @@ namespace HospitalWPF
 
 		private void PopulateListBoxWaitingWM()
 		{
-			ListBoxWaitingWM.ItemsSource = _waitingListManager.RetrieveAllWaitings();
+			ListBoxWaitingWM.ItemsSource = _waitingListManager.RetrieveWaitingList();
 		}
 
 		private void ListBoxPatientsWM_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -203,7 +203,7 @@ namespace HospitalWPF
 
 		private void PopulateListBoxWaitingMF()
 		{
-			ListBoxWaitingMF.ItemsSource = _waitingListManager.RetrieveAllWaitings();
+			ListBoxWaitingMF.ItemsSource = _waitingListManager.RetrieveWaitingList();
 		}
 
 		private void PopulateListBoxMatchedDonations()
