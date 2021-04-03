@@ -84,6 +84,19 @@ namespace HospitalData
 		{
 			return Name;
 		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is Organ organ &&
+				   Name == organ.Name &&
+				   Type == organ.Type &&
+				   IsAgeChecked == organ.IsAgeChecked;
+		}
+
+		public override int GetHashCode()
+		{
+			return System.HashCode.Combine(OrganId, Name, Type, IsAgeChecked);
+		}
 	}
 
 	public partial class MatchedDonation

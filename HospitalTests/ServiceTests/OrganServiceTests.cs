@@ -48,7 +48,7 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[Test]
-		public void WhenANewOrganIsCreated_NumberOfOrgansIsIncreasedByOne()
+		public void WhenANewOrganIsAdded_NumberOfOrgansIsIncreasedByOne()
 		{
 			var numberOfOrgansBefore = _context.Organs.Count();
 
@@ -67,6 +67,40 @@ namespace HospitalTests.ServiceTests
 			var testOrgan = _context.Organs.Where(o => o.Name == "TestOrgan");
 			_context.Organs.RemoveRange(testOrgan);
 			_context.SaveChanges();
+		}
+
+		[Test]
+		public void GetOrganList_ReturnsCorrectNumberOfOrgans()
+		{
+			Assert.That(_organService.GetOrganList().Count(), Is.EqualTo(3));
+		}
+
+		[Test]
+		public void GetOrganList_ReturnsCorrectListOfOrgans()
+		{
+			var manualListOfOrgans = new List<Organ>
+			{
+				new Organ()
+				{
+					Name = "TestSeedName1",
+					Type = "TestSeedType1",
+				},
+				new Organ()
+				{
+					Name = "TestSeedName2",
+					Type = "TestSeedType2",
+					IsAgeChecked = false
+				},
+				new Organ()
+				{
+					Name = "TestSeedName3",
+					Type = "TestSeedType3",
+				}
+			};
+
+			var result = _organService.GetOrganList();
+
+			Assert.That(result, Is.EquivalentTo(manualListOfOrgans));
 		}
 	}
 }

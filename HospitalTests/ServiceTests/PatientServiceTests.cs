@@ -68,7 +68,7 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[Test]
-		public void WhenANewPatientIsCreated_NumberOfPatientsIsIncreasedByOne()
+		public void WhenANewPatientIsAdded_NumberOfPatientsIsIncreasedByOne()
 		{
 			var numberOfPatientsBefore = _context.Patients.Count();
 
