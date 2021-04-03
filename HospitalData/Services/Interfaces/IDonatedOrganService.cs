@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HospitalData.Services.Interfaces
+namespace HospitalData.Services
 {
 	public interface IDonatedOrganService
 	{
