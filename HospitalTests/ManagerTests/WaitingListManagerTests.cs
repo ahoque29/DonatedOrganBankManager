@@ -22,7 +22,7 @@ namespace HospitalTests.ManagerTests
 		}
 		
 		[Test]
-		public void RetrieveWaitingList_ReturnsWaitingList()
+		public void RetrieveWaitingList_ReturnsListOfWaitings()
 		{
 			var mockWaitingService = new Mock<IWaitingService>(MockBehavior.Strict);
 			mockWaitingService.Setup(w => w.GetWaitingList())
