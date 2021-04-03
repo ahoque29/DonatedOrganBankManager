@@ -6,7 +6,7 @@ namespace HospitalData.Services
 {
 	public interface IOrganService
 	{
-		void AddOrgan();
+		void AddOrgan(Organ organ);
 		List<Organ> GetOrganList();
 	}
 }
