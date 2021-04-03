@@ -44,7 +44,7 @@ namespace HospitalData.Services
 		/// Removes the waiting list entry from the database.
 		/// </summary>
 		/// <param name="waitingId">
-		/// Id of the waiting list to be removed.
+		/// Id of the waiting to be removed.
 		/// </param>
 		public void RemoveWaiting(int waitingId)
 		{

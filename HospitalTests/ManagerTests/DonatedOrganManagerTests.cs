@@ -1,100 +1,80 @@
 ﻿using HospitalData;
+using HospitalData.Services;
 using HospitalManagement;
+using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System;
-using System.Linq;
 
-namespace HospitalTests
+namespace HospitalTests.ManagerTests
 {
 	[TestFixture]
 	public class DonatedOrganManagerTests
 	{
-		#region Initialization and SetUp
 
-		private DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
+		//[Test]
+		//public void WhenAnOrganIsDonated_TheNumberOfDonatedOrgansIncreasesByOne() //service
+		//{
+		//	using var db = new HospitalContext();
 
-		[SetUp]
-		public void Setup()
-		{
-			using (var db = new HospitalContext())
-			{
-				// remove test donated organ if it exists in the database
-				var testDonatedOrgan = db.DonatedOrgans.Where(d => d.BloodType == "TestBloodType");
-				db.DonatedOrgans.RemoveRange(testDonatedOrgan);
-				db.SaveChanges();
-			}
-		}
+		//	var numberOfDonatedOrgansBefore = db.DonatedOrgans.Count();
 
-		#endregion Initialization and SetUp
+		//	// create test donated organ
+		//	_donatedOrganManager.CreateDonatedOrgan("Pancreas",
+		//		"TestBloodType",
+		//		12,
+		//		new DateTime(2021, 01, 01));
 
-		#region CreateDonatedOrgan() Tests
+		//	var numberOfDonatedOrgansAfter = db.DonatedOrgans.Count();
 
-		[Test]
-		public void WhenAnOrganIsDonated_TheNumberOfDonatedOrgansIncreasesByOne()
-		{
-			using var db = new HospitalContext();
-
-			var numberOfDonatedOrgansBefore = db.DonatedOrgans.Count();
-
-			// create test donated organ
-			_donatedOrganManager.CreateDonatedOrgan("Pancreas",
-				"TestBloodType",
-				12,
-				new DateTime(2021, 01, 01));
-
-			var numberOfDonatedOrgansAfter = db.DonatedOrgans.Count();
-
-			Assert.That(numberOfDonatedOrgansBefore + 1, Is.EqualTo(numberOfDonatedOrgansAfter));
-		}
+		//	Assert.That(numberOfDonatedOrgansBefore + 1, Is.EqualTo(numberOfDonatedOrgansAfter));
+		//}
 
 		[Test]
-		public void WhenAnOrganIsCreatedWithNegativeAge_ThrowsArgumentException()
+		public void WhenADonatedOrganIsCreatedWithNegativeAge_ThrowsException() // manager
 		{
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>();
+			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+			
 			Assert.That(() => _donatedOrganManager.CreateDonatedOrgan("Pancreas",
 				"TestBloodType",
 				-6,
-				new DateTime(2021, 01, 01)), Throws.ArgumentException);
+				new DateTime(2021, 01, 01)), 
+				Throws.ArgumentException.With.Message.EqualTo("Age cannot be negative!"));
 		}
-
-		#endregion CreateDonatedOrgan() Tests
-
-		#region DeleteDonatedOrgan() Tests
 
 		[Test]
-		public void WhenADonatedOrganIsDeleted_QueryThatSearchesForItReturnsFalse()
+		public void RetrieveDonatedOrgansList_ReturnsListOfDonatedOrgans()
 		{
-			using var db = new HospitalContext();
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Strict);
+			mockDonatedOrganService.Setup(d => d.GetDonatedOrgansList())
+				.Returns(new List<DonatedOrgan>());
 
-			// create test donated organ
-			_donatedOrganManager.CreateDonatedOrgan("Pancreas",
-				"TestBloodType",
-				12,
-				new DateTime(2021, 01, 01));
+			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+			var result = _donatedOrganManager.RetrieveAllDonatedOrgans();
 
-			var testDonatedOrgan = db.DonatedOrgans.Where(d => d.BloodType == "TestBloodType").FirstOrDefault();
-
-			// delete test donated organ
-			_donatedOrganManager.DeleteDonatedOrgan(testDonatedOrgan.DonatedOrganId);
-
-			var query = db.DonatedOrgans.Where(d => d.BloodType == "TestBloodType").Any();
-
-			Assert.That(query, Is.False);
+			Assert.That(result, Is.TypeOf<List<DonatedOrgan>>());
 		}
 
-		#endregion DeleteDonatedOrgan() Tests
+		//[Test]
+		//public void WhenADonatedOrganIsDeleted_QueryThatSearchesForItReturnsFalse() // service
+		//{
+		//	using var db = new HospitalContext();
 
-		#region TearDown
+		//	// create test donated organ
+		//	_donatedOrganManager.CreateDonatedOrgan("Pancreas",
+		//		"TestBloodType",
+		//		12,
+		//		new DateTime(2021, 01, 01));
 
-		public void TearDown()
-		{
-			using (var db = new HospitalContext())
-			{
-				var testDonatedOrgan = db.DonatedOrgans.Where(d => d.BloodType == "TestBloodType");
-				db.DonatedOrgans.RemoveRange(testDonatedOrgan);
-				db.SaveChanges();
-			}
-		}
+		//	var testDonatedOrgan = db.DonatedOrgans.Where(d => d.BloodType == "TestBloodType").FirstOrDefault();
 
-		#endregion TearDown
+		//	// delete test donated organ
+		//	_donatedOrganManager.DeleteDonatedOrgan(testDonatedOrgan.DonatedOrganId);
+
+		//	var query = db.DonatedOrgans.Where(d => d.BloodType == "TestBloodType").Any();
+
+		//	Assert.That(query, Is.False);
+		//}
 	}
 }
