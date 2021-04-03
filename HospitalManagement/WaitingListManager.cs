@@ -1,4 +1,5 @@
 ﻿using HospitalData;
+using HospitalData.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,18 @@ namespace HospitalManagement
 {
 	public class WaitingListManager
 	{
+		private readonly IWaitingService _service;
 		public Waiting SelectedWaiting { get; set; }
+
+		public WaitingListManager()
+		{
+			_service = new WaitingService();
+		}
+
+		public WaitingListManager(IWaitingService service)
+		{
+			_service = service;
+		}
 
 		#region Create, Delete, Retrieve, Set
 
@@ -23,31 +35,19 @@ namespace HospitalManagement
 				DateOfEntry = dateOfEntry
 			};
 
-			using (var db = new HospitalContext())
-			{
-				db.Add(newWaiting);
-				db.SaveChanges();
-			}
+			_service.AddWaiting(newWaiting);
 		}
 
 		// Retrieve
 		public List<Waiting> RetrieveAllWaitings()
 		{
-			using (var db = new HospitalContext())
-			{
-				return db.Waitings.ToList();
-			}
+			return _service.GetWaitingList();
 		}
 
 		// Delete
 		public void DeleteWaiting(int waitingId)
 		{
-			using (var db = new HospitalContext())
-			{
-				SelectedWaiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault<Waiting>();
-				db.Waitings.RemoveRange(SelectedWaiting);
-				db.SaveChanges();
-			}
+			_service.RemoveWaiting(waitingId);
 		}
 
 		public void SetSelectedWaiting(object selectedItem)

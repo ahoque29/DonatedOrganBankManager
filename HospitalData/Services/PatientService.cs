@@ -7,14 +7,14 @@ namespace HospitalData.Services
 	{
 		private readonly HospitalContext _context;
 
-		public PatientService(HospitalContext context)
-		{
-			_context = context;
-		}
-
 		public PatientService()
 		{
 			_context = new HospitalContext();
+		}
+
+		public PatientService(HospitalContext context)
+		{
+			_context = context;
 		}
 
 		/// <summary>
