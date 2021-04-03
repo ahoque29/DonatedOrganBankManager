@@ -16,7 +16,7 @@ namespace HospitalData.Services
 
 		public OrganService(HospitalContext context)
 		{
-			context = _context;
+			_context = context;
 		}
 
 		public void AddOrgan(Organ organ)

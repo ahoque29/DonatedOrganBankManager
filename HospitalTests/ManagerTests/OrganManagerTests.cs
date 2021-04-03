@@ -16,7 +16,7 @@ namespace HospitalTests.ManagerTests
 		public void RetriveAllOrgans_ReturnsAListOfOrgans()
 		{
 			var mockOrganService = new Mock<IOrganService>(MockBehavior.Strict);
-			mockOrganService.Setup(p => p.GetOrganList())
+			mockOrganService.Setup(o => o.GetOrganList())
 				.Returns(new List<Organ>());
 
 			var _organManager = new OrganManager(mockOrganService.Object);

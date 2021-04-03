@@ -78,7 +78,7 @@ namespace HospitalTests.ServiceTests
 				LastName = "GuyTest",
 				FirstName = "TestGuy",
 				DateOfBirth = new DateTime(2020, 01, 01),
-				Address = "00 TestAddress",
+				Address = "00 Test Street",
 				City = "TestCity",
 				PostCode = "TestPostcode",
 				Phone = "TestPhone",
@@ -89,8 +89,8 @@ namespace HospitalTests.ServiceTests
 
 			Assert.That(numberOfPatientsBefore + 1, Is.EqualTo(numberOfPatientsAfter));
 
-			// Remove
-			var testGuy = _context.Patients.Where(f => f.FirstName == "TestGuy");
+			// Remove entry
+			var testGuy = _context.Patients.Where(p => p.FirstName == "TestGuy");
 			_context.Patients.RemoveRange(testGuy);
 			_context.SaveChanges();
 		}
