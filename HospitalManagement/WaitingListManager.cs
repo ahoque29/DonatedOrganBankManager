@@ -36,11 +36,6 @@ namespace HospitalManagement
 			int organId,
 			DateTime dateOfEntry)
 		{
-			if (dateOfEntry > DateTime.Today)
-			{
-				throw new ArgumentException("Date Of Entry cannot be in the future!");
-			}
-
 			var newWaiting = new Waiting()
 			{
 				OrganId = organId,
