@@ -65,7 +65,7 @@ namespace HospitalTests.ServiceTests
 				BloodType = "B"
 			});
 
-			#endregion Populate the InMemory Database
+			#endregion
 		}
 
 		[Test]
