@@ -17,6 +17,15 @@ namespace HospitalData.Services
 			_context = context;
 		}
 
+		/// <summary>
+		/// Grabs the organ id, given an organ name.
+		/// </summary>
+		/// <param name="organName">
+		/// Name of the organ.
+		/// </param>
+		/// <returns>
+		/// Id of the organ.
+		/// </returns>
 		public int GetOrganId(string organName)
 		{
 			var organ = _context.Organs.Where(o => o.Name == organName).FirstOrDefault();
@@ -63,6 +72,15 @@ namespace HospitalData.Services
 			}
 		}
 
+		/// <summary>
+		/// Calls the database and formats the ToString().
+		/// </summary>
+		/// <param name="donatedOrganId">
+		/// Id of the donated organ.
+		/// </param>
+		/// <returns>
+		/// ToString().
+		/// </returns>
 		public string GetToString(int donatedOrganId)
 		{
 			var donatedOrgan = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
@@ -71,7 +89,6 @@ namespace HospitalData.Services
 			var availability = donatedOrgan.IsDonated ? "No" : "Yes";
 
 			return $"Id: {donatedOrganId} - Availability: {availability} - Organ: {organ.Name} - Blood Type: {donatedOrgan.BloodType} - Age at Donation: {donatedOrgan.DonorAge} - Donated on: {donatedOrgan.DonationDate:dd/MM/yyyy}";
-
 		}
 	}
 }

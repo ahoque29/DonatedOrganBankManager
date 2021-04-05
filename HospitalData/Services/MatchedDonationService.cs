@@ -40,6 +40,15 @@ namespace HospitalData.Services
 			return _context.MatchedDonations.ToList();
 		}
 
+		/// <summary>
+		/// Calls the database and formats the ToString().
+		/// </summary>
+		/// <param name="matchedDonationId">
+		/// Id of the matched donation.
+		/// </param>
+		/// <returns>
+		/// ToString().
+		/// </returns>
 		public string GetToString(int matchedDonationId)
 		{
 			var matchedDonation = _context.MatchedDonations.Where(m => m.MatchedDonationId == matchedDonationId).FirstOrDefault();

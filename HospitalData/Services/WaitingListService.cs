@@ -53,6 +53,15 @@ namespace HospitalData.Services
 			_context.SaveChanges();
 		}
 
+		/// <summary>
+		/// Calls the database aqnd formats the ToString().
+		/// </summary>
+		/// <param name="waitingId">
+		/// Id of the waiting list entry.
+		/// </param>
+		/// <returns>
+		/// ToString().
+		/// </returns>
 		public string GetToString(int waitingId)
 		{
 			var waiting = _context.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
