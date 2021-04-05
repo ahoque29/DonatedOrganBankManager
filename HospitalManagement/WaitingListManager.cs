@@ -7,15 +7,15 @@ namespace HospitalManagement
 {
 	public class WaitingListManager
 	{
-		private readonly IWaitingService _service;
+		private readonly IWaitingListService _service;
 		public Waiting SelectedWaiting { get; set; }
 
 		public WaitingListManager()
 		{
-			_service = new WaitingService();
+			_service = new WaitingListService();
 		}
 
-		public WaitingListManager(IWaitingService service)
+		public WaitingListManager(IWaitingListService service)
 		{
 			_service = service;
 		}

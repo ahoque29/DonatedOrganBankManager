@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace HospitalData.Services
 {
-	public class WaitingService : IWaitingService
+	public class WaitingListService : IWaitingListService
 	{
 		private readonly HospitalContext _context;
 
-		public WaitingService()
+		public WaitingListService()
 		{
 			_context = new HospitalContext();
 		}
 
-		public WaitingService(HospitalContext context)
+		public WaitingListService(HospitalContext context)
 		{
 			_context = context;
 		}

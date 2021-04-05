@@ -9,10 +9,10 @@ using System.Linq;
 namespace HospitalTests.ServiceTests
 {
 	[TestFixture]
-	public class WaitingServiceTests
+	public class WaitingListServiceTests
 	{
 		private HospitalContext _context;
-		private WaitingService _waitingService;
+		private WaitingListService _waitingService;
 
 		[OneTimeSetUp]
 		public void OneTimeSetup()
@@ -22,7 +22,7 @@ namespace HospitalTests.ServiceTests
 				.Options;
 
 			_context = new HospitalContext(options);
-			_waitingService = new WaitingService(_context);
+			_waitingService = new WaitingListService(_context);
 
 			#region Populate the InMemoryDatabase
 

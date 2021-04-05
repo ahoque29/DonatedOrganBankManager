@@ -2,7 +2,7 @@
 
 namespace HospitalData.Services
 {
-	public interface IWaitingService
+	public interface IWaitingListService
 	{
 		void AddWaiting(Waiting waiting);
 
