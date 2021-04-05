@@ -11,5 +11,6 @@ namespace HospitalData.Services
 		void RemoveDonatedOrgan(int donatedOrganId);
 
 		List<DonatedOrgan> GetDonatedOrgansList();
+		string GetToString(int donatedOrganId);
 	}
 }

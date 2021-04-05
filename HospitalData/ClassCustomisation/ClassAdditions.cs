@@ -38,19 +38,16 @@ namespace HospitalData
 
 	public partial class DonatedOrgan
 	{
+		private IDonatedOrganService _service;
+
+		public DonatedOrgan(IDonatedOrganService service)
+		{
+			_service = service;
+		}
+
 		public override string ToString()
 		{
-			DonatedOrgan donatedOrgan;
-			Organ organ;
-			using (var db = new HospitalContext())
-			{
-				donatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == this.DonatedOrganId).FirstOrDefault();
-				organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
-			}
-
-			var availability = donatedOrgan.IsDonated ? "No" : "Yes";
-
-			return $"Id: {DonatedOrganId} - Availability: {availability} - Organ: {organ.Name} - Blood Type: {BloodType} - Age at Donation: {DonorAge} - Donated on: {DonationDate:dd/MM/yyyy}";
+			return _service.GetToString(DonatedOrganId);
 		}
 
 		public override bool Equals(object obj)

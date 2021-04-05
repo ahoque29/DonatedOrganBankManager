@@ -25,14 +25,14 @@ namespace HospitalTests.ServiceTests
 
 			#region Populate the InMemory Database
 
-			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan()
+			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 1,
 				BloodType = "O",
 				DonorAge = 21
 			});
 
-			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan()
+			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 2,
 				BloodType = "A",
@@ -40,7 +40,7 @@ namespace HospitalTests.ServiceTests
 				IsDonated = true
 			});
 
-			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan()
+			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 3,
 				BloodType = "B",
@@ -55,7 +55,7 @@ namespace HospitalTests.ServiceTests
 		{
 			var numberOfDonatedOrgansBefore = _context.DonatedOrgans.Count();
 
-			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan()
+			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 99,
 				BloodType = "AB",
@@ -103,20 +103,20 @@ namespace HospitalTests.ServiceTests
 		{
 			var manualWaitingList = new List<DonatedOrgan>
 			{
-				new DonatedOrgan()
+				new DonatedOrgan(_donatedOrganService)
 				{
 					OrganId = 1,
 					BloodType = "O",
 					DonorAge = 21
 				},
-				new DonatedOrgan()
+				new DonatedOrgan(_donatedOrganService)
 				{
 					OrganId = 2,
 					BloodType = "A",
 					DonorAge = 36,
 					IsDonated = true
 				},
-				new DonatedOrgan()
+				new DonatedOrgan(_donatedOrganService)
 				{
 					OrganId = 3,
 					BloodType = "B",

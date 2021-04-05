@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HospitalData.Services;
 
 namespace HospitalData
 {
@@ -7,6 +8,7 @@ namespace HospitalData
 	{
 		public DonatedOrgan()
 		{
+			_service = new DonatedOrganService();
 			MatchedDonations = new HashSet<MatchedDonation>();
 		}
 

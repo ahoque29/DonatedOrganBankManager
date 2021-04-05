@@ -62,5 +62,16 @@ namespace HospitalData.Services
 				_context.SaveChanges();
 			}
 		}
+
+		public string GetToString(int donatedOrganId)
+		{
+			var donatedOrgan = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
+			var organ = _context.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
+
+			var availability = donatedOrgan.IsDonated ? "No" : "Yes";
+
+			return $"Id: {donatedOrganId} - Availability: {availability} - Organ: {organ.Name} - Blood Type: {donatedOrgan.BloodType} - Age at Donation: {donatedOrgan.DonorAge} - Donated on: {donatedOrgan.DonationDate:dd/MM/yyyy}";
+
+		}
 	}
 }
