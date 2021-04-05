@@ -2,12 +2,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalData.Services;
 
 namespace HospitalManagement
 {
 	public class MatchedDonationManager
 	{
+		private readonly IMatchedDonationService _service;
 
+		public MatchedDonationManager()
+		{
+			_service = new MatchedDonationService();
+		}
+
+		public MatchedDonationManager(IMatchedDonationService service)
+		{
+			_service = service;
+		}
+
+		/// <summary>
+		/// Creates a new matched donation.
+		/// </summary>
+		/// <param name="patientId">
+		/// Id of the patient that has received the organ.
+		/// </param>
+		/// <param name="donatedOrganId">
+		/// Id of the organ that has been donated.
+		/// </param>
+		/// <param name="dateOfMatch">
+		/// Date of match.
+		/// </param>
 		public void CreateMatchedDonation(int patientId,
 			int donatedOrganId,
 			DateTime dateOfMatch)
@@ -19,19 +43,18 @@ namespace HospitalManagement
 				DateOfMatch = dateOfMatch
 			};
 
-			using (var db = new HospitalContext())
-			{
-				db.Add(newMatchedDonation);
-				db.SaveChanges();
-			}
+			_service.AddMatchedDonation(newMatchedDonation);
 		}
 
+		/// <summary>
+		/// Retrieves a list of all the mathched donations stored in the database.
+		/// </summary>
+		/// <returns>
+		/// List of all matched donations.
+		/// </returns>
 		public List<MatchedDonation> RetrieveAllMatchedDonations()
 		{
-			using (var db = new HospitalContext())
-			{
-				return db.MatchedDonations.ToList();
-			}
+			return _service.GetMatchedDonationsList();
 		}
 	}
 }
