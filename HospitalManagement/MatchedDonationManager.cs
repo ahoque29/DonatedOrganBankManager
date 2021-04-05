@@ -7,7 +7,6 @@ namespace HospitalManagement
 {
 	public class MatchedDonationManager
 	{
-		#region Create, Retrieve
 
 		public void CreateMatchedDonation(int patientId,
 			int donatedOrganId,
@@ -34,7 +33,5 @@ namespace HospitalManagement
 				return db.MatchedDonations.ToList();
 			}
 		}
-
-		#endregion Create, Retrieve
 	}
 }
