@@ -116,7 +116,7 @@
 							</StackPanel>
 						</Grid>
 
-						<Image Source="C:\Users\gaffi\source\repos\WPFEntityFrameworkProject\HospitalWPF\sparta-logo.png"
+						<Image Source="https://raw.githubusercontent.com/ahoque29/WPFEntityFrameworkProject/main/HospitalWPF/sparta-logo.png"
 							   Height="70"
 							   HorizontalAlignment="Right"
 							   Margin="0 10 10 0" />
@@ -223,7 +223,7 @@
 								   HorizontalAlignment="Center"
 								   Margin="5" />
 
-						<Image Source="C:\Users\gaffi\source\repos\WPFEntityFrameworkProject\HospitalWPF\sparta-logo.png"
+						<Image Source="https://raw.githubusercontent.com/ahoque29/WPFEntityFrameworkProject/main/HospitalWPF/sparta-logo.png"
 							   Height="45"
 							   HorizontalAlignment="Right"
 							   Margin="0 -5 10 0" />
@@ -265,7 +265,7 @@
 								Background="#8C9491"
 								Click="SendToWaitingList_Click" />
 
-						<Image Source="C:\Users\gaffi\source\repos\WPFEntityFrameworkProject\HospitalWPF\sparta-logo.png"
+						<Image Source="https://raw.githubusercontent.com/ahoque29/WPFEntityFrameworkProject/main/HospitalWPF/sparta-logo.png"
 							   Height="70"
 							   HorizontalAlignment="Center"
 							   Margin="0 30 0 0" />
