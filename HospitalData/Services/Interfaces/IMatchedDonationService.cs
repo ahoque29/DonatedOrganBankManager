@@ -7,6 +7,6 @@ namespace HospitalData.Services
 	public interface IMatchedDonationService
 	{
 		void AddMatchedDonation(MatchedDonation matchedDonation);
-		List<MatchedDonation> GetMatchedDonations();
+		List<MatchedDonation> GetMatchedDonationsList();
 	}
 }
