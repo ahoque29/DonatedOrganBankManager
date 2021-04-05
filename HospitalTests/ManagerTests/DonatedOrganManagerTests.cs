@@ -12,7 +12,7 @@ namespace HospitalTests.ManagerTests
 	public class DonatedOrganManagerTests
 	{
 		[Test]
-		public void WhenADonatedOrganIsCreatedWithNegativeAge_ThrowsException() // manager
+		public void WhenADonatedOrganIsCreatedWithNegativeAge_ThrowsException()
 		{
 			var mockDonatedOrganService = new Mock<IDonatedOrganService>();
 			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);

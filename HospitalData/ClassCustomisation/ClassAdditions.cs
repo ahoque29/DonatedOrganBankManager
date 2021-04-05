@@ -5,14 +5,14 @@ namespace HospitalData
 {
 	public partial class Waiting
 	{
-		private readonly IWaitingService _service;
+		private readonly IWaitingListService _service;
 
 		public Waiting()
 		{
-			_service = new WaitingService();
+			_service = new WaitingListService();
 		}
 
-		public Waiting(IWaitingService service)
+		public Waiting(IWaitingListService service)
 		{
 			_service = service;
 		}

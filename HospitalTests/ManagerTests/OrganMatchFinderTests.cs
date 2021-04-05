@@ -14,7 +14,6 @@ namespace HospitalTests
 		private PatientManager _patientManager = new PatientManager();
 		private WaitingListManager _waitingListManager = new WaitingListManager();
 		private DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
-		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 		private OrganMatchFinder _organMatchFinder = new OrganMatchFinder();
 
 		#endregion Initialization and SetUp

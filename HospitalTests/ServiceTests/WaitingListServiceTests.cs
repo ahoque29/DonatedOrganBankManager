@@ -26,21 +26,21 @@ namespace HospitalTests.ServiceTests
 
 			#region Populate the InMemoryDatabase
 
-			_waitingListService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting(_waitingListService)
 			{
 				OrganId = 8,
 				PatientId = 1,
 				DateOfEntry = new DateTime(2021, 01, 02)
 			});
 
-			_waitingListService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting(_waitingListService)
 			{
 				OrganId = 2,
 				PatientId = 4,
 				DateOfEntry = new DateTime(2020, 07, 17)
 			});
 
-			_waitingListService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting(_waitingListService)
 			{
 				OrganId = 1,
 				PatientId = 2,
@@ -55,7 +55,7 @@ namespace HospitalTests.ServiceTests
 		{
 			var numberOfWaitingsBefore = _context.Waitings.Count();
 
-			_waitingListService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting(_waitingListService)
 			{
 				OrganId = 6,
 				PatientId = 9,
@@ -82,7 +82,7 @@ namespace HospitalTests.ServiceTests
 			Assert.That(query, Is.False);
 
 			// Add the entry back
-			_waitingListService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting(_waitingListService)
 			{
 				OrganId = 1,
 				PatientId = 2,
@@ -101,19 +101,19 @@ namespace HospitalTests.ServiceTests
 		{
 			var manualWaitingList = new List<Waiting>
 			{
-				new Waiting()
+				new Waiting(_waitingListService)
 				{
 					OrganId = 8,
 					PatientId = 1,
 					DateOfEntry = new DateTime(2021, 01, 02)
 				},
-				new Waiting()
+				new Waiting(_waitingListService)
 				{
 					OrganId = 2,
 					PatientId = 4,
 					DateOfEntry = new DateTime(2020, 07, 17)
 				},
-				new Waiting()
+				new Waiting(_waitingListService)
 				{
 					OrganId = 1,
 					PatientId = 2,

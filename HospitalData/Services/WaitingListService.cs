@@ -52,5 +52,15 @@ namespace HospitalData.Services
 			_context.Waitings.RemoveRange(waitingToBeRemoved);
 			_context.SaveChanges();
 		}
+
+		public string GetToString(int waitingId)
+		{
+			var waiting = _context.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+			var patient = _context.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
+			var organ = _context.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
+
+			return $"Id: {waitingId} - {patient.Title} {patient.FirstName} {patient.LastName} of Blood Type {patient.BloodType} needs {organ.Name}";
+		}
+
 	}
 }

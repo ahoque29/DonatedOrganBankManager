@@ -9,5 +9,6 @@ namespace HospitalData.Services
 		List<Waiting> GetWaitingList();
 
 		void RemoveWaiting(int waitingId);
+		string GetToString(int waitingId);
 	}
 }
