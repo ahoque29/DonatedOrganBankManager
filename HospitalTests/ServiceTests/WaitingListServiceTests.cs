@@ -12,7 +12,7 @@ namespace HospitalTests.ServiceTests
 	public class WaitingListServiceTests
 	{
 		private HospitalContext _context;
-		private WaitingListService _waitingService;
+		private WaitingListService _waitingListService;
 
 		[OneTimeSetUp]
 		public void OneTimeSetup()
@@ -22,25 +22,25 @@ namespace HospitalTests.ServiceTests
 				.Options;
 
 			_context = new HospitalContext(options);
-			_waitingService = new WaitingListService(_context);
+			_waitingListService = new WaitingListService(_context);
 
 			#region Populate the InMemoryDatabase
 
-			_waitingService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting()
 			{
 				OrganId = 8,
 				PatientId = 1,
 				DateOfEntry = new DateTime(2021, 01, 02)
 			});
 
-			_waitingService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting()
 			{
 				OrganId = 2,
 				PatientId = 4,
 				DateOfEntry = new DateTime(2020, 07, 17)
 			});
 
-			_waitingService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting()
 			{
 				OrganId = 1,
 				PatientId = 2,
@@ -55,7 +55,7 @@ namespace HospitalTests.ServiceTests
 		{
 			var numberOfWaitingsBefore = _context.Waitings.Count();
 
-			_waitingService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting()
 			{
 				OrganId = 6,
 				PatientId = 9,
@@ -76,13 +76,13 @@ namespace HospitalTests.ServiceTests
 		public void WhenAWaitingListEntryIsRemoved_QueryThatSearchesForItReturnsFalse()
 		{
 			var waitingToBeRemoved = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
-			_waitingService.RemoveWaiting(waitingToBeRemoved.WaitingId);
+			_waitingListService.RemoveWaiting(waitingToBeRemoved.WaitingId);
 
 			var query = _context.Waitings.Where(w => w.WaitingId == waitingToBeRemoved.WaitingId).Any();
 			Assert.That(query, Is.False);
 
 			// Add the entry back
-			_waitingService.AddWaiting(new Waiting()
+			_waitingListService.AddWaiting(new Waiting()
 			{
 				OrganId = 1,
 				PatientId = 2,
@@ -93,7 +93,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetWaitingList_ReturnsCorrectNumberOfPatients()
 		{
-			Assert.That(_waitingService.GetWaitingList().Count(), Is.EqualTo(3));
+			Assert.That(_waitingListService.GetWaitingList().Count(), Is.EqualTo(3));
 		}
 
 		[Test]
@@ -121,7 +121,7 @@ namespace HospitalTests.ServiceTests
 				}
 			};
 
-			var result = _waitingService.GetWaitingList();
+			var result = _waitingListService.GetWaitingList();
 
 			Assert.That(result, Is.EquivalentTo(manualWaitingList));
 		}

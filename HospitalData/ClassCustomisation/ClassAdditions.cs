@@ -1,18 +1,25 @@
 ﻿using System.Linq;
+using HospitalData.Services;
 
 namespace HospitalData
 {
 	public partial class Waiting
 	{
+		private readonly IWaitingService _service;
+
+		public Waiting()
+		{
+			_service = new WaitingService();
+		}
+
+		public Waiting(IWaitingService service)
+		{
+			_service = service;
+		}
+
 		public override string ToString()
 		{
-			using var db = new HospitalContext();
-
-			var waiting = db.Waitings.Where(w => w.WaitingId == WaitingId).FirstOrDefault();
-			var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
-			var organ = db.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
-
-			return $"Id: {WaitingId} - {patient.Title} {patient.FirstName} {patient.LastName} of Blood Type {patient.BloodType} needs {organ.Name}";
+			return _service.GetToString(WaitingId);
 		}
 
 		public override bool Equals(object obj)

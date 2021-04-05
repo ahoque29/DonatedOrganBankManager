@@ -37,26 +37,28 @@ namespace HospitalManagement
 			{
 				return "Newborn or Infant";
 			}
-			else if (age <= 3)
+
+			if (age <= 3)
 			{
 				return "Toddler";
 			}
-			else if (age <= 5)
+
+			if (age <= 5)
 			{
 				return "Preschooler";
 			}
-			else if (age <= 12)
+
+			if (age <= 12)
 			{
 				return "Child";
 			}
-			else if (age <= 19)
+
+			if (age <= 19)
 			{
 				return "Teenager";
 			}
-			else
-			{
-				return "Adult";
-			}
+
+			return "Adult";
 		}
 
 		// AgeRangeFinder() method overload that takes in date of birth as parameter
@@ -179,25 +181,20 @@ namespace HospitalManagement
 		// Finding a match
 		public bool MatchExists(int waitingId)
 		{
-			if (HasOrgan(waitingId) && AgeCheck(waitingId) && BloodTypeMatch(waitingId))
-			{
-				return true;
-			}
-			return false;
+			return HasOrgan(waitingId) && AgeCheck(waitingId) && BloodTypeMatch(waitingId);
 		}
 
 		// Listing the matches
 		public List<DonatedOrgan> ListMatchedOrgans(int waitingId)
 		{
+			var matchedOrgans = new List<DonatedOrgan>();
+
 			if (MatchExists(waitingId))
 			{
-				var matchedOrgans = BloodTypeMatchList(waitingId);
-
-				return matchedOrgans;
+				matchedOrgans = BloodTypeMatchList(waitingId);
 			}
-
-			List<DonatedOrgan> emptyList = new List<DonatedOrgan>();
-			return emptyList;
+			
+			return matchedOrgans;			
 		}
 
 		public void ExecuteMatch(int waitingId, int donatedOrganId)
