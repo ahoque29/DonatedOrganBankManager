@@ -20,8 +20,6 @@ namespace HospitalManagement
 			_service = service;
 		}
 
-		#region Create, Retrieve, Set
-
 		/// <summary>
 		/// Creates a new organ.
 		/// Primarily used for seeding the database.
@@ -79,7 +77,5 @@ namespace HospitalManagement
 		{
 			SelectedOrgan = (Organ)selectedItem;
 		}
-
-		#endregion Create, Retrieve, Set
 	}
 }

@@ -54,7 +54,7 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database aqnd formats the ToString().
+		/// Calls the database and formats the ToString().
 		/// </summary>
 		/// <param name="waitingId">
 		/// Id of the waiting list entry.
