@@ -73,12 +73,12 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[Test]
-		public void WhenAWaitingListEntryIsDeleted_QueryThatSearchesForItReturnsFalse()
+		public void WhenAWaitingListEntryIsRemoved_QueryThatSearchesForItReturnsFalse()
 		{
-			var waitingToBeDeleted = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
-			_waitingService.RemoveWaiting(waitingToBeDeleted.WaitingId);
+			var waitingToBeRemoved = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
+			_waitingService.RemoveWaiting(waitingToBeRemoved.WaitingId);
 
-			var query = _context.Waitings.Where(w => w.WaitingId == waitingToBeDeleted.WaitingId).Any();
+			var query = _context.Waitings.Where(w => w.WaitingId == waitingToBeRemoved.WaitingId).Any();
 			Assert.That(query, Is.False);
 
 			// Add the entry back

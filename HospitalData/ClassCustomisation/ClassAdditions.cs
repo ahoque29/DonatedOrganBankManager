@@ -50,6 +50,20 @@ namespace HospitalData
 
 			return $"Id: {DonatedOrganId} - Availability: {availability} - Organ: {organ.Name} - Blood Type: {BloodType} - Age at Donation: {DonorAge} - Donated on: {DonationDate:dd/MM/yyyy}";
 		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is DonatedOrgan organ &&
+				   OrganId == organ.OrganId &&
+				   BloodType == organ.BloodType &&
+				   DonorAge == organ.DonorAge &&
+				   IsDonated == organ.IsDonated;
+		}
+
+		public override int GetHashCode()
+		{
+			return System.HashCode.Combine(DonatedOrganId, OrganId, BloodType, DonorAge, IsDonated);
+		}
 	}
 
 	public partial class Patient
