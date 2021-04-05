@@ -127,19 +127,21 @@ namespace HospitalData
 
 	public partial class MatchedDonation
 	{
+		private IMatchedDonationService _service;
+
+		public MatchedDonation()
+		{
+			_service = new MatchedDonationService();
+		}
+
+		public MatchedDonation(IMatchedDonationService service)
+		{
+			_service = service;
+		}
+
 		public override string ToString()
 		{
-			Patient patient;
-			DonatedOrgan donatedOrgan;
-			Organ organ;
-			using (var db = new HospitalContext())
-			{
-				patient = db.Patients.Where(p => p.PatientId == this.PatientId).FirstOrDefault();
-				donatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == this.DonatedOrganId).FirstOrDefault();
-				organ = db.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
-			}
-
-			return $"{MatchedDonationId} - {patient.FirstName} {patient.LastName} has received {organ.Name} on {DateOfMatch:dd/MM/yyyy}.";
+			return _service.GetToString(MatchedDonationId);
 		}
 
 		public override bool Equals(object obj)

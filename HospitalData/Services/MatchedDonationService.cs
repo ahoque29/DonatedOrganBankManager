@@ -39,5 +39,15 @@ namespace HospitalData.Services
 		{
 			return _context.MatchedDonations.ToList();
 		}
+
+		public string GetToString(int matchedDonationId)
+		{
+			var matchedDonation = _context.MatchedDonations.Where(m => m.MatchedDonationId == matchedDonationId).FirstOrDefault();
+			var patient = _context.Patients.Where(p => p.PatientId == matchedDonation.PatientId).FirstOrDefault();
+			var donatedOrgan = _context.DonatedOrgans.Where(d => d.DonatedOrganId == matchedDonation.DonatedOrganId).FirstOrDefault();
+			var organ = _context.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
+
+			return $"{matchedDonationId} - {patient.FirstName} {patient.LastName} has received {organ.Name} on {matchedDonation.DateOfMatch:dd/MM/yyyy}.";
+		}
 	}
 }

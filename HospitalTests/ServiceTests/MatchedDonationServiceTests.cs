@@ -26,21 +26,21 @@ namespace HospitalTests.ServiceTests
 
 			#region Populate the InMemoryDatabase
 
-			_matchedDonationService.AddMatchedDonation(new MatchedDonation()
+			_matchedDonationService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
 			{
 				PatientId = 1,
 				DonatedOrganId = 1,
 				DateOfMatch = new DateTime(2019, 09, 15)
 			});
 
-			_matchedDonationService.AddMatchedDonation(new MatchedDonation()
+			_matchedDonationService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
 			{
 				PatientId = 2,
 				DonatedOrganId = 2,
 				DateOfMatch = new DateTime(2020, 11, 25)
 			});
 
-			_matchedDonationService.AddMatchedDonation(new MatchedDonation()
+			_matchedDonationService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
 			{
 				PatientId = 3,
 				DonatedOrganId = 3,
@@ -55,7 +55,7 @@ namespace HospitalTests.ServiceTests
 		{
 			var numberOfMatchedDonationsBefore = _context.MatchedDonations.Count();
 
-			_matchedDonationService.AddMatchedDonation(new MatchedDonation()
+			_matchedDonationService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
 			{
 				PatientId = 99,
 				DonatedOrganId = 99,
@@ -78,19 +78,19 @@ namespace HospitalTests.ServiceTests
 		{
 			var manualDonationsList = new List<MatchedDonation>
 			{
-				new MatchedDonation()
+				new MatchedDonation(_matchedDonationService)
 				{
 					PatientId = 1,
 					DonatedOrganId = 1,
 					DateOfMatch = new DateTime(2019, 09, 15)
 				},
-				new MatchedDonation()
+				new MatchedDonation(_matchedDonationService)
 				{
 					PatientId = 2,
 					DonatedOrganId = 2,
 					DateOfMatch = new DateTime(2020, 11, 25)
 				},
-				new MatchedDonation()
+				new MatchedDonation(_matchedDonationService)
 				{
 					PatientId = 3,
 					DonatedOrganId = 3,
