@@ -2,7 +2,6 @@
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,9 +38,8 @@ namespace HospitalTests.ServiceTests
 				BloodType = "A",
 				DonorAge = 36,
 				IsDonated = true
-
 			});
-			
+
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan()
 			{
 				OrganId = 3,

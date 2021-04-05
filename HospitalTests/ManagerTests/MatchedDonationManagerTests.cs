@@ -3,10 +3,9 @@ using HospitalData.Services;
 using HospitalManagement;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 
-namespace HospitalTests
+namespace HospitalTests.ManagerTests
 {
 	[TestFixture]
 	public class MatchedDonationManagerTests
@@ -17,12 +16,11 @@ namespace HospitalTests
 			var mockMatchedDonationsService = new Mock<IMatchedDonationService>();
 			mockMatchedDonationsService.Setup(m => m.GetMatchedDonationsList())
 				.Returns(new List<MatchedDonation>());
-			
+
 			var _matchedDonationManager = new MatchedDonationManager(mockMatchedDonationsService.Object);
 			var result = _matchedDonationManager.RetrieveAllMatchedDonations();
 
 			Assert.That(result, Is.TypeOf<List<MatchedDonation>>());
-
 		}
 	}
 }

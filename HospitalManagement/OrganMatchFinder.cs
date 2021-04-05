@@ -10,8 +10,6 @@ namespace HospitalManagement
 		private WaitingListManager _waitingListManager = new WaitingListManager();
 		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 
-		#region Compatibility Logic
-
 		// returns a list of donated organs with same OrganId the waiting list entry, if the donated organ is available
 		public List<DonatedOrgan> HasOrganList(int waitingId)
 		{
@@ -222,7 +220,5 @@ namespace HospitalManagement
 				}
 			}
 		}
-
-		#endregion Compatibility Logic
 	}
 }

@@ -9,7 +9,7 @@ namespace HospitalManagement
 	public class DonatedOrganManager
 	{
 		private readonly IDonatedOrganService _service;
-		
+
 		public DonatedOrgan SelectedDonatedOrgan { get; set; }
 
 		public DonatedOrganManager()

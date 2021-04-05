@@ -3,8 +3,8 @@ using HospitalData.Services;
 using HospitalManagement;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace HospitalTests.ManagerTests
 {
@@ -16,11 +16,11 @@ namespace HospitalTests.ManagerTests
 		{
 			var mockDonatedOrganService = new Mock<IDonatedOrganService>();
 			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
-			
+
 			Assert.That(() => _donatedOrganManager.CreateDonatedOrgan("Pancreas",
 				"TestBloodType",
 				-6,
-				new DateTime(2021, 01, 01)), 
+				new DateTime(2021, 01, 01)),
 				Throws.ArgumentException.With.Message.EqualTo("Age cannot be negative!"));
 		}
 
