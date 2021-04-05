@@ -142,5 +142,18 @@ namespace HospitalData
 
 			return $"{MatchedDonationId} - {patient.FirstName} {patient.LastName} has received {organ.Name} on {DateOfMatch:dd/MM/yyyy}.";
 		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is MatchedDonation donation &&
+				   PatientId == donation.PatientId &&
+				   DonatedOrganId == donation.DonatedOrganId &&
+				   DateOfMatch == donation.DateOfMatch;
+		}
+
+		public override int GetHashCode()
+		{
+			return System.HashCode.Combine(MatchedDonationId, PatientId, DonatedOrganId, DateOfMatch);
+		}
 	}
 }
