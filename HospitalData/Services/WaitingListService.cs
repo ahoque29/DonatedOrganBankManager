@@ -70,6 +70,5 @@ namespace HospitalData.Services
 
 			return $"Id: {waitingId} - {patient.Title} {patient.FirstName} {patient.LastName} of Blood Type {patient.BloodType} needs {organ.Name}";
 		}
-
 	}
 }

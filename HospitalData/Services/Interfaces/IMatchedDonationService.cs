@@ -7,6 +7,7 @@ namespace HospitalData.Services
 		void AddMatchedDonation(MatchedDonation matchedDonation);
 
 		List<MatchedDonation> GetMatchedDonationsList();
+
 		string GetToString(int matchedDonationId);
 	}
 }

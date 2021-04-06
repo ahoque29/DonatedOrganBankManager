@@ -193,8 +193,8 @@ namespace HospitalManagement
 			{
 				matchedOrgans = BloodTypeMatchList(waitingId);
 			}
-			
-			return matchedOrgans;			
+
+			return matchedOrgans;
 		}
 
 		public void ExecuteMatch(int waitingId, int donatedOrganId)

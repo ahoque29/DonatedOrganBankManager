@@ -134,6 +134,5 @@ namespace HospitalTests.ServiceTests
 		{
 			_context.Database.EnsureDeleted();
 		}
-
 	}
 }

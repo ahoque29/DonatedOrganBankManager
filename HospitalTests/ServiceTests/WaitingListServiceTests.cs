@@ -66,8 +66,6 @@ namespace HospitalTests.ServiceTests
 				Name = "TestOrgan"
 			});
 
-
-
 			#endregion Populate the InMemoryDatabase
 		}
 

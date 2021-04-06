@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using HospitalData.Services;
+﻿using HospitalData.Services;
 
 namespace HospitalData
 {
