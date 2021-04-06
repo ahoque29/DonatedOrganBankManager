@@ -68,10 +68,7 @@ namespace HospitalManagement
 		/// </returns>
 		public List<DonatedOrgan> RetrieveAllDonatedOrgans()
 		{
-			using (var db = new HospitalContext())
-			{
-				return db.DonatedOrgans.ToList();
-			}
+			return _service.GetDonatedOrgansList();
 		}
 
 

@@ -22,5 +22,17 @@ namespace HospitalTests.ManagerTests
 
 			Assert.That(result, Is.TypeOf<List<MatchedDonation>>());
 		}
+
+		[Test]
+		public void MatchedDonationToString_ReturnsGivenString()
+		{
+			var matchedDonationService = new Mock<IMatchedDonationService>(MockBehavior.Strict);
+			matchedDonationService.Setup(d => d.GetToString(It.IsAny<int>()))
+				.Returns("ToString() text");
+
+			var matchedDonation = new MatchedDonation(matchedDonationService.Object);
+
+			Assert.That(matchedDonation.ToString(), Is.EqualTo("ToString() text"));
+		}
 	}
 }
