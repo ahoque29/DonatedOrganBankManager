@@ -13,6 +13,8 @@ namespace HospitalTests.ServiceTests
 	{
 		private HospitalContext _context;
 		private WaitingListService _waitingListService;
+		private PatientService _patientService;
+		private OrganService _organService;
 
 		[OneTimeSetUp]
 		public void OneTimeSetup()
@@ -23,6 +25,8 @@ namespace HospitalTests.ServiceTests
 
 			_context = new HospitalContext(options);
 			_waitingListService = new WaitingListService(_context);
+			_patientService = new PatientService(_context);
+			_organService = new OrganService(_context);
 
 			#region Populate the InMemoryDatabase
 
@@ -46,6 +50,23 @@ namespace HospitalTests.ServiceTests
 				PatientId = 2,
 				DateOfEntry = new DateTime(2021, 02, 15)
 			});
+
+			_patientService.AddPatient(new Patient()
+			{
+				PatientId = 2,
+				Title = "TestTitle",
+				LastName = "TestLastName",
+				FirstName = "TestFirstName",
+				BloodType = "O",
+			});
+
+			_organService.AddOrgan(new Organ()
+			{
+				OrganId = 1,
+				Name = "TestOrgan"
+			});
+
+
 
 			#endregion Populate the InMemoryDatabase
 		}
@@ -124,6 +145,15 @@ namespace HospitalTests.ServiceTests
 			var result = _waitingListService.GetWaitingList();
 
 			Assert.That(result, Is.EquivalentTo(manualWaitingList));
+		}
+
+		[Test]
+		public void GetToString_ReturnsCorrectString()
+		{
+			var waiting = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
+			var result = _waitingListService.GetToString(waiting.WaitingId);
+
+			Assert.That(result, Is.EqualTo("Id: 3 - TestTitle TestFirstName TestLastName of Blood Type O needs TestOrgan"));
 		}
 	}
 }
