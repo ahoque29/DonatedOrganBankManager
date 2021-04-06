@@ -22,5 +22,17 @@ namespace HospitalTests.ManagerTests
 
 			Assert.That(result, Is.TypeOf<List<Waiting>>());
 		}
+
+		[Test]
+		public void WaitingToString_ReturnsGivenString()
+		{
+			var mockWaitingService = new Mock<IWaitingListService>();
+			mockWaitingService.Setup(w => w.GetToString(It.IsAny<int>()))
+				.Returns("ToString() text");
+
+			var waiting = new Waiting(mockWaitingService.Object);
+
+			Assert.That(waiting.ToString, Is.EqualTo("ToString() text"));
+		}
 	}
 }
