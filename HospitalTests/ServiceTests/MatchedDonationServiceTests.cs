@@ -102,5 +102,11 @@ namespace HospitalTests.ServiceTests
 
 			Assert.That(result, Is.EqualTo(manualDonationsList));
 		}
+
+		[OneTimeTearDown]
+		public void TearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
 	}
 }

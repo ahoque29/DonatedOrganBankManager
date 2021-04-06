@@ -128,5 +128,12 @@ namespace HospitalTests.ServiceTests
 
 			Assert.That(result, Is.EquivalentTo(manualWaitingList));
 		}
+
+		[OneTimeTearDown]
+		public void TearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
+
 	}
 }

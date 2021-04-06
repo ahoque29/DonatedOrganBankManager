@@ -36,5 +36,17 @@ namespace HospitalTests.ManagerTests
 
 			Assert.That(result, Is.TypeOf<List<DonatedOrgan>>());
 		}
+
+		[Test]
+		public void DonatedOrganToString_ReturnsGivenString()
+		{
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Strict);
+			mockDonatedOrganService.Setup(d => d.GetToString(It.IsAny<int>()))
+				.Returns("ToString() text");
+
+			var donatedOrgan = new DonatedOrgan(mockDonatedOrganService.Object);
+
+			Assert.That(donatedOrgan.ToString(), Is.EqualTo("ToString() text"));
+		}
 	}
 }

@@ -149,5 +149,11 @@ namespace HospitalTests.ServiceTests
 
 			Assert.That(result, Is.EquivalentTo(manualListOfPatients));
 		}
+
+		[OneTimeTearDown]
+		public void TearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
 	}
 }

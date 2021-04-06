@@ -101,5 +101,11 @@ namespace HospitalTests.ServiceTests
 
 			Assert.That(result, Is.EquivalentTo(manualListOfOrgans));
 		}
+
+		[OneTimeTearDown]
+		public void TearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
 	}
 }

@@ -26,13 +26,13 @@ namespace HospitalTests.ManagerTests
 		[Test]
 		public void WaitingToString_ReturnsGivenString()
 		{
-			var mockWaitingService = new Mock<IWaitingListService>();
+			var mockWaitingService = new Mock<IWaitingListService>(MockBehavior.Strict);
 			mockWaitingService.Setup(w => w.GetToString(It.IsAny<int>()))
 				.Returns("ToString() text");
 
 			var waiting = new Waiting(mockWaitingService.Object);
 
-			Assert.That(waiting.ToString, Is.EqualTo("ToString() text"));
+			Assert.That(waiting.ToString(), Is.EqualTo("ToString() text"));
 		}
 	}
 }

@@ -155,5 +155,11 @@ namespace HospitalTests.ServiceTests
 
 			Assert.That(result, Is.EqualTo("Id: 3 - TestTitle TestFirstName TestLastName of Blood Type O needs TestOrgan"));
 		}
+
+		[OneTimeTearDown]
+		public void TearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
 	}
 }
