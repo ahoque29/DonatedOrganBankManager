@@ -12,6 +12,20 @@ namespace HospitalTests.ManagerTests
 	public class DonatedOrganManagerTests
 	{
 		[Test]
+		public void CreateDonatedOrgan_CallsIDonatedOrganGetOrganId_WithCorrectParameters()
+		{
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Loose);
+			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+
+			donatedOrganManager.CreateDonatedOrgan("TestOrgan",
+				"TestBloodType",
+				99,
+				new DateTime(1900, 01, 01));
+
+			mockDonatedOrganService.Verify(d => d.GetOrganId("TestOrgan"));
+		}
+		
+		[Test]
 		public void WhenADonatedOrganIsCreatedWithNegativeAge_ThrowsException()
 		{
 			var mockDonatedOrganService = new Mock<IDonatedOrganService>();
