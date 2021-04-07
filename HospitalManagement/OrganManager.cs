@@ -46,12 +46,6 @@ namespace HospitalManagement
 				IsAgeChecked = isAgeChecked
 			};
 
-			using (var db = new HospitalContext())
-			{
-				db.Organs.Add(newOrgan);
-				db.SaveChanges();
-			}
-
 			_service.AddOrgan(newOrgan);
 		}
 
