@@ -27,7 +27,7 @@ namespace HospitalTests.ManagerTests
 				"TestPhone",
 				"B");
 
-			var patient = new Patient()
+			var patientToBeAdded = new Patient()
 			{
 				Title = "Mr",
 				LastName = "GuyTest",
@@ -40,7 +40,7 @@ namespace HospitalTests.ManagerTests
 				BloodType = "B"
 			};
 
-			mockPatientService.Verify(p => p.AddPatient(patient));
+			mockPatientService.Verify(p => p.AddPatient(patientToBeAdded));
 		}
 
 		[Test]

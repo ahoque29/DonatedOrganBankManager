@@ -4,12 +4,57 @@ using HospitalManagement;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System;
 
 namespace HospitalTests.ManagerTests
 {
 	[TestFixture]
 	public class WaitingListManagerTests
 	{
+		[Test]
+		public void CreateWaiting_CallsIWaitingListServiceAddWaiting_WithCorrectParameter()
+		{
+			var mockWaitingService = new Mock<IWaitingListService>(MockBehavior.Loose);
+			var waitingListManager = new WaitingListManager(mockWaitingService.Object);
+
+			waitingListManager.CreateWaiting(3,
+				5,
+				new DateTime(1999, 02, 05));
+
+			var waitingToBeAdded = new Waiting()
+			{
+				PatientId = 3,
+				OrganId = 5,
+				DateOfEntry = new DateTime(1999, 02, 05)
+			};
+
+			mockWaitingService.Verify(w => w.AddWaiting(waitingToBeAdded));
+		}
+
+		[Test]
+		public void CreateWaiting_CallsIWaitingServiceAddWaiting_Once()
+		{
+			var mockWaitingService = new Mock<IWaitingListService>(MockBehavior.Loose);
+			var waitingListManager = new WaitingListManager(mockWaitingService.Object);
+
+			waitingListManager.CreateWaiting(3,
+				5,
+				new DateTime(1999, 02, 05));
+
+			mockWaitingService.Verify(w => w.AddWaiting(It.IsAny<Waiting>()), Times.Once);
+		}
+
+		[Test]
+		public void RetrieveAllWaiting_CallsIWaitingListServiceGetWaitingList_Once()
+		{
+			var mockWaitingService = new Mock<IWaitingListService>(MockBehavior.Loose);
+			var waitingListManager = new WaitingListManager(mockWaitingService.Object);
+
+			waitingListManager.RetrieveWaitingList();
+
+			mockWaitingService.Verify(w => w.GetWaitingList(), Times.Once);
+		}
+
 		[Test]
 		public void RetrieveWaitingList_ReturnsListOfWaitings()
 		{

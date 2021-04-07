@@ -73,8 +73,8 @@ namespace HospitalTests.ServiceTests
 				Name = "TestOrgan"
 			});
 
-				#endregion Populate the InMemoryDatabase
-			}
+			#endregion Populate the InMemoryDatabase
+		}
 
 		[Test]
 		public void WhenAMatchedDonationEntryIsAdded_NumberOfMatchedDonationIncreaseByOne()

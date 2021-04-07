@@ -31,6 +31,30 @@ namespace HospitalTests.ManagerTests
 		}
 
 		[Test]
+		public void CreateOrgan_CallsIOrganServiceAddOrgan_Once()
+		{
+			var mockOrganService = new Mock<IOrganService>(MockBehavior.Loose);
+			var organManager = new OrganManager(mockOrganService.Object);
+
+			organManager.CreateOrgan("TestOrgan",
+				"TestType",
+				false);
+
+			mockOrganService.Verify(o => o.AddOrgan(It.IsAny<Organ>()), Times.Once);
+		}
+
+		[Test]
+		public void RetrieveAllOrgans_CallsIOrganServiceGetOrganList_Once()
+		{
+			var mockOrganService = new Mock<IOrganService>(MockBehavior.Loose);
+			var organManager = new OrganManager(mockOrganService.Object);
+
+			organManager.RetrieveAllOrgans();
+
+			mockOrganService.Verify(o => o.GetOrganList(), Times.Once);
+		}
+
+		[Test]
 		public void RetriveAllOrgans_ReturnsAListOfOrgans()
 		{
 			var mockOrganService = new Mock<IOrganService>(MockBehavior.Strict);
