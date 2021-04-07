@@ -44,14 +44,14 @@ namespace HospitalTests.ServiceTests
 
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
-				OrganId = 3,
+				OrganId = 101,
 				BloodType = "B",
 				DonorAge = 31,
 			});
 
 			_organService.AddOrgan(new Organ()
 			{
-				OrganId = 3,
+				OrganId = 101,
 				Name = "TestOrgan"
 			});
 
@@ -93,7 +93,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void WhenADonatedOrganIsRemoved_QueryThatSearchesForItReturnsFalse()
 		{
-			var donatedOrganToBeDeleted = _context.DonatedOrgans.Where(d => d.OrganId == 3).FirstOrDefault();
+			var donatedOrganToBeDeleted = _context.DonatedOrgans.Where(d => d.OrganId == 101).FirstOrDefault();
 			_donatedOrganService.RemoveDonatedOrgan(donatedOrganToBeDeleted.DonatedOrganId);
 
 			var query = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganToBeDeleted.DonatedOrganId).Any();
@@ -102,7 +102,7 @@ namespace HospitalTests.ServiceTests
 			// Add the entry back
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
-				OrganId = 3,
+				OrganId = 101,
 				BloodType = "B",
 				DonorAge = 31,
 			});
@@ -134,7 +134,7 @@ namespace HospitalTests.ServiceTests
 				},
 				new DonatedOrgan(_donatedOrganService)
 				{
-					OrganId = 3,
+					OrganId = 101,
 					BloodType = "B",
 					DonorAge = 31,
 				}
@@ -148,7 +148,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetToString_ReturnsCorrectString()
 		{
-			var donatedOrgan = _context.DonatedOrgans.Where(w => w.OrganId == 3).FirstOrDefault();
+			var donatedOrgan = _context.DonatedOrgans.Where(w => w.OrganId == 101).FirstOrDefault();
 			var result = _donatedOrganService.GetToString(donatedOrgan.DonatedOrganId);
 
 			Assert.That(result, Is.EqualTo("Id: 3 - Availability: Yes - Organ: TestOrgan - Blood Type: B - Age at Donation: 31 - Donated on: 01/01/0001"));
