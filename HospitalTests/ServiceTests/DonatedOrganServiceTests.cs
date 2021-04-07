@@ -12,6 +12,7 @@ namespace HospitalTests.ServiceTests
 	{
 		private HospitalContext _context;
 		private DonatedOrganService _donatedOrganService;
+		private OrganService _organService;
 
 		[OneTimeSetUp]
 		public void OneTimeSetup()
@@ -22,6 +23,7 @@ namespace HospitalTests.ServiceTests
 
 			_context = new HospitalContext(options);
 			_donatedOrganService = new DonatedOrganService(_context);
+			_organService = new OrganService(_context);
 
 			#region Populate the InMemory Database
 
@@ -45,6 +47,12 @@ namespace HospitalTests.ServiceTests
 				OrganId = 3,
 				BloodType = "B",
 				DonorAge = 31,
+			});
+
+			_organService.AddOrgan(new Organ()
+			{
+				OrganId = 3,
+				Name = "TestOrgan"
 			});
 
 			#endregion
@@ -90,6 +98,14 @@ namespace HospitalTests.ServiceTests
 
 			var query = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganToBeDeleted.DonatedOrganId).Any();
 			Assert.That(query, Is.False);
+
+			// Add the entry back
+			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
+			{
+				OrganId = 3,
+				BloodType = "B",
+				DonorAge = 31,
+			});
 		}
 
 		[Test]
@@ -127,6 +143,15 @@ namespace HospitalTests.ServiceTests
 			var result = _donatedOrganService.GetDonatedOrgansList();
 
 			Assert.That(result, Is.EquivalentTo(manualWaitingList));
+		}
+
+		[Test]
+		public void GetToString_ReturnsCorrectString()
+		{
+			var donatedOrgan = _context.DonatedOrgans.Where(w => w.OrganId == 3).FirstOrDefault();
+			var result = _donatedOrganService.GetToString(donatedOrgan.DonatedOrganId);
+
+			Assert.That(result, Is.EqualTo("Id: 3 - Availability: Yes - Organ: TestOrgan - Blood Type: B - Age at Donation: 31 - Donated on: 01/01/0001"));
 		}
 
 		[OneTimeTearDown]
