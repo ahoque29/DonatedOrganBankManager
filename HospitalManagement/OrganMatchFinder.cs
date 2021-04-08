@@ -1,4 +1,5 @@
 ﻿using HospitalData;
+using HospitalData.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,27 +8,31 @@ namespace HospitalManagement
 {
 	public class OrganMatchFinder
 	{
+		private readonly IOrganMatchFinderService _service;
+
+		public OrganMatchFinder()
+		{
+			_service = new OrganMatchFinderService();
+		}
+
+		public OrganMatchFinder(IOrganMatchFinderService service)
+		{
+			_service = service;
+		}
+		
 		private WaitingListManager _waitingListManager = new WaitingListManager();
 		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
 
 		// returns a list of donated organs with same OrganId the waiting list entry, if the donated organ is available
 		public List<DonatedOrgan> HasOrganList(int waitingId)
 		{
-			using (var db = new HospitalContext())
-			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
-				var hasOrganList = db.DonatedOrgans.Where(d => d.OrganId == waiting.OrganId && d.IsDonated == false).ToList();
-
-				return hasOrganList;
-			}
+			return _service.GetHasOrganList(waitingId);
 		}
 
 		// returns true if HasOrganList is not null
 		public bool HasOrgan(int waitingId)
 		{
-			var hasOrgan = HasOrganList(waitingId).Any();
-
-			return hasOrgan;
+			return HasOrganList(waitingId).Any();
 		}
 
 		// AgeFinder
@@ -73,7 +78,7 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault(); // 2
 				var organ = db.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
 				var organAgeChecked = organ.IsAgeChecked;
 				var donatedOrgans = HasOrganList(waitingId);
@@ -147,7 +152,7 @@ namespace HospitalManagement
 		{
 			using (var db = new HospitalContext())
 			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault(); // 3
 				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
 				var patientBloodType = patient.BloodType;
 
