@@ -36,9 +36,9 @@ namespace HospitalTests.ManagerTests
 			var mockOrganService = new Mock<IOrganService>(MockBehavior.Loose);
 			var organManager = new OrganManager(mockOrganService.Object);
 
-			organManager.CreateOrgan("TestOrgan",
-				"TestType",
-				false);
+			organManager.CreateOrgan(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<bool>());
 
 			mockOrganService.Verify(o => o.AddOrgan(It.IsAny<Organ>()), Times.Once);
 		}

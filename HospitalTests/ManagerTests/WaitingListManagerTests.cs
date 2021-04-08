@@ -37,15 +37,15 @@ namespace HospitalTests.ManagerTests
 			var mockWaitingService = new Mock<IWaitingListService>(MockBehavior.Loose);
 			var waitingListManager = new WaitingListManager(mockWaitingService.Object);
 
-			waitingListManager.CreateWaiting(3,
-				5,
-				new DateTime(1999, 02, 05));
+			waitingListManager.CreateWaiting(It.IsAny<int>(),
+				It.IsAny<int>(),
+				It.IsAny<DateTime>());
 
 			mockWaitingService.Verify(w => w.AddWaiting(It.IsAny<Waiting>()), Times.Once);
 		}
 
 		[Test]
-		public void RetrieveAllWaiting_CallsIWaitingListServiceGetWaitingList_Once()
+		public void RetrieveWaitingList_CallsIWaitingListServiceGetWaitingList_Once()
 		{
 			var mockWaitingService = new Mock<IWaitingListService>(MockBehavior.Loose);
 			var waitingListManager = new WaitingListManager(mockWaitingService.Object);

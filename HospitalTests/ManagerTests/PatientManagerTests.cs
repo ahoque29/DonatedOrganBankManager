@@ -25,7 +25,7 @@ namespace HospitalTests.ManagerTests
 				"TestCity",
 				"TestPostcode",
 				"TestPhone",
-				"B");
+				"TestBloodType");
 
 			var patientToBeAdded = new Patient()
 			{
@@ -37,7 +37,7 @@ namespace HospitalTests.ManagerTests
 				City = "TestCity",
 				PostCode = "TestPostcode",
 				Phone = "TestPhone",
-				BloodType = "B"
+				BloodType = "TestBloodType"
 			};
 
 			mockPatientService.Verify(p => p.AddPatient(patientToBeAdded));
@@ -49,15 +49,15 @@ namespace HospitalTests.ManagerTests
 			var mockPatientService = new Mock<IPatientService>(MockBehavior.Loose);
 			var patientManager = new PatientManager(mockPatientService.Object);
 
-			patientManager.CreatePatient("Mr",
-				"GuyTest",
-				"TestGuy",
-				new DateTime(1900, 01, 01),
-				"00 TestAddress",
-				"TestCity",
-				"TestPostcode",
-				"TestPhone",
-				"B");
+			patientManager.CreatePatient(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<DateTime>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<string>());
 
 			mockPatientService.Verify(p => p.AddPatient(It.IsAny<Patient>()), Times.Once);
 		}
@@ -68,15 +68,15 @@ namespace HospitalTests.ManagerTests
 			var mockPatientServive = new Mock<IPatientService>();
 			var patientManager = new PatientManager(mockPatientServive.Object);
 
-			Assert.That(() => patientManager.CreatePatient("Mr",
-			"GuyTest",
-			"TestGuy",
+			Assert.That(() => patientManager.CreatePatient(It.IsAny<string>(),
+			It.IsAny<string>(),
+			It.IsAny<string>(),
 			new DateTime(3000, 01, 01),
-			"00 TestAddress",
-			"TestCity",
-			"TestPostcode",
-			"TestPhone",
-			"B"), Throws.ArgumentException.With.Message.EqualTo("Date of Birth cannot be in the future!"));
+			It.IsAny<string>(),
+			It.IsAny<string>(),
+			It.IsAny<string>(),
+			It.IsAny<string>(),
+			It.IsAny<string>()), Throws.ArgumentException.With.Message.EqualTo("Date of Birth cannot be in the future!"));
 		}
 
 		[Test]

@@ -18,24 +18,90 @@ namespace HospitalTests.ManagerTests
 			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
 
 			donatedOrganManager.CreateDonatedOrgan("TestOrgan",
-				"TestBloodType",
-				99,
-				new DateTime(1900, 01, 01));
+				It.IsAny<string>(),
+				It.IsAny<int>(),
+				It.IsAny<DateTime>());
 
 			mockDonatedOrganService.Verify(d => d.GetOrganId("TestOrgan"));
 		}
-		
+
+		[Test]
+		public void CreateDonatedOrgan_CallsIDonatedOrganGetOrganId_Once()
+		{
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Loose);
+			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+
+			donatedOrganManager.CreateDonatedOrgan(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<int>(),
+				It.IsAny<DateTime>());
+
+			mockDonatedOrganService.Verify(d => d.GetOrganId(It.IsAny<string>()), Times.Once);
+		}
+
+		[Test]
+		public void CreateDonatedOrgan_CallsIDonatedOrganAddDonatedOrgan_WithCorrectParameters()
+		{
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Loose);
+			mockDonatedOrganService.Setup(d => d.GetOrganId(It.IsAny<string>()))
+				.Returns(5);			
+
+			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+
+			donatedOrganManager.CreateDonatedOrgan("TestOrgan",
+				"TestBloodType",
+				26,
+				new DateTime(1900, 01, 01));
+
+			var donatedOrganToBeAdded = new DonatedOrgan()
+			{
+				OrganId = 5,
+				BloodType = "TestBloodType",
+				DonorAge = 26,
+				DonationDate = new DateTime(1900, 01, 01)
+			};
+
+			mockDonatedOrganService.Verify(d => d.AddDonatedOrgan(donatedOrganToBeAdded));
+		}
+
+		[Test]
+		public void CreateDonatedOrgan_CallsIDonatedOrganService_Once()
+		{
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Loose);
+			mockDonatedOrganService.Setup(d => d.GetOrganId(It.IsAny<string>()))
+				.Returns(It.IsAny<int>());
+
+			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+
+			donatedOrganManager.CreateDonatedOrgan(It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<int>(),
+				It.IsAny<DateTime>());
+
+			mockDonatedOrganService.Verify(d => d.AddDonatedOrgan(It.IsAny<DonatedOrgan>()), Times.Once);
+		}
+
+		[Test]
+		public void RetrieveAllDonatedOrgans_CallsIDonatedOrganServiceGetDonatedOrgansList_Once()
+		{
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Loose);
+			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+
+			donatedOrganManager.RetrieveAllDonatedOrgans();
+
+			mockDonatedOrganService.Verify(d => d.GetDonatedOrgansList(), Times.Once);
+		}
+
 		[Test]
 		public void WhenADonatedOrganIsCreatedWithNegativeAge_ThrowsException()
 		{
 			var mockDonatedOrganService = new Mock<IDonatedOrganService>();
 			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
 
-			Assert.That(() => _donatedOrganManager.CreateDonatedOrgan("Pancreas",
-				"TestBloodType",
+			Assert.That(() => _donatedOrganManager.CreateDonatedOrgan(It.IsAny<string>(),
+				It.IsAny<string>(),
 				-6,
-				new DateTime(2021, 01, 01)),
-				Throws.ArgumentException.With.Message.EqualTo("Age cannot be negative!"));
+				It.IsAny<DateTime>()), Throws.ArgumentException.With.Message.EqualTo("Age cannot be negative!"));
 		}
 
 		[Test]
