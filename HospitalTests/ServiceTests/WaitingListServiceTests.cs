@@ -17,7 +17,7 @@ namespace HospitalTests.ServiceTests
 		private OrganService _organService;
 
 		[OneTimeSetUp]
-		public void OneTimeSetup()
+		public void OneTimeSetUp()
 		{
 			var options = new DbContextOptionsBuilder<HospitalContext>()
 				.UseInMemoryDatabase(databaseName: "Hospital_Fake")
@@ -28,7 +28,7 @@ namespace HospitalTests.ServiceTests
 			_patientService = new PatientService(_context);
 			_organService = new OrganService(_context);
 
-			#region Populate the InMemoryDatabase
+			#region Populate the InMemory Database
 
 			_waitingListService.AddWaiting(new Waiting(_waitingListService)
 			{
@@ -68,15 +68,6 @@ namespace HospitalTests.ServiceTests
 			});
 
 			#endregion Populate the InMemoryDatabase
-		}
-
-		[Test]
-		public void GetWaitingById_ReturnsCorrectWaiting()
-		{
-			var waiting = _context.Waitings.Where(w => w.WaitingId == 230).FirstOrDefault();
-			var result = _waitingListService.GetWaitingById(230);
-
-			Assert.That(result, Is.EqualTo(waiting));
 		}
 
 		[Test]
@@ -165,7 +156,7 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[OneTimeTearDown]
-		public void TearDown()
+		public void OneTimeTearDown()
 		{
 			_context.Database.EnsureDeleted();
 		}

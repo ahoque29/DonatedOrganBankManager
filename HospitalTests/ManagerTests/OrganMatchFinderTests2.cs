@@ -7,13 +7,7 @@ namespace HospitalTests
 	[TestFixture]
 	public class OrganMatchFinderTests2
 	{
-		#region Initialization and SetUp
-
 		private OrganMatchFinder _organMatchFinder = new OrganMatchFinder();
-
-		#endregion Initialization and SetUp
-
-		#region AgeRangeFinder() Tests
 
 		[TestCase(0, "Newborn or Infant")]
 		[TestCase(1, "Newborn or Infant")]
@@ -42,7 +36,5 @@ namespace HospitalTests
 			var result = _organMatchFinder.AgeRangeFinder(dob);
 			Assert.AreEqual(result, expectedResult);
 		}
-
-		#endregion AgeRangeFinder() Tests
 	}
 }

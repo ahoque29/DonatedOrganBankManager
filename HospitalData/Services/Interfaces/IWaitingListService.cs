@@ -4,7 +4,6 @@ namespace HospitalData.Services
 {
 	public interface IWaitingListService
 	{
-		Waiting GetWaitingById(int waitingId);
 		void AddWaiting(Waiting waiting);
 
 		List<Waiting> GetWaitingList();
