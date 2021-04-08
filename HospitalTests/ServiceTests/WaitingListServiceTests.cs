@@ -32,13 +32,14 @@ namespace HospitalTests.ServiceTests
 
 			_waitingListService.AddWaiting(new Waiting(_waitingListService)
 			{
+				WaitingId = 230,
 				OrganId = 8,
 				PatientId = 1,
 				DateOfEntry = new DateTime(2021, 01, 02)
 			});
 
 			_waitingListService.AddWaiting(new Waiting(_waitingListService)
-			{
+			{				
 				OrganId = 2,
 				PatientId = 4,
 				DateOfEntry = new DateTime(2020, 07, 17)
@@ -67,6 +68,15 @@ namespace HospitalTests.ServiceTests
 			});
 
 			#endregion Populate the InMemoryDatabase
+		}
+
+		[Test]
+		public void GetWaitingById_ReturnsCorrectWaiting()
+		{
+			var waiting = _context.Waitings.Where(w => w.WaitingId == 230).FirstOrDefault();
+			var result = _waitingListService.GetWaitingById(230);
+
+			Assert.That(result, Is.EqualTo(waiting));
 		}
 
 		[Test]
@@ -151,7 +161,7 @@ namespace HospitalTests.ServiceTests
 			var waiting = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
 			var result = _waitingListService.GetToString(waiting.WaitingId);
 
-			Assert.That(result, Is.EqualTo("Id: 3 - TestTitle TestFirstName TestLastName of Blood Type O needs TestOrgan"));
+			Assert.That(result, Is.EqualTo("Id: 232 - TestTitle TestFirstName TestLastName of Blood Type O needs TestOrgan"));
 		}
 
 		[OneTimeTearDown]

@@ -18,6 +18,21 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
+		/// Retrieves a waiting list entry, given its Id.
+		/// </summary>
+		/// <param name="waitingId">
+		/// Id of the waiting list entry.
+		/// </param>
+		/// <returns>
+		/// Waiting list entry.
+		/// </returns>
+		public Waiting GetWaitingById(int waitingId)
+		{
+			return _context.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+		}
+
+
+		/// <summary>
 		/// Adds the waiting list entry into the database and saves.
 		/// </summary>
 		/// <param name="waiting">
