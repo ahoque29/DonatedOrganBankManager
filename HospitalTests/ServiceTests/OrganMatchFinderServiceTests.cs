@@ -48,7 +48,6 @@ namespace HospitalTests.ServiceTests
 			Assert.That(result, Is.EqualTo(waiting));
 		}
 
-
 		[OneTimeTearDown]
 		public void OneTimeTearDown()
 		{

@@ -33,5 +33,33 @@ namespace HospitalTests.ManagerTests
 			mockOrganMatchFinderService.Verify(o => o.GetHasOrganList(It.IsAny<int>()), Times.Once);
 
 		}
+
+		[Test]
+		public void HasOrgan_CallsOrganMatchFinderSeriveGetHasOrganlist_WithCorrectParameters()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+			mockOrganMatchFinderService.Setup(o => o.GetHasOrganList(3))
+				.Returns(new List<DonatedOrgan>());
+
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+
+			organMatchFinder.HasOrgan(3);
+
+			mockOrganMatchFinderService.Verify(o => o.GetHasOrganList(3));
+		}
+
+		[Test]
+		public void HasOrgan_CallsOrganMatchFinderServiceGetHasOrganList_Once()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+			mockOrganMatchFinderService.Setup(o => o.GetHasOrganList(It.IsAny<int>()))
+				.Returns(new List<DonatedOrgan>());
+
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+
+			organMatchFinder.HasOrgan(It.IsAny<int>());
+
+			mockOrganMatchFinderService.Verify(o => o.GetHasOrganList(It.IsAny<int>()), Times.Once);
+		}
 	}
 }
