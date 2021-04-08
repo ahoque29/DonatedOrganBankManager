@@ -4,12 +4,57 @@ using HospitalManagement;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System;
 
 namespace HospitalTests.ManagerTests
 {
 	[TestFixture]
 	public class MatchedDonationManagerTests
 	{
+		[Test]
+		public void CreateMatchedDonation_CallsIMatchedDonationAddMatchedDonation_WithCorrectParameters()
+		{
+			var mockMatchedDonationService = new Mock<IMatchedDonationService>(MockBehavior.Loose);
+			var matchedDonationManager = new MatchedDonationManager(mockMatchedDonationService.Object);
+
+			matchedDonationManager.CreateMatchedDonation(2,
+				3,
+				new DateTime(1900, 01, 01));
+
+			var matchedDonationToBeAdded = new MatchedDonation()
+			{
+				PatientId = 2,
+				DonatedOrganId = 3,
+				DateOfMatch = new DateTime(1900, 01, 01)
+			};
+
+			mockMatchedDonationService.Verify(m => m.AddMatchedDonation(matchedDonationToBeAdded));
+		}
+
+		[Test]
+		public void CreateMatchedDonation_CallsIMatchedDonationServiceAddMatchedDonation_Once()
+		{
+			var mockMatchedDonationService = new Mock<IMatchedDonationService>(MockBehavior.Loose);
+			var matchedDonationManager = new MatchedDonationManager(mockMatchedDonationService.Object);
+
+			matchedDonationManager.CreateMatchedDonation(It.IsAny<int>(),
+				It.IsAny<int>(),
+				It.IsAny<DateTime>());
+
+			mockMatchedDonationService.Verify(m => m.AddMatchedDonation(It.IsAny<MatchedDonation>()), Times.Once);
+		}
+
+		[Test]
+		public void RetrieveMatchedDonationList_CallsIMatchedDonationListService_GetMatchedDonationList()
+		{
+			var mockMatchedDonationService = new Mock<IMatchedDonationService>(MockBehavior.Loose);
+			var matchedDonationManager = new MatchedDonationManager(mockMatchedDonationService.Object);
+
+			matchedDonationManager.RetrieveAllMatchedDonations();
+
+			mockMatchedDonationService.Verify(m => m.GetMatchedDonationsList(), Times.Once);
+		}
+
 		[Test]
 		public void RetrieveAllMatchedDonations_ReturnsAListOfMatchedDonations()
 		{
