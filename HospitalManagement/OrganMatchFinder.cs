@@ -19,23 +19,27 @@ namespace HospitalManagement
 		{
 			_service = service;
 		}
+
+		private List<DonatedOrgan> _donationCandidates;
+		private Waiting _waiting;
+		private Organ _organ;
+		private Patient _patient;
+
+		public void SetParameters(int waitingId)
+		{
+			_waiting = _service.GetWaiting(waitingId);
+			_organ = _service.GetOrgan(_waiting);
+			_patient = _service.GetPatient(_waiting);
+			_donationCandidates = _service.GetDonatedOrgans();
+		}
 		
-		private WaitingListManager _waitingListManager = new WaitingListManager();
-		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
-
 		// returns a list of donated organs with same OrganId the waiting list entry, if the donated organ is available
-		public List<DonatedOrgan> HasOrganList(int waitingId)
+		public void OrganFilter()
 		{
-			return _service.GetHasOrganList(waitingId);
+			_donationCandidates = _donationCandidates.Where(d => d.OrganId == _waiting.OrganId).ToList();
 		}
 
-		// returns true if HasOrganList is not null
-		public bool HasOrgan(int waitingId)
-		{
-			return HasOrganList(waitingId).Any();
-		}
-
-		// AgeFinder
+		// AgeRangeFinder
 		public string AgeRangeFinder(int age)
 		{
 			if (age <= 1)
@@ -73,46 +77,31 @@ namespace HospitalManagement
 			return AgeRangeFinder(age);
 		}
 
-		// returns list of donated organs where the age ranges match
-		public List<DonatedOrgan> AgeCheckList(int waitingId)
+		public bool AgeRangeChecker(string patientAgeRange, string donorAgeRange)
 		{
-			using (var db = new HospitalContext())
-			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault(); // 2
-				var organ = db.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
-				var organAgeChecked = organ.IsAgeChecked;
-				var donatedOrgans = HasOrganList(waitingId);
-
-				if (organAgeChecked)
-				{
-					var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
-					var ageRangePatient = AgeRangeFinder(patient.DateOfBirth);
-
-					List<DonatedOrgan> ageCheckList = new List<DonatedOrgan>();
-
-					foreach (var donatedOrgan in donatedOrgans)
-					{
-						var ageRangeDonor = AgeRangeFinder((int)donatedOrgan.DonorAge);
-
-						if (ageRangePatient == ageRangeDonor)
-						{
-							ageCheckList.Add(donatedOrgan);
-						}
-					}
-
-					return ageCheckList;
-				}
-
-				return donatedOrgans;
-			}
+			return patientAgeRange == donorAgeRange;
 		}
 
-		// returns true if HasOrganList is not null
-		public bool AgeCheck(int waitingId)
+		// returns list of donated organs where the age ranges match
+		public void AgeFilter()
 		{
-			var AgeCheck = AgeCheckList(waitingId).Any();
+			if (!_organ.IsAgeChecked)
+			{
+				return;
+			}
 
-			return AgeCheck;
+			var patientAgeRange = AgeRangeFinder(_patient.DateOfBirth);
+			var donatedOrgansWithFailedAgeCheck = new List<DonatedOrgan>();
+
+			foreach (var donatedOrgan in _donationCandidates)
+			{
+				if (!AgeRangeChecker(patientAgeRange, AgeRangeFinder((int)donatedOrgan.DonorAge)))
+				{
+					donatedOrgansWithFailedAgeCheck.Add(donatedOrgan);
+				}
+			}
+
+			_donationCandidates = _donationCandidates.Except(donatedOrgansWithFailedAgeCheck).ToList();
 		}
 
 		// blood type compatibility check
@@ -148,78 +137,83 @@ namespace HospitalManagement
 		}
 
 		// returns list of donated organs where the blood types is compatible
-		public List<DonatedOrgan> BloodTypeMatchList(int waitingId)
+		public void BloodTypeFilter()
 		{
-			using (var db = new HospitalContext())
+			var patientBloodType = _patient.BloodType;
+			var donatedOrgansWithFailedBloodTypeCheck = new List<DonatedOrgan>();
+
+			foreach (var donatedOrgan in _donationCandidates)
 			{
-				var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault(); // 3
-				var patient = db.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
-				var patientBloodType = patient.BloodType;
-
-				var donatedOrgans = AgeCheckList(waitingId);
-
-				List<DonatedOrgan> donatedOrgansCorrectBloodType = new List<DonatedOrgan>();
-
-				foreach (var donatedOrgan in donatedOrgans)
+				if (!BloodTypeCheck(patientBloodType, donatedOrgan.BloodType))
 				{
-					var donorBloodType = donatedOrgan.BloodType;
-					var bloodTypeCheck = BloodTypeCheck(patientBloodType, donorBloodType);
-
-					if (bloodTypeCheck)
-					{
-						donatedOrgansCorrectBloodType.Add(donatedOrgan);
-					}
+					donatedOrgansWithFailedBloodTypeCheck.Add(donatedOrgan);
 				}
-
-				return donatedOrgansCorrectBloodType;
 			}
+
+			_donationCandidates = _donationCandidates.Except(donatedOrgansWithFailedBloodTypeCheck).ToList();
 		}
 
-		// returns true if BloodTypeMatchList is not null
-		public bool BloodTypeMatch(int waitingId)
+		/// <summary>
+		/// Creates a new matched donation.
+		/// </summary>
+		/// <param name="patientId">
+		/// Id of the patient that has received the organ.
+		/// </param>
+		/// <param name="donatedOrganId">
+		/// Id of the organ that has been donated.
+		/// </param>
+		/// <param name="dateOfMatch">
+		/// Date of match.
+		/// </param>
+		public void CreateMatchedDonation(int patientId,
+			int donatedOrganId,
+			DateTime dateOfMatch)
 		{
-			var bloodTypeMatch = BloodTypeMatchList(waitingId).Any();
+			var newMatchedDonation = new MatchedDonation()
+			{
+				PatientId = patientId,
+				DonatedOrganId = donatedOrganId,
+				DateOfMatch = dateOfMatch
+			};
 
-			return bloodTypeMatch;
+			_service.AddMatchedDonation(newMatchedDonation);
 		}
 
-		// Finding a match
-		public bool MatchExists(int waitingId)
+		/// <summary>
+		/// Deletes a waiting list entry.
+		/// </summary>
+		/// <param name="waitingId">
+		/// Id of the waiting to be removed.
+		/// </param>
+		public void DeleteWaiting(Waiting waiting)
 		{
-			return HasOrgan(waitingId) && AgeCheck(waitingId) && BloodTypeMatch(waitingId);
+			_service.RemoveWaiting(waiting);
 		}
 
 		// Listing the matches
 		public List<DonatedOrgan> ListMatchedOrgans(int waitingId)
 		{
-			var matchedOrgans = new List<DonatedOrgan>();
+			SetParameters(waitingId);
 
-			if (MatchExists(waitingId))
-			{
-				matchedOrgans = BloodTypeMatchList(waitingId);
-			}
+			OrganFilter();
+			AgeFilter();			
+			BloodTypeFilter();
 
-			return matchedOrgans;
+			return _donationCandidates;
 		}
 
 		public void ExecuteMatch(int waitingId, int donatedOrganId)
 		{
-			if (MatchExists(waitingId))
+			if (ListMatchedOrgans(waitingId).Any())
 			{
-				using (var db = new HospitalContext())
-				{
-					// mark the donated organ as donated and save changes
-					var donatedOrgan = db.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
-					donatedOrgan.IsDonated = true;
-					db.SaveChanges();
+				// mark the donated organ as donated and save changes
+				_service.MarkOrganAsMatched(donatedOrganId);
 
-					// add an entry to the matched donations table
-					var waiting = db.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
-					_matchedDonationManager.CreateMatchedDonation(waiting.PatientId, donatedOrganId, DateTime.Now);
+				// add an entry to the matched donations table
+				CreateMatchedDonation(_waiting.PatientId, donatedOrganId, DateTime.Now);
 
-					// delete the waiting from the database
-					_waitingListManager.DeleteWaiting(waitingId);
-				}
+				// delete the waiting from the database
+				DeleteWaiting(_waiting);
 			}
 		}
 	}

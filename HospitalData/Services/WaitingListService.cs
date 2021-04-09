@@ -41,19 +41,6 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Removes the waiting list entry from the database.
-		/// </summary>
-		/// <param name="waitingId">
-		/// Id of the waiting to be removed.
-		/// </param>
-		public void RemoveWaiting(int waitingId)
-		{
-			var waitingToBeRemoved = _context.Waitings.Where(w => w.WaitingId == waitingId);
-			_context.Waitings.RemoveRange(waitingToBeRemoved);
-			_context.SaveChanges();
-		}
-
-		/// <summary>
 		/// Calls the database and formats the ToString().
 		/// </summary>
 		/// <param name="waitingId">

@@ -92,23 +92,23 @@ namespace HospitalTests.ServiceTests
 			_context.SaveChanges();
 		}
 
-		[Test]
-		public void WhenAWaitingListEntryIsRemoved_QueryThatSearchesForItReturnsFalse()
-		{
-			var waitingToBeRemoved = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
-			_waitingListService.RemoveWaiting(waitingToBeRemoved.WaitingId);
+		//[Test]
+		//public void WhenAWaitingListEntryIsRemoved_QueryThatSearchesForItReturnsFalse()
+		//{
+		//	var waitingToBeRemoved = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
+		//	_waitingListService.RemoveWaiting(waitingToBeRemoved.WaitingId);
 
-			var query = _context.Waitings.Where(w => w.WaitingId == waitingToBeRemoved.WaitingId).Any();
-			Assert.That(query, Is.False);
+		//	var query = _context.Waitings.Where(w => w.WaitingId == waitingToBeRemoved.WaitingId).Any();
+		//	Assert.That(query, Is.False);
 
-			// Add the entry back
-			_waitingListService.AddWaiting(new Waiting(_waitingListService)
-			{
-				OrganId = 1,
-				PatientId = 2,
-				DateOfEntry = new DateTime(2021, 02, 15)
-			});
-		}
+		//	// Add the entry back
+		//	_waitingListService.AddWaiting(new Waiting(_waitingListService)
+		//	{
+		//		OrganId = 1,
+		//		PatientId = 2,
+		//		DateOfEntry = new DateTime(2021, 02, 15)
+		//	});
+		//}
 
 		[Test]
 		public void GetWaitingList_ReturnsCorrectNumberOfPatients()

@@ -39,15 +39,6 @@ namespace HospitalTests.ServiceTests
 			#endregion
 		}
 
-		[Test]
-		public void GetWaitingById_ReturnsCorrectWaiting()
-		{
-			var waiting = _context.Waitings.Where(w => w.WaitingId == 230).FirstOrDefault();
-			var result = _organMatchFinderService.GetWaitingById(230);
-
-			Assert.That(result, Is.EqualTo(waiting));
-		}
-
 		[OneTimeTearDown]
 		public void OneTimeTearDown()
 		{

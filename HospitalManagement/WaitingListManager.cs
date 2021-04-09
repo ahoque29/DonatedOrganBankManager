@@ -57,16 +57,6 @@ namespace HospitalManagement
 			return _service.GetWaitingList();
 		}
 
-		/// <summary>
-		/// Deletes a waiting list entry.
-		/// </summary>
-		/// <param name="waitingId">
-		/// Id of the waiting to be removed.
-		/// </param>
-		public void DeleteWaiting(int waitingId)
-		{
-			_service.RemoveWaiting(waitingId);
-		}
 
 		/// <summary>
 		/// Sets a given object as a waiting.
