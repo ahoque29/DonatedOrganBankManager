@@ -63,7 +63,7 @@ namespace HospitalTests.ManagerTests
 		}
 
 		[Test]
-		public void WhenAPatientIsCreatedWithANegativeAge_ArgumentExceptionIsThrown()
+		public void CreatePatient_WithADobInTheFuture_ThrowsArgumentException_WithCorrectMessage()
 		{
 			var mockPatientServive = new Mock<IPatientService>();
 			var patientManager = new PatientManager(mockPatientServive.Object);
