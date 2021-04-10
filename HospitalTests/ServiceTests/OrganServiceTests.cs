@@ -47,7 +47,7 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[Test]
-		public void WhenANewOrganIsAdded_NumberOfOrgansIsIncreasedByOne()
+		public void AddOrgan_IncreasesNumberOfOrgans_ByOne()
 		{
 			var numberOfOrgansBefore = _context.Organs.Count();
 
