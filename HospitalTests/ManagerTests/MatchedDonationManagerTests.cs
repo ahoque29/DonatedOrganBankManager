@@ -12,7 +12,7 @@ namespace HospitalTests.ManagerTests
 	public class MatchedDonationManagerTests
 	{
 		[Test]
-		public void RetrieveMatchedDonationList_CallsIMatchedDonationListService_GetMatchedDonationList()
+		public void RetrieveMatchedDonationList_CallsIMatchedDonationListService_GetMatchedDonationList_Once()
 		{
 			var mockMatchedDonationService = new Mock<IMatchedDonationService>(MockBehavior.Loose);
 			var matchedDonationManager = new MatchedDonationManager(mockMatchedDonationService.Object);

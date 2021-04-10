@@ -46,6 +46,14 @@
 + DonatedOrgan.ToString()
   + DonatedOrganToString_ReturnsGivenString()
 
+### MatchedDonationManager
+
++ RetrieveAllMatchedDonations()
+  + RetrieveMatchedDonationList_CallsIMatchedDonationListService_GetMatchedDonationList_Once()
+  + RetrieveAllMatchedDonations_ReturnsAListOfMatchedDonations()
++ MatchedDonation.ToString()
+  + MatchedDonationToString_ReturnsGivenString()
+
 ## Service Layer
 
 ### PatientService
@@ -89,3 +97,10 @@
 + GetToString()
   + GetToString_ReturnsCorrectString()
 
+### MatchedDonationService
+
++ GetmatchedDonationsList()
+  + GetMatchedDonationsList_ReturnsCorrectNumberOfMatchedDonations()
+  + GetMatchedDonationsList_ReturnsCorrectListOfMatchedDonations()
++ GetToString()
+  + GetToString_ReturnsCorrectString()

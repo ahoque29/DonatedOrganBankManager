@@ -16,6 +16,7 @@ namespace HospitalTests.ServiceTests
 		private PatientService _patientService;
 		private DonatedOrganService _donatedOrganService;
 		private OrganService _organService;
+		private OrganMatchFinderService _organMatchFinderService;
 
 		[OneTimeSetUp]
 		public void OneTimeSetup()
@@ -25,28 +26,30 @@ namespace HospitalTests.ServiceTests
 				.Options;
 
 			_context = new HospitalContext(options);
+
 			_matchedDonationService = new MatchedDonationService(_context);
 			_patientService = new PatientService(_context);
 			_donatedOrganService = new DonatedOrganService(_context);
 			_organService = new OrganService(_context);
+			_organMatchFinderService = new OrganMatchFinderService(_context);
 
-			#region Populate the InMemoryDatabase
+			#region Populate the InMemory Database
 
-			_matchedDonationService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
+			_organMatchFinderService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
 			{
 				PatientId = 1,
 				DonatedOrganId = 1,
 				DateOfMatch = new DateTime(2019, 09, 15)
 			});
 
-			_matchedDonationService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
+			_organMatchFinderService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
 			{
 				PatientId = 2,
 				DonatedOrganId = 2,
 				DateOfMatch = new DateTime(2020, 11, 25)
 			});
 
-			_matchedDonationService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
+			_organMatchFinderService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
 			{
 				PatientId = 3,
 				DonatedOrganId = 3,
@@ -73,24 +76,7 @@ namespace HospitalTests.ServiceTests
 				Name = "TestOrgan"
 			});
 
-			#endregion Populate the InMemoryDatabase
-		}
-
-		[Test]
-		public void WhenAMatchedDonationEntryIsAdded_NumberOfMatchedDonationIncreaseByOne()
-		{
-			var numberOfMatchedDonationsBefore = _context.MatchedDonations.Count();
-
-			_matchedDonationService.AddMatchedDonation(new MatchedDonation(_matchedDonationService)
-			{
-				PatientId = 99,
-				DonatedOrganId = 99,
-				DateOfMatch = DateTime.Now
-			});
-
-			var numberOfMatchedDonationsAfter = _context.MatchedDonations.Count();
-
-			Assert.That(numberOfMatchedDonationsBefore + 1, Is.EqualTo(numberOfMatchedDonationsAfter));
+			#endregion
 		}
 
 		[Test]
