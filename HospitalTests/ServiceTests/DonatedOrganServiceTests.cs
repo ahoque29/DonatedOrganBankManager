@@ -30,14 +30,14 @@ namespace HospitalTests.ServiceTests
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 1,
-				BloodType = "O",
+				BloodType = "TestSeedBloodType1",
 				DonorAge = 21
 			});
 
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 2,
-				BloodType = "A",
+				BloodType = "TestSeedBloodType2",
 				DonorAge = 36,
 				IsDonated = true
 			});
@@ -45,7 +45,7 @@ namespace HospitalTests.ServiceTests
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 101,
-				BloodType = "B",
+				BloodType = "TestSeedBloodType3",
 				DonorAge = 31,
 			});
 
@@ -59,14 +59,22 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[Test]
-		public void WhenANewDonatedOrganIsAdded_NumberOfDonatedOrgansIsIncreasedByOne()
+		public void GetOrganId_ReturnsCorrectOrganId()
+		{
+			var result = _donatedOrganService.GetOrganId("TestOrgan");
+
+			Assert.That(result, Is.EqualTo(101));
+		}
+
+		[Test]
+		public void AddDonatedOrgan_IncreasesNumberOfDonatedOrgans_ByOne()
 		{
 			var numberOfDonatedOrgansBefore = _context.DonatedOrgans.Count();
 
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 99,
-				BloodType = "AB",
+				BloodType = "TestBloodType",
 				DonorAge = 42
 			});
 
@@ -81,7 +89,7 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[Test]
-		public void WhenAttemptingToDeleteADonatedOrganThatHasAlreadyBeenDonated_DonatedOrganIsNotDeleted()
+		public void RemoveDonatedOrgan_ThatIsAlreadyDonated_DoesNotRemoveOrgan()
 		{
 			var donatedOrgan = _context.DonatedOrgans.Where(d => d.OrganId == 2).FirstOrDefault();
 			_donatedOrganService.RemoveDonatedOrgan(donatedOrgan.DonatedOrganId);
@@ -91,7 +99,7 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[Test]
-		public void WhenADonatedOrganIsRemoved_QueryThatSearchesForItReturnsFalse()
+		public void RemoveDonatedOrgan_MakesQueryThatSearchesTheOrgan_ReturnFalse()
 		{
 			var donatedOrganToBeDeleted = _context.DonatedOrgans.Where(d => d.OrganId == 101).FirstOrDefault();
 			_donatedOrganService.RemoveDonatedOrgan(donatedOrganToBeDeleted.DonatedOrganId);
@@ -103,14 +111,14 @@ namespace HospitalTests.ServiceTests
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
 			{
 				OrganId = 101,
-				BloodType = "B",
+				BloodType = "TestSeedBloodType3",
 				DonorAge = 31,
 			});
 		}
 
 		[Test]
 		public void GetDonatedOrgansList_ReturnsCorrectNumberOfDonatedOrgans()
-		{
+		{			
 			Assert.That(_donatedOrganService.GetDonatedOrgansList().Count(), Is.EqualTo(3));
 		}
 
@@ -122,20 +130,20 @@ namespace HospitalTests.ServiceTests
 				new DonatedOrgan(_donatedOrganService)
 				{
 					OrganId = 1,
-					BloodType = "O",
+					BloodType = "TestSeedBloodType1",
 					DonorAge = 21
 				},
 				new DonatedOrgan(_donatedOrganService)
 				{
 					OrganId = 2,
-					BloodType = "A",
+					BloodType = "TestSeedBloodType2",
 					DonorAge = 36,
 					IsDonated = true
 				},
 				new DonatedOrgan(_donatedOrganService)
 				{
 					OrganId = 101,
-					BloodType = "B",
+					BloodType = "TestSeedBloodType3",
 					DonorAge = 31,
 				}
 			};
@@ -151,7 +159,7 @@ namespace HospitalTests.ServiceTests
 			var donatedOrgan = _context.DonatedOrgans.Where(w => w.OrganId == 101).FirstOrDefault();
 			var result = _donatedOrganService.GetToString(donatedOrgan.DonatedOrganId);
 
-			Assert.That(result, Is.EqualTo("Id: 3 - Availability: Yes - Organ: TestOrgan - Blood Type: B - Age at Donation: 31 - Donated on: 01/01/0001"));
+			Assert.That(result, Is.EqualTo("Id: 3 - Availability: Yes - Organ: TestOrgan - Blood Type: TestSeedBloodType3 - Age at Donation: 31 - Donated on: 01/01/0001"));
 		}
 
 		[OneTimeTearDown]

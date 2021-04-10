@@ -82,18 +82,7 @@ namespace HospitalTests.ManagerTests
 		}
 
 		[Test]
-		public void RetrieveAllDonatedOrgans_CallsIDonatedOrganServiceGetDonatedOrgansList_Once()
-		{
-			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Loose);
-			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
-
-			donatedOrganManager.RetrieveAllDonatedOrgans();
-
-			mockDonatedOrganService.Verify(d => d.GetDonatedOrgansList(), Times.Once);
-		}
-
-		[Test]
-		public void WhenADonatedOrganIsCreatedWithNegativeAge_ThrowsException()
+		public void CreateDonatedOrgan_WithNegativeAge_ThrowsArgumentExceptionWithCorrectMessage()
 		{
 			var mockDonatedOrganService = new Mock<IDonatedOrganService>();
 			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
@@ -102,6 +91,17 @@ namespace HospitalTests.ManagerTests
 				It.IsAny<string>(),
 				-6,
 				It.IsAny<DateTime>()), Throws.ArgumentException.With.Message.EqualTo("Age cannot be negative!"));
+		}
+
+		[Test]
+		public void RetrieveAllDonatedOrgans_CallsIDonatedOrganServiceGetDonatedOrgansList_Once()
+		{
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Loose);
+			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+
+			donatedOrganManager.RetrieveAllDonatedOrgans();
+
+			mockDonatedOrganService.Verify(d => d.GetDonatedOrgansList(), Times.Once);
 		}
 
 		[Test]

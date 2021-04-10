@@ -45,17 +45,6 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database context to return a list of all the donated organs.
-		/// </summary>
-		/// <returns>
-		/// List of all donated organs.
-		/// </returns>
-		public List<DonatedOrgan> GetDonatedOrgansList()
-		{
-			return _context.DonatedOrgans.ToList();
-		}
-
-		/// <summary>
 		/// Removes the donated organ from the database.
 		/// Only allows deletion if the donated organ has not been donated yet.
 		/// </summary>
@@ -70,6 +59,17 @@ namespace HospitalData.Services
 				_context.DonatedOrgans.RemoveRange(donatedOrganToBeRemoved);
 				_context.SaveChanges();
 			}
+		}
+
+		/// <summary>
+		/// Calls the database context to return a list of all the donated organs.
+		/// </summary>
+		/// <returns>
+		/// List of all donated organs.
+		/// </returns>
+		public List<DonatedOrgan> GetDonatedOrgansList()
+		{
+			return _context.DonatedOrgans.ToList();
 		}
 
 		/// <summary>

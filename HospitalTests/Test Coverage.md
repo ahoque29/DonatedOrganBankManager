@@ -32,6 +32,20 @@
 + Waiting.ToString()
   + WaitingToString_ReturnsGivenString()
 
+### DonatedOrganManager
+
++ CreateDonatedOrgan()
+  + CreateDonatedOrgan_CallsIDonatedOrganGetOrganId_WithCorrectParameters()
+  + CreateDonatedOrgan_CallsIDonatedOrganGetOrganId_Once()
+  + CreateDonatedOrgan_CallsIDonatedOrganAddDonatedOrgan_WithCorrectParameters()
+  + CreateDonatedOrgan_CallsIDonatedOrganService_Once()
+  + CreateDonatedOrgan_WithNegativeAge_ThrowsArgumentExceptionWithCorrectMessage()
++ RetrieveAllDonatedOrgans()
+  + RetrieveAllDonatedOrgans_CallsIDonatedOrganServiceGetDonatedOrgansList_Once()
+  + RetrieveDonatedOrgansList_ReturnsListOfDonatedOrgans()
++ DonatedOrgan.ToString()
+  + DonatedOrganToString_ReturnsGivenString()
+
 ## Service Layer
 
 ### PatientService
@@ -59,3 +73,19 @@
   + GetWaitingList_ReturnsCorrectWaitingList()
 + GetToString()
   + GetToString_ReturnsCorrectString()
+
+### DonatedOrganService
+
++ GetOrganId()
+  + GetOrganId_ReturnsCorrectOrganId()
++ AddDonatedOrgan()
+  + AddDonatedOrgan_IncreasesNumberOfDonatedOrgans_ByOne()
++ RemoveDonatedOrgan()
+  + RemoveDonatedOrgan_ThatIsAlreadyDonated_DoesNotRemoveOrgan()
+  + RemoveDonatedOrgan_MakesQueryThatSearchesTheOrgan_ReturnFalse()
++ GetDonatedOrgansList()
+  + GetDonatedOrgansList_ReturnsCorrectNumberOfDonatedOrgans()
+  + GetDonatedOrgansList_ReturnsCorrectListOfDonatedOrgans()
++ GetToString()
+  + GetToString_ReturnsCorrectString()
+
