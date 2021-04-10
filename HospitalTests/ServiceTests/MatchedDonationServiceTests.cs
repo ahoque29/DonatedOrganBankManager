@@ -61,7 +61,6 @@ namespace HospitalTests.ServiceTests
 				PatientId = 3,
 				FirstName = "TestFirstName",
 				LastName = "TestLastName",
-
 			});
 
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan()

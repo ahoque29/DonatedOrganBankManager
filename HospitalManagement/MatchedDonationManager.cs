@@ -1,6 +1,5 @@
 ﻿using HospitalData;
 using HospitalData.Services;
-using System;
 using System.Collections.Generic;
 
 namespace HospitalManagement

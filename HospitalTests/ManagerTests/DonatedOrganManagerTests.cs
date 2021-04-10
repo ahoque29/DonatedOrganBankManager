@@ -44,7 +44,7 @@ namespace HospitalTests.ManagerTests
 		{
 			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Loose);
 			mockDonatedOrganService.Setup(d => d.GetOrganId(It.IsAny<string>()))
-				.Returns(5);			
+				.Returns(5);
 
 			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
 

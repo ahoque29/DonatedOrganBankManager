@@ -118,7 +118,7 @@ namespace HospitalTests.ServiceTests
 
 		[Test]
 		public void GetDonatedOrgansList_ReturnsCorrectNumberOfDonatedOrgans()
-		{			
+		{
 			Assert.That(_donatedOrganService.GetDonatedOrgansList().Count(), Is.EqualTo(3));
 		}
 

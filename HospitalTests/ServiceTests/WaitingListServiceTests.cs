@@ -39,7 +39,7 @@ namespace HospitalTests.ServiceTests
 			});
 
 			_waitingListService.AddWaiting(new Waiting(_waitingListService)
-			{				
+			{
 				OrganId = 2,
 				PatientId = 4,
 				DateOfEntry = new DateTime(2020, 07, 17)

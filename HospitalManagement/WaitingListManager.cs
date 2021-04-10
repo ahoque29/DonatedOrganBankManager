@@ -57,7 +57,6 @@ namespace HospitalManagement
 			return _service.GetWaitingList();
 		}
 
-
 		/// <summary>
 		/// Sets a given object as a waiting.
 		/// Used for front-end

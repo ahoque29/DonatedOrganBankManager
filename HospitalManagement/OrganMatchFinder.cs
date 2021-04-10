@@ -25,21 +25,37 @@ namespace HospitalManagement
 		private Organ _organ;
 		private Patient _patient;
 
-		public void SetParameters(int waitingId)
+		/// <summary>
+		/// Takes in the Id of the waiting list entry and sets the properties to the corresponding waiting list entry.
+		/// </summary>
+		/// <param name="waitingId">
+		/// Id of the waiting list entry.
+		/// </param>
+		public void SetProperties(int waitingId)
 		{
 			_waiting = _service.GetWaiting(waitingId);
 			_organ = _service.GetOrgan(_waiting);
 			_patient = _service.GetPatient(_waiting);
 			_donationCandidates = _service.GetDonatedOrgans();
 		}
-		
-		// returns a list of donated organs with same OrganId the waiting list entry, if the donated organ is available
+
+		/// <summary>
+		/// Sets _donationCandidates such that it only contains donated organs that match the organ in the waiting list entry.
+		/// </summary>
 		public void OrganFilter()
 		{
 			_donationCandidates = _donationCandidates.Where(d => d.OrganId == _waiting.OrganId).ToList();
 		}
 
-		// AgeRangeFinder
+		/// <summary>
+		/// Returns the age range, when given an age in years.
+		/// </summary>
+		/// <param name="age">
+		/// Age in years.
+		/// </param>
+		/// <returns>
+		/// Age Range.
+		/// </returns>
 		public string AgeRangeFinder(int age)
 		{
 			if (age <= 1)
@@ -70,19 +86,42 @@ namespace HospitalManagement
 			return "Adult";
 		}
 
-		// AgeRangeFinder() method overload that takes in date of birth as parameter
+		/// <summary>
+		/// Method overload for AgeRangeFinder() that takes in date of birth as input.
+		/// </summary>
+		/// <param name="dateOfBirth">
+		/// Date of birth.
+		/// </param>
+		/// <returns>
+		/// Age Range.
+		/// </returns>
 		public string AgeRangeFinder(DateTime dateOfBirth)
 		{
 			int age = DateTime.Today.Year - dateOfBirth.Year;
 			return AgeRangeFinder(age);
 		}
 
+		/// <summary>
+		/// Compares two age ranges.
+		/// </summary>
+		/// <param name="patientAgeRange">
+		/// Age range of the patient.
+		/// </param>
+		/// <param name="donorAgeRange">
+		/// Age range of the donor.
+		/// </param>
+		/// <returns>
+		/// True: Age ranges are compatible.
+		/// False: Age ranges are incompatible.
+		/// </returns>
 		public bool AgeRangeChecker(string patientAgeRange, string donorAgeRange)
 		{
 			return patientAgeRange == donorAgeRange;
 		}
 
-		// returns list of donated organs where the age ranges match
+		/// <summary>
+		/// Sets the _donationCandidates property such that donated organs with incompatible age ranges are removed.
+		/// </summary>
 		public void AgeFilter()
 		{
 			if (!_organ.IsAgeChecked)
@@ -104,7 +143,19 @@ namespace HospitalManagement
 			_donationCandidates = _donationCandidates.Except(donatedOrgansWithFailedAgeCheck).ToList();
 		}
 
-		// blood type compatibility check
+		/// <summary>
+		/// Blood type compatibility.
+		/// </summary>
+		/// <param name="patientBloodType">
+		/// Patient's blood type.
+		/// </param>
+		/// <param name="donorBloodType">
+		/// Donor's blood type.
+		/// </param>
+		/// <returns>
+		/// True: blood types are compatible.
+		/// False: blood types are incompatible.
+		/// </returns>
 		public bool BloodTypeCheck(string patientBloodType, string donorBloodType)
 		{
 			switch (donorBloodType)
@@ -136,7 +187,9 @@ namespace HospitalManagement
 			return false;
 		}
 
-		// returns list of donated organs where the blood types is compatible
+		/// <summary>
+		/// Sets _donatedCandidates such that donated organs with incompatible blood types are removed.
+		/// </summary>
 		public void BloodTypeFilter()
 		{
 			var patientBloodType = _patient.BloodType;
@@ -155,6 +208,7 @@ namespace HospitalManagement
 
 		/// <summary>
 		/// Creates a new matched donation.
+		/// This is invoked when a match between patient and donated organ is executed.
 		/// </summary>
 		/// <param name="patientId">
 		/// Id of the patient that has received the organ.
@@ -181,6 +235,7 @@ namespace HospitalManagement
 
 		/// <summary>
 		/// Deletes a waiting list entry.
+		/// This is invoked when a match between patient and donated organ is executed.
 		/// </summary>
 		/// <param name="waitingId">
 		/// Id of the waiting to be removed.
@@ -190,24 +245,44 @@ namespace HospitalManagement
 			_service.RemoveWaiting(waiting);
 		}
 
-		// Listing the matches
-		public List<DonatedOrgan> ListMatchedOrgans(int waitingId)
+		/// <summary>
+		/// Lists out all the donated organs that are compatible with a selected patient in the waiting list entry.
+		/// </summary>
+		/// <param name="waitingId">
+		/// Id of the waiting list entry.
+		/// </param>
+		/// <returns>
+		/// List of compatible donated organs.
+		/// </returns>
+		public List<DonatedOrgan> ListCompatibleOrgans(int waitingId)
 		{
-			SetParameters(waitingId);
+			SetProperties(waitingId);
 
 			OrganFilter();
-			AgeFilter();			
+			AgeFilter();
 			BloodTypeFilter();
 
 			return _donationCandidates;
 		}
 
+		/// <summary>
+		/// Matches a patient in the waiting list entry with a donated organ.
+		/// First marks the donated organ as donated.
+		/// Then, adds an entry to the matched donations table.
+		/// Finally, deletes the waiting list entry.
+		/// </summary>
+		/// <param name="waitingId">
+		/// Id of the waiting list entry.
+		/// </param>
+		/// <param name="donatedOrganId">
+		/// Id of the donated organ.
+		/// </param>
 		public void ExecuteMatch(int waitingId, int donatedOrganId)
 		{
-			if (ListMatchedOrgans(waitingId).Any())
+			if (ListCompatibleOrgans(waitingId).Any())
 			{
-				// mark the donated organ as donated and save changes
-				_service.MarkOrganAsMatched(donatedOrganId);
+				// mark the donated organ as donated and save changes								
+				_service.MarkDonatedOrganAsMatched(donatedOrganId);
 
 				// add an entry to the matched donations table
 				CreateMatchedDonation(_waiting.PatientId, donatedOrganId, DateTime.Now);

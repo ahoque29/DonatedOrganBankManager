@@ -4,7 +4,6 @@ using HospitalManagement;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 
 namespace HospitalTests.ManagerTests
 {

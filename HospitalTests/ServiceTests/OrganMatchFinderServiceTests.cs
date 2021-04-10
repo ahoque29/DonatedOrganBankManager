@@ -3,7 +3,6 @@ using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace HospitalTests.ServiceTests
@@ -57,7 +56,6 @@ namespace HospitalTests.ServiceTests
 				DateOfEntry = new DateTime(2021, 01, 02)
 			});
 		}
-
 
 		[OneTimeTearDown]
 		public void OneTimeTearDown()

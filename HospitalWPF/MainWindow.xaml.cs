@@ -215,7 +215,7 @@ namespace HospitalWPF
 		{
 			if (ListBoxWaitingMF.SelectedItem != null)
 			{
-				ListBoxMatchedOrgans.ItemsSource = _organMatchFinder.ListMatchedOrgans(_waitingListManager.SelectedWaiting.WaitingId);
+				ListBoxMatchedOrgans.ItemsSource = _organMatchFinder.ListCompatibleOrgans(_waitingListManager.SelectedWaiting.WaitingId);
 			}
 		}
 
