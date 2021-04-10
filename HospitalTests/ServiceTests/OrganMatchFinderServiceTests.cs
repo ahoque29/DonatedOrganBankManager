@@ -39,6 +39,26 @@ namespace HospitalTests.ServiceTests
 			#endregion
 		}
 
+		[Test]
+		public void WhenAWaitingListEntryIsRemoved_QueryThatSearchesForItReturnsFalse()
+		{
+			var waitingToBeRemoved = _context.Waitings.Where(w => w.WaitingId == 230).FirstOrDefault();
+			_organMatchFinderService.RemoveWaiting(waitingToBeRemoved);
+
+			var query = _context.Waitings.Where(w => w.WaitingId == waitingToBeRemoved.WaitingId).Any();
+			Assert.That(query, Is.False);
+
+			// Add the entry back
+			_waitingListService.AddWaiting(new Waiting(_waitingListService)
+			{
+				WaitingId = 230,
+				OrganId = 8,
+				PatientId = 1,
+				DateOfEntry = new DateTime(2021, 01, 02)
+			});
+		}
+
+
 		[OneTimeTearDown]
 		public void OneTimeTearDown()
 		{

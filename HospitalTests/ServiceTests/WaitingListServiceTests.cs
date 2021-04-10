@@ -71,7 +71,7 @@ namespace HospitalTests.ServiceTests
 		}
 
 		[Test]
-		public void WhenANewWaitingListEntryIsAdded_NumberOfWaitingsIsIncreasedByOne()
+		public void AddWaiting_IncreasesNumberOfWaitings_ByOne()
 		{
 			var numberOfWaitingsBefore = _context.Waitings.Count();
 
@@ -91,24 +91,6 @@ namespace HospitalTests.ServiceTests
 			_context.Waitings.RemoveRange(testWaiting);
 			_context.SaveChanges();
 		}
-
-		//[Test]
-		//public void WhenAWaitingListEntryIsRemoved_QueryThatSearchesForItReturnsFalse()
-		//{
-		//	var waitingToBeRemoved = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
-		//	_waitingListService.RemoveWaiting(waitingToBeRemoved.WaitingId);
-
-		//	var query = _context.Waitings.Where(w => w.WaitingId == waitingToBeRemoved.WaitingId).Any();
-		//	Assert.That(query, Is.False);
-
-		//	// Add the entry back
-		//	_waitingListService.AddWaiting(new Waiting(_waitingListService)
-		//	{
-		//		OrganId = 1,
-		//		PatientId = 2,
-		//		DateOfEntry = new DateTime(2021, 02, 15)
-		//	});
-		//}
 
 		[Test]
 		public void GetWaitingList_ReturnsCorrectNumberOfPatients()

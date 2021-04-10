@@ -21,6 +21,17 @@
   + RetrieveAllOrgans_CallsIOrganServiceGetOrganList_Once()
   + RetriveAllOrgans_ReturnsAListOfOrgans()
 
+### WaitingListManager
+
++ CreateWaiting()
+  + CreateWaiting_CallsIWaitingListServiceAddWaiting_WithCorrectParameter()
+  + CreateWaiting_CallsIWaitingServiceAddWaiting_Once()
++ RetrieveWaitingList()
+  + RetrieveWaitingList_CallsIWaitingListServiceGetWaitingList_Once()
+  + RetrieveWaitingList_ReturnsListOfWaitings()
++ Waiting.ToString()
+  + WaitingToString_ReturnsGivenString()
+
 ## Service Layer
 
 ### PatientService
@@ -38,3 +49,13 @@
 + GetOrganList()
   + GetOrganList_ReturnsCorrectNumberOfOrgans()
   + GetOrganList_ReturnsCorrectListOfOrgans()
+
+### WaitingListService
+
++ AddWaiting()
+  + AddWaiting_IncreasesNumberOfWaitings_ByOne()
++ GetWaitingList()
+  + GetWaitingList_ReturnsCorrectNumberOfPatients()
+  + GetWaitingList_ReturnsCorrectWaitingList()
++ GetToString()
+  + GetToString_ReturnsCorrectString()
