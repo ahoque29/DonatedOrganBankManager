@@ -23,7 +23,16 @@ namespace HospitalManagement
 		private List<DonatedOrgan> _donationCandidates;
 		private Waiting _waiting;
 		private Organ _organ;
-		private Patient _patient;		
+		private Patient _patient;
+		private readonly Dictionary<int[], string> _ageRanges = new Dictionary<int[], string>()
+		{
+			{ new int[] { -1, 1 }, "Newborn or Infant" },
+			{ new int[] { 1, 3 }, "Toddler" },
+			{ new int[] { 3, 5 }, "Preschooler" },
+			{ new int[] { 5, 12 }, "Child" },
+			{ new int[] { 12, 19 }, "Teenager" },
+			{ new int[] { 19, int.MaxValue }, "Adult" }
+		};
 
 		/// <summary>
 		/// Takes in the Id of the waiting list entry and sets the properties to the corresponding waiting list entry.
@@ -58,50 +67,17 @@ namespace HospitalManagement
 		/// </returns>
 		public string AgeRangeFinder(int age)
 		{
-			//if (age <= 1)
-			//{
-			//	return "Newborn or Infant";
-			//}
+			string ageRangeReturned = string.Empty;
 
-			//if (age <= 3)
-			//{
-			//	return "Toddler";
-			//}
-
-			//if (age <= 5)
-			//{
-			//	return "Preschooler";
-			//}
-
-			//if (age <= 12)
-			//{
-			//	return "Child";
-			//}
-
-			//if (age <= 19)
-			//{
-			//	return "Teenager";
-			//}
-
-			//return "Adult";
-
-			Dictionary<int[], string> ageRanges = new Dictionary<int[], string>();
-
-			ageRanges.Add(new int[] { -1, 1 }, "Newborn or Infant");
-			ageRanges.Add(new int[] { 1, 3 }, "Toddler");
-			ageRanges.Add(new int[] { 3, 5 }, "Preschooler");
-			ageRanges.Add(new int[] { 5, 12 }, "Child");
-			ageRanges.Add(new int[] { 12, 19 }, "Teenager");
-
-			foreach (var ageRange in ageRanges)
+			foreach (var ageRange in _ageRanges)
 			{
 				if (age > ageRange.Key[0] && age <= ageRange.Key[1])
 				{
-					return ageRange.Value;
+					ageRangeReturned = ageRange.Value;					
 				}
 			}
 
-			return "Adult";
+			return ageRangeReturned;
 		}
 
 		/// <summary>
