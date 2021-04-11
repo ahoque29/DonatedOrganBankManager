@@ -23,7 +23,7 @@ namespace HospitalManagement
 		private List<DonatedOrgan> _donationCandidates;
 		private Waiting _waiting;
 		private Organ _organ;
-		private Patient _patient;
+		private Patient _patient;		
 
 		/// <summary>
 		/// Takes in the Id of the waiting list entry and sets the properties to the corresponding waiting list entry.
@@ -31,7 +31,7 @@ namespace HospitalManagement
 		/// <param name="waitingId">
 		/// Id of the waiting list entry.
 		/// </param>
-		public void SetProperties(int waitingId)
+		public void SetFields(int waitingId)
 		{
 			_waiting = _service.GetWaiting(waitingId);
 			_organ = _service.GetOrgan(_waiting);
@@ -58,29 +58,47 @@ namespace HospitalManagement
 		/// </returns>
 		public string AgeRangeFinder(int age)
 		{
-			if (age <= 1)
-			{
-				return "Newborn or Infant";
-			}
+			//if (age <= 1)
+			//{
+			//	return "Newborn or Infant";
+			//}
 
-			if (age <= 3)
-			{
-				return "Toddler";
-			}
+			//if (age <= 3)
+			//{
+			//	return "Toddler";
+			//}
 
-			if (age <= 5)
-			{
-				return "Preschooler";
-			}
+			//if (age <= 5)
+			//{
+			//	return "Preschooler";
+			//}
 
-			if (age <= 12)
-			{
-				return "Child";
-			}
+			//if (age <= 12)
+			//{
+			//	return "Child";
+			//}
 
-			if (age <= 19)
+			//if (age <= 19)
+			//{
+			//	return "Teenager";
+			//}
+
+			//return "Adult";
+
+			Dictionary<int[], string> ageRanges = new Dictionary<int[], string>();
+
+			ageRanges.Add(new int[] { -1, 1 }, "Newborn or Infant");
+			ageRanges.Add(new int[] { 1, 3 }, "Toddler");
+			ageRanges.Add(new int[] { 3, 5 }, "Preschooler");
+			ageRanges.Add(new int[] { 5, 12 }, "Child");
+			ageRanges.Add(new int[] { 12, 19 }, "Teenager");
+
+			foreach (var ageRange in ageRanges)
 			{
-				return "Teenager";
+				if (age > ageRange.Key[0] && age <= ageRange.Key[1])
+				{
+					return ageRange.Value;
+				}
 			}
 
 			return "Adult";
@@ -256,7 +274,7 @@ namespace HospitalManagement
 		/// </returns>
 		public List<DonatedOrgan> ListCompatibleOrgans(int waitingId)
 		{
-			SetProperties(waitingId);
+			SetFields(waitingId);
 
 			OrganFilter();
 			AgeFilter();
@@ -281,7 +299,7 @@ namespace HospitalManagement
 		{
 			if (ListCompatibleOrgans(waitingId).Any())
 			{
-				// mark the donated organ as donated and save changes								
+				// mark the donated organ as donated and save changes
 				_service.MarkDonatedOrganAsMatched(donatedOrganId);
 
 				// add an entry to the matched donations table

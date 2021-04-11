@@ -11,6 +11,50 @@ namespace HospitalTests.ManagerTests
 	public class OrganMatchFinderTests
 	{
 		[Test]
+		public void SetProperties_CallsIOrganManagerGetWaiting_WithCorrectParameters()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+
+			organMatchFinder.SetFields(5);
+
+			mockOrganMatchFinderService.Verify(o => o.GetWaiting(5));
+		}
+
+		[Test]
+		public void SetProperties_CallsIOrganManagerGetWaiting_Once()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+
+			organMatchFinder.SetFields(It.IsAny<int>());
+
+			mockOrganMatchFinderService.Verify(o => o.GetWaiting(It.IsAny<int>()), Times.Once);
+		}
+
+		[Test]
+		public void SetProperties_CallsIOrganManagerGetOrgan_Once()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+
+			organMatchFinder.SetFields(It.IsAny<int>());
+
+			mockOrganMatchFinderService.Verify(o => o.GetOrgan(It.IsAny<Waiting>()), Times.Once);
+		}
+
+		[Test]
+		public void SetProperties_CallsIOrganManagerGetPatient_Once()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+
+			organMatchFinder.SetFields(It.IsAny<int>());
+
+			mockOrganMatchFinderService.Verify(o => o.GetPatient(It.IsAny<Waiting>()), Times.Once);
+		}
+
+		[Test]
 		public void CreateMatchedDonation_CallsIOrganMatchFinderServiceAddMatchedDonation_WithCorrectParameters()
 		{
 			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
