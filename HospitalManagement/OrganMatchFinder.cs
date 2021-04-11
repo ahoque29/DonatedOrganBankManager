@@ -24,6 +24,7 @@ namespace HospitalManagement
 		private Waiting _waiting;
 		private Organ _organ;
 		private Patient _patient;
+
 		private readonly Dictionary<int[], string> _ageRanges = new Dictionary<int[], string>()
 		{
 			{ new int[] { -1, 1 }, "Newborn or Infant" },
@@ -73,7 +74,7 @@ namespace HospitalManagement
 			{
 				if (age > ageRange.Key[0] && age <= ageRange.Key[1])
 				{
-					ageRangeReturned = ageRange.Value;					
+					ageRangeReturned = ageRange.Value;
 				}
 			}
 
@@ -275,13 +276,10 @@ namespace HospitalManagement
 		{
 			if (ListCompatibleOrgans(waitingId).Any())
 			{
-				// mark the donated organ as donated and save changes
 				_service.MarkDonatedOrganAsMatched(donatedOrganId);
 
-				// add an entry to the matched donations table
 				CreateMatchedDonation(_waiting.PatientId, donatedOrganId, DateTime.Now);
 
-				// delete the waiting from the database
 				DeleteWaiting(_waiting);
 			}
 		}
