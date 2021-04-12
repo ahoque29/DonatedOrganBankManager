@@ -11,39 +11,6 @@ namespace HospitalTests.ManagerTests
 	public class OrganManagerTests
 	{
 		[Test]
-		public void CreateOrgan_CallsIOrganServiceAddOrgan_WithCorrectParameters()
-		{
-			var mockOrganService = new Mock<IOrganService>(MockBehavior.Loose);
-			var organManager = new OrganManager(mockOrganService.Object);
-
-			organManager.CreateOrgan("TestOrgan",
-				"TestType",
-				false);
-
-			var organToBeAdded = new Organ()
-			{
-				Name = "TestOrgan",
-				Type = "TestType",
-				IsAgeChecked = false
-			};
-
-			mockOrganService.Verify(o => o.AddOrgan(organToBeAdded));
-		}
-
-		[Test]
-		public void CreateOrgan_CallsIOrganServiceAddOrgan_Once()
-		{
-			var mockOrganService = new Mock<IOrganService>(MockBehavior.Loose);
-			var organManager = new OrganManager(mockOrganService.Object);
-
-			organManager.CreateOrgan(It.IsAny<string>(),
-				It.IsAny<string>(),
-				It.IsAny<bool>());
-
-			mockOrganService.Verify(o => o.AddOrgan(It.IsAny<Organ>()), Times.Once);
-		}
-
-		[Test]
 		public void RetrieveAllOrgans_CallsIOrganServiceGetOrganList_Once()
 		{
 			var mockOrganService = new Mock<IOrganService>(MockBehavior.Loose);

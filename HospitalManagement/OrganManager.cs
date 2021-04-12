@@ -21,35 +21,6 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Creates a new organ.
-		/// Primarily used for seeding the database.
-		/// Not used in front end, yet.
-		/// </summary>
-		/// <param name="name">
-		/// Name of the organ.
-		/// </param>
-		/// <param name="type">
-		/// Type of organ (organ, tissue etc).
-		/// </param>
-		/// <param name="isAgeChecked">
-		/// Bool that checks whether the age of the donor is checked.
-		/// Used in compatibility logic.
-		/// </param>
-		public void CreateOrgan(string name,
-			string type,
-			bool isAgeChecked = true)
-		{
-			var newOrgan = new Organ()
-			{
-				Name = name,
-				Type = type,
-				IsAgeChecked = isAgeChecked
-			};
-
-			_service.AddOrgan(newOrgan);
-		}
-
-		/// <summary>
 		/// Retrieve a list of all the organs stored in the database.
 		/// </summary>
 		/// <returns>

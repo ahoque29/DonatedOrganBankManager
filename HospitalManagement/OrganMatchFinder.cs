@@ -24,7 +24,6 @@ namespace HospitalManagement
 		private Waiting _waiting;
 		private Organ _organ;
 		private Patient _patient;
-
 		private readonly Dictionary<int[], string> _ageRanges = new Dictionary<int[], string>()
 		{
 			{ new int[] { -1, 1 }, "Newborn or Infant" },
@@ -41,7 +40,7 @@ namespace HospitalManagement
 		/// <param name="waitingId">
 		/// Id of the waiting list entry.
 		/// </param>
-		public void SetFields(int waitingId)
+		private void SetFields(int waitingId)
 		{
 			_waiting = _service.GetWaiting(waitingId);
 			_organ = _service.GetOrgan(_waiting);
@@ -52,7 +51,7 @@ namespace HospitalManagement
 		/// <summary>
 		/// Sets _donationCandidates such that it only contains donated organs that match the organ in the waiting list entry.
 		/// </summary>
-		public void OrganFilter()
+		private void OrganFilter()
 		{
 			_donationCandidates = _donationCandidates.Where(d => d.OrganId == _waiting.OrganId).ToList();
 		}
@@ -66,7 +65,7 @@ namespace HospitalManagement
 		/// <returns>
 		/// Age Range.
 		/// </returns>
-		public string AgeRangeFinder(int age)
+		private string AgeRangeFinder(int age)
 		{
 			string ageRangeReturned = string.Empty;
 
@@ -90,7 +89,7 @@ namespace HospitalManagement
 		/// <returns>
 		/// Age Range.
 		/// </returns>
-		public string AgeRangeFinder(DateTime dateOfBirth)
+		private string AgeRangeFinder(DateTime dateOfBirth)
 		{
 			int age = DateTime.Today.Year - dateOfBirth.Year;
 			return AgeRangeFinder(age);
@@ -109,7 +108,7 @@ namespace HospitalManagement
 		/// True: Age ranges are compatible.
 		/// False: Age ranges are incompatible.
 		/// </returns>
-		public bool AgeRangeChecker(string patientAgeRange, string donorAgeRange)
+		private bool AgeRangeChecker(string patientAgeRange, string donorAgeRange)
 		{
 			return patientAgeRange == donorAgeRange;
 		}
@@ -117,7 +116,7 @@ namespace HospitalManagement
 		/// <summary>
 		/// Sets the _donationCandidates property such that donated organs with incompatible age ranges are removed.
 		/// </summary>
-		public void AgeFilter()
+		private void AgeFilter()
 		{
 			if (!_organ.IsAgeChecked)
 			{
@@ -151,7 +150,7 @@ namespace HospitalManagement
 		/// True: blood types are compatible.
 		/// False: blood types are incompatible.
 		/// </returns>
-		public bool BloodTypeCheck(string patientBloodType, string donorBloodType)
+		private bool BloodTypeCheck(string patientBloodType, string donorBloodType)
 		{
 			switch (donorBloodType)
 			{
@@ -185,7 +184,7 @@ namespace HospitalManagement
 		/// <summary>
 		/// Sets _donatedCandidates such that donated organs with incompatible blood types are removed.
 		/// </summary>
-		public void BloodTypeFilter()
+		private void BloodTypeFilter()
 		{
 			var patientBloodType = _patient.BloodType;
 			var donatedOrgansWithFailedBloodTypeCheck = new List<DonatedOrgan>();
@@ -214,7 +213,7 @@ namespace HospitalManagement
 		/// <param name="dateOfMatch">
 		/// Date of match.
 		/// </param>
-		public void CreateMatchedDonation(int patientId,
+		private void CreateMatchedDonation(int patientId,
 			int donatedOrganId,
 			DateTime dateOfMatch)
 		{
