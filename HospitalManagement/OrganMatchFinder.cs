@@ -234,7 +234,7 @@ namespace HospitalManagement
 		/// <param name="waitingId">
 		/// Id of the waiting to be removed.
 		/// </param>
-		public void DeleteWaiting(Waiting waiting)
+		private void DeleteWaiting(Waiting waiting)
 		{
 			_service.RemoveWaiting(waiting);
 		}

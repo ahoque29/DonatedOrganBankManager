@@ -84,7 +84,7 @@ namespace HospitalTests.ManagerTests
 		[Test]
 		public void CreateDonatedOrgan_WithNegativeAge_ThrowsArgumentExceptionWithCorrectMessage()
 		{
-			var mockDonatedOrganService = new Mock<IDonatedOrganService>();
+			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Strict);
 			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
 
 			Assert.That(() => _donatedOrganManager.CreateDonatedOrgan(It.IsAny<string>(),
