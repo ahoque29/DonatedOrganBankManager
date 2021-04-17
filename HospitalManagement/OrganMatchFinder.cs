@@ -9,10 +9,12 @@ namespace HospitalManagement
 	public class OrganMatchFinder
 	{
 		private readonly IOrganMatchFinderService _service;
+		private readonly IDateTimeService _dateTimeService;
 
 		public OrganMatchFinder()
 		{
 			_service = new OrganMatchFinderService();
+			_dateTimeService = new DateTimeService();
 		}
 
 		public OrganMatchFinder(IOrganMatchFinderService service)
@@ -20,10 +22,16 @@ namespace HospitalManagement
 			_service = service;
 		}
 
+		public OrganMatchFinder(IOrganMatchFinderService service, IDateTimeService dateTimeService)
+		{
+			_service = service;
+			_dateTimeService = dateTimeService;
+		}
+		
 		private List<DonatedOrgan> _donationCandidates;
 		private Waiting _waiting;
 		private Organ _organ;
-		private Patient _patient;
+		private Patient _patient;		
 		private readonly Dictionary<int[], string> _ageRanges = new Dictionary<int[], string>()
 		{
 			{ new int[] { -1, 1 }, "Newborn or Infant" },
@@ -91,7 +99,7 @@ namespace HospitalManagement
 		/// </returns>
 		private string AgeRangeFinder(DateTime dateOfBirth)
 		{
-			int age = DateTime.Today.Year - dateOfBirth.Year;
+			int age = _dateTimeService.GetToday().Year - dateOfBirth.Year;
 			return AgeRangeFinder(age);
 		}
 
