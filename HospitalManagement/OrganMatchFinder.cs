@@ -20,6 +20,7 @@ namespace HospitalManagement
 		public OrganMatchFinder(IOrganMatchFinderService service)
 		{
 			_service = service;
+			_dateTimeService = new DateTimeService();
 		}
 
 		public OrganMatchFinder(IOrganMatchFinderService service, IDateTimeService dateTimeService)
