@@ -28,11 +28,12 @@ namespace HospitalManagement
 			_service = service;
 			_dateTimeService = dateTimeService;
 		}
-		
+
 		private List<DonatedOrgan> _donationCandidates;
 		private Waiting _waiting;
 		private Organ _organ;
-		private Patient _patient;		
+		private Patient _patient;
+
 		private readonly Dictionary<int[], string> _ageRanges = new Dictionary<int[], string>()
 		{
 			{ new int[] { -1, 1 }, "Newborn or Infant" },
