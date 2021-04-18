@@ -250,7 +250,7 @@ namespace HospitalManagement
 		/// Matches a patient in the waiting list entry with a donated organ.
 		/// First marks the donated organ as donated.
 		/// Then, adds an entry to the matched donations table.
-		/// Finally, deletes the waiting list entry.
+		/// Finally, deletes the corresponding waiting list entry.
 		/// </summary>
 		/// <param name="waitingId">
 		/// Id of the waiting list entry.
