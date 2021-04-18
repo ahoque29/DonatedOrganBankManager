@@ -114,10 +114,6 @@ namespace HospitalTests.ManagerTests
 			Assert.That(result, Is.TypeOf<List<DonatedOrgan>>());
 		}
 
-		// tests for OrganFilter()
-		// tests for AgeFilter()
-		// tests for BloodTypeFilter()
-
 		[Test]
 		public void ListCompatibleOrgans_ReturnsEmptyList_WhenOrganFilterFails()
 		{
@@ -204,7 +200,7 @@ namespace HospitalTests.ManagerTests
 					new DonatedOrgan() { OrganId = 3 }
 				});
 			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
-				.Returns(new Patient() { DateOfBirth = new DateTime(2011, 04, 16), BloodType = "A" });
+				.Returns(new Patient() { DateOfBirth = new DateTime(2011, 04, 16), BloodType = "AB" });
 			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
 				.Returns(new Organ());
 

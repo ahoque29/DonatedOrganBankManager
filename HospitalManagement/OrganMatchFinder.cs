@@ -161,33 +161,11 @@ namespace HospitalManagement
 		/// </returns>
 		private bool BloodTypeCheck(string patientBloodType, string donorBloodType)
 		{
-			switch (donorBloodType)
+			return donorBloodType switch
 			{
-				case "O":
-					return true;
-
-				case "A":
-					if (patientBloodType == "A" || patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-
-				case "B":
-					if (patientBloodType == "B" || patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-
-				case "AB":
-					if (patientBloodType == "AB")
-					{
-						return true;
-					}
-					break;
-			}
-			return false;
+				"O" => true,
+				_ => patientBloodType.Contains(donorBloodType),
+			};
 		}
 
 		/// <summary>
