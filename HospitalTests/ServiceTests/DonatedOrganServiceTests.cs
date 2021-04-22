@@ -12,8 +12,6 @@ namespace HospitalTests.ServiceTests
 	{
 		private HospitalContext _context;
 		private DonatedOrganService _donatedOrganService;
-		private OrganService _organService;
-
 		[OneTimeSetUp]
 		public void OneTimeSetup()
 		{
@@ -23,7 +21,6 @@ namespace HospitalTests.ServiceTests
 
 			_context = new HospitalContext(options);
 			_donatedOrganService = new DonatedOrganService(_context);
-			_organService = new OrganService(_context);
 
 			#region Populate the InMemory Database
 
@@ -49,11 +46,12 @@ namespace HospitalTests.ServiceTests
 				DonorAge = 31,
 			});
 
-			_organService.AddOrgan(new Organ()
+			_context.Add(new Organ()
 			{
 				OrganId = 101,
 				Name = "TestOrgan"
 			});
+			_context.SaveChanges();
 
 			#endregion
 		}

@@ -37,7 +37,7 @@ namespace HospitalData
 
 	public partial class DonatedOrgan
 	{
-		private IDonatedOrganService _service;
+		private readonly IDonatedOrganService _service;
 
 		public DonatedOrgan(IDonatedOrganService service)
 		{
@@ -126,7 +126,7 @@ namespace HospitalData
 
 	public partial class MatchedDonation
 	{
-		private IMatchedDonationService _service;
+		private readonly IMatchedDonationService _service;
 
 		public MatchedDonation()
 		{

@@ -8,12 +8,12 @@ namespace HospitalWPF
 	{
 		#region Initialization
 
-		private PatientManager _patientManager = new PatientManager();
-		private WaitingListManager _waitingListManager = new WaitingListManager();
-		private DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
-		private OrganMatchFinder _organMatchFinder = new OrganMatchFinder();
-		private MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
-		private OrganManager _organManager = new OrganManager();
+		private readonly PatientManager _patientManager = new PatientManager();
+		private readonly WaitingListManager _waitingListManager = new WaitingListManager();
+		private readonly DonatedOrganManager _donatedOrganManager = new DonatedOrganManager();
+		private readonly OrganMatchFinder _organMatchFinder = new OrganMatchFinder();
+		private readonly MatchedDonationManager _matchedDonationManager = new MatchedDonationManager();
+		private readonly OrganManager _organManager = new OrganManager();
 
 		public MainWindow()
 		{

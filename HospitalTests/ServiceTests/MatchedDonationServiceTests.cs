@@ -15,7 +15,6 @@ namespace HospitalTests.ServiceTests
 		private MatchedDonationService _matchedDonationService;
 		private PatientService _patientService;
 		private DonatedOrganService _donatedOrganService;
-		private OrganService _organService;
 		private OrganMatchFinderService _organMatchFinderService;
 
 		[OneTimeSetUp]
@@ -30,7 +29,6 @@ namespace HospitalTests.ServiceTests
 			_matchedDonationService = new MatchedDonationService(_context);
 			_patientService = new PatientService(_context);
 			_donatedOrganService = new DonatedOrganService(_context);
-			_organService = new OrganService(_context);
 			_organMatchFinderService = new OrganMatchFinderService(_context);
 
 			#region Populate the InMemory Database
@@ -69,11 +67,13 @@ namespace HospitalTests.ServiceTests
 				OrganId = 5
 			});
 
-			_organService.AddOrgan(new Organ()
+			_context.Add(new Organ()
 			{
 				OrganId = 5,
 				Name = "TestOrgan"
 			});
+
+			_context.SaveChanges();
 
 			#endregion
 		}

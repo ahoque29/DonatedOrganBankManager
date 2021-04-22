@@ -14,7 +14,6 @@ namespace HospitalTests.ServiceTests
 		private HospitalContext _context;
 		private WaitingListService _waitingListService;
 		private PatientService _patientService;
-		private OrganService _organService;
 
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
@@ -26,7 +25,6 @@ namespace HospitalTests.ServiceTests
 			_context = new HospitalContext(options);
 			_waitingListService = new WaitingListService(_context);
 			_patientService = new PatientService(_context);
-			_organService = new OrganService(_context);
 
 			#region Populate the InMemory Database
 
@@ -61,11 +59,13 @@ namespace HospitalTests.ServiceTests
 				BloodType = "O",
 			});
 
-			_organService.AddOrgan(new Organ()
+			_context.Add(new Organ()
 			{
 				OrganId = 1,
 				Name = "TestOrgan"
 			});
+
+			_context.SaveChanges();
 
 			#endregion Populate the InMemoryDatabase
 		}

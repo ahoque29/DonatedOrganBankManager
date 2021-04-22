@@ -24,48 +24,28 @@ namespace HospitalTests.ServiceTests
 
 			#region Populate the InMemoryDatabase
 
-			_organService.AddOrgan(new Organ()
+			_context.Add(new Organ()
 			{
 				Name = "TestSeedName1",
 				Type = "TestSeedType1",
 			});
 
-			_organService.AddOrgan(new Organ()
+			_context.Add(new Organ()
 			{
 				Name = "TestSeedName2",
 				Type = "TestSeedType2",
 				IsAgeChecked = false
 			});
 
-			_organService.AddOrgan(new Organ()
+			_context.Add(new Organ()
 			{
 				Name = "TestSeedName3",
 				Type = "TestSeedType3",
 			});
 
-			#endregion Populate the InMemoryDatabase
-		}
-
-		[Test]
-		public void AddOrgan_IncreasesNumberOfOrgans_ByOne()
-		{
-			var numberOfOrgansBefore = _context.Organs.Count();
-
-			_organService.AddOrgan(new Organ()
-			{
-				Name = "TestOrgan",
-				Type = "TestType",
-				IsAgeChecked = false
-			});
-
-			var numberOfOrgansAfter = _context.Organs.Count();
-
-			Assert.That(numberOfOrgansBefore + 1, Is.EqualTo(numberOfOrgansAfter));
-
-			// Remove entry
-			var testOrgan = _context.Organs.Where(o => o.Name == "TestOrgan");
-			_context.Organs.RemoveRange(testOrgan);
 			_context.SaveChanges();
+
+			#endregion Populate the InMemoryDatabase
 		}
 
 		[Test]

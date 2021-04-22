@@ -18,18 +18,6 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Adds the organ entry into the database and saves.
-		/// </summary>
-		/// <param name="organ">
-		/// Organ to be added to the database.
-		/// </param>
-		public void AddOrgan(Organ organ)
-		{
-			_context.Add(organ);
-			_context.SaveChanges();
-		}
-
-		/// <summary>
 		/// Calls the database context to return a list of all the organs.
 		/// </summary>
 		/// <returns>
