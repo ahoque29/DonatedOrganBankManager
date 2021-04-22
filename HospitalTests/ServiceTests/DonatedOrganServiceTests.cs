@@ -39,7 +39,7 @@ namespace HospitalTests.ServiceTests
 				OrganId = 2,
 				BloodType = "TestSeedBloodType2",
 				DonorAge = 36,
-				IsDonated = true
+				IsMatched = true
 			});
 
 			_donatedOrganService.AddDonatedOrgan(new DonatedOrgan(_donatedOrganService)
@@ -138,7 +138,7 @@ namespace HospitalTests.ServiceTests
 					OrganId = 2,
 					BloodType = "TestSeedBloodType2",
 					DonorAge = 36,
-					IsDonated = true
+					IsMatched = true
 				},
 				new DonatedOrgan(_donatedOrganService)
 				{

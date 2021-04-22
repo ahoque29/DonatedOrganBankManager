@@ -67,7 +67,7 @@ namespace HospitalData.Services
 		/// </returns>
 		public List<DonatedOrgan> GetDonatedOrgans()
 		{
-			return _context.DonatedOrgans.Where(d => d.IsDonated == false).ToList();
+			return _context.DonatedOrgans.Where(d => d.IsMatched == false).ToList();
 		}
 
 		/// <summary>
@@ -79,7 +79,7 @@ namespace HospitalData.Services
 		public void MarkDonatedOrganAsMatched(int donatedOrganId)
 		{
 			var matchedDonatedOrgan = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
-			matchedDonatedOrgan.IsDonated = true;
+			matchedDonatedOrgan.IsMatched = true;
 			_context.SaveChanges();
 		}
 

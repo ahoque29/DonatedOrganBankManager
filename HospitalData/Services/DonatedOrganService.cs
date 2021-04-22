@@ -54,7 +54,7 @@ namespace HospitalData.Services
 		public void RemoveDonatedOrgan(int donatedOrganId)
 		{
 			var donatedOrganToBeRemoved = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
-			if (!donatedOrganToBeRemoved.IsDonated)
+			if (!donatedOrganToBeRemoved.IsMatched)
 			{
 				_context.DonatedOrgans.RemoveRange(donatedOrganToBeRemoved);
 				_context.SaveChanges();
@@ -86,7 +86,7 @@ namespace HospitalData.Services
 			var donatedOrgan = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
 			var organ = _context.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
 
-			var availability = donatedOrgan.IsDonated ? "No" : "Yes";
+			var availability = donatedOrgan.IsMatched ? "No" : "Yes";
 
 			return $"Id: {donatedOrganId} - Availability: {availability} - Organ: {organ.Name} - Blood Type: {donatedOrgan.BloodType} - Age at Donation: {donatedOrgan.DonorAge} - Donated on: {donatedOrgan.DonationDate:dd/MM/yyyy}";
 		}

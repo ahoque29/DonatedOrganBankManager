@@ -19,7 +19,7 @@ namespace HospitalData
 		public string BloodType { get; set; }
 		public int? DonorAge { get; set; }
 		public DateTime DonationDate { get; set; }
-		public bool IsDonated { get; set; }
+		public bool IsMatched { get; set; }
 
 		public virtual Organ Organ { get; set; }
 		public virtual ICollection<MatchedDonation> MatchedDonations { get; set; }

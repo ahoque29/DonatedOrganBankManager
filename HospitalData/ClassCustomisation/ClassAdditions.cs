@@ -55,12 +55,12 @@ namespace HospitalData
 				   OrganId == organ.OrganId &&
 				   BloodType == organ.BloodType &&
 				   DonorAge == organ.DonorAge &&
-				   IsDonated == organ.IsDonated;
+				   IsMatched == organ.IsMatched;
 		}
 
 		public override int GetHashCode()
 		{
-			return System.HashCode.Combine(DonatedOrganId, OrganId, BloodType, DonorAge, IsDonated);
+			return System.HashCode.Combine(DonatedOrganId, OrganId, BloodType, DonorAge, IsMatched);
 		}
 	}
 
