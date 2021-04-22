@@ -1,4 +1,4 @@
-# WPFEntityFrameworkProject
+# Donated Organ Bank Manager
 WPF-Entity Framework C# Project - February 2021
 
 #### Project Goal
