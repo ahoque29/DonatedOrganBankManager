@@ -125,7 +125,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetDonatedOrgansList_ReturnsCorrectListOfDonatedOrgans()
 		{
-			var manualWaitingList = new List<DonatedOrgan>
+			var manualDonatedOrgansList = new List<DonatedOrgan>
 			{
 				new DonatedOrgan(_donatedOrganService)
 				{
@@ -150,7 +150,7 @@ namespace HospitalTests.ServiceTests
 
 			var result = _donatedOrganService.GetDonatedOrgansList();
 
-			Assert.That(result, Is.EquivalentTo(manualWaitingList));
+			Assert.That(result, Is.EquivalentTo(manualDonatedOrgansList));
 		}
 
 		[Test]
