@@ -1,6 +1,6 @@
 ﻿namespace HospitalData
 {
-	public class Program
+	internal class Program
 	{
 		private static void Main()
 		{

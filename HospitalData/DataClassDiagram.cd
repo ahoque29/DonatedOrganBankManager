@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HospitalData.DonatedOrgan">
+    <Position X="4.75" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAFAAAAUgFAAQAAAAACAAIAABAAAAAABAAA=</HashCode>
+      <FileName>ClassCustomisation\ClassAdditions.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="MatchedDonations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HospitalData.MatchedDonation">
+    <Position X="0.75" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAUgEAAAAAACAAAAIAAAAAgAAAQCAA=</HashCode>
+      <FileName>ClassCustomisation\ClassAdditions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalData.Organ">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAEAAAAAAAAEgBAAAAQAAAAAAoAAAQAAAAAAAAA=</HashCode>
+      <FileName>ClassCustomisation\ClassAdditions.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="DonatedOrgans" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HospitalData.Patient">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAQAAAEAMgAAAQAAAAACQAoACAAAAoAAAAAg=</HashCode>
+      <FileName>ClassCustomisation\ClassAdditions.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Waitings" />
+      <Property Name="MatchedDonations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HospitalData.Waiting">
+    <Position X="3.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAUgBAAgAAIAAAAAIAAAAAAAAABCAA=</HashCode>
+      <FileName>ClassCustomisation\ClassAdditions.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Organ" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
