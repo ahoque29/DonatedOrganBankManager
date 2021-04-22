@@ -220,9 +220,167 @@ namespace HospitalTests.ManagerTests
 			Assert.That(result.Any(), Is.EqualTo(expectedResult));
 		}
 
-		// tests for ExecuteMatch
-		// tests for service called
-		// tests for CreateMatchedDonation
-		// tests for DeleteWaiting
+		[Test]
+		public void ExecuteMatch_CallsIOrganMatchFinderServiceMarkDonatedOrganAsMatched_WithCorrectParameters()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+
+			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
+				.Returns(new Waiting() { OrganId = 1 });
+			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
+				.Returns(new Organ() { IsAgeChecked = false });
+			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
+				.Returns(new Patient() { BloodType = "A" });
+			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
+				.Returns(new List<DonatedOrgan>()
+				{
+					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
+					new DonatedOrgan() { OrganId = 3 }
+				});
+
+			var mockDateTimeService = new Mock<IDateTimeService>(MockBehavior.Strict);
+			mockDateTimeService.Setup(d => d.GetNow())
+				.Returns(new DateTime(2021, 04, 17));
+
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object, mockDateTimeService.Object);
+			organMatchFinder.ExecuteMatch(It.IsAny<int>(), 3);
+
+			mockOrganMatchFinderService.Verify(o => o.MarkDonatedOrganAsMatched(3));
+		}
+
+		[Test]
+		public void ExecuteMatch_CallsIOrganMatchFinderServiceMarkDonatedOrganAsMatched_Once()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+
+			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
+				.Returns(new Waiting() { OrganId = 1 });
+			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
+				.Returns(new Organ() { IsAgeChecked = false });
+			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
+				.Returns(new Patient() { BloodType = "A" });
+			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
+				.Returns(new List<DonatedOrgan>()
+				{
+					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
+					new DonatedOrgan() { OrganId = 3 }
+				});
+
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+			organMatchFinder.ExecuteMatch(It.IsAny<int>(), It.IsAny<int>());
+
+			mockOrganMatchFinderService.Verify(o => o.MarkDonatedOrganAsMatched(It.IsAny<int>()), Times.Once);
+		}
+
+		[Test]
+		public void ExecuteMatch_CallsIOrganMatchFinderServiceAddMatchedDonation_WithCorrectParameters()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+
+			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
+				.Returns(new Waiting() { PatientId = 5, OrganId = 1 });
+			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
+				.Returns(new Organ() { IsAgeChecked = false });
+			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
+				.Returns(new Patient() { BloodType = "A" });
+			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
+				.Returns(new List<DonatedOrgan>()
+				{
+					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
+					new DonatedOrgan() { OrganId = 3 }
+				});
+
+			var mockDateTimeService = new Mock<IDateTimeService>(MockBehavior.Strict);
+			mockDateTimeService.Setup(d => d.GetNow())
+				.Returns(new DateTime(2021, 04, 17));
+
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object, mockDateTimeService.Object);
+			organMatchFinder.ExecuteMatch(It.IsAny<int>(), 3);
+
+			var matchedDonationToBeAdded = new MatchedDonation()
+			{
+				PatientId = 5,
+				DonatedOrganId = 3,
+				DateOfMatch = new DateTime(2021, 04, 17)
+			};
+
+			mockOrganMatchFinderService.Verify(o => o.AddMatchedDonation(matchedDonationToBeAdded));
+		}
+
+		[Test]
+		public void ExecuteMatch_CallsIOrganMatchFinderServiceAddMatchedDonation_Once()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+
+			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
+				.Returns(new Waiting() { OrganId = 1 });
+			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
+				.Returns(new Organ() { IsAgeChecked = false });
+			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
+				.Returns(new Patient() { BloodType = "A" });
+			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
+				.Returns(new List<DonatedOrgan>()
+				{
+					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
+					new DonatedOrgan() { OrganId = 3 }
+				});
+
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+			organMatchFinder.ExecuteMatch(It.IsAny<int>(), It.IsAny<int>());
+
+			mockOrganMatchFinderService.Verify(o => o.AddMatchedDonation(It.IsAny<MatchedDonation>()), Times.Once);
+		}
+
+		[Test]
+		public void ExecuteMatch_CallsIOrganMatchFinderServiceDeleteWaiting_WithCorrectParameters()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
+				.Returns(new Waiting() { WaitingId = 2, OrganId = 1 });
+			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
+				.Returns(new Organ() { IsAgeChecked = false });
+			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
+				.Returns(new Patient() { BloodType = "A" });
+			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
+				.Returns(new List<DonatedOrgan>()
+				{
+					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
+					new DonatedOrgan() { OrganId = 3 }
+				});
+
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+			organMatchFinder.ExecuteMatch(It.IsAny<int>(), It.IsAny<int>());
+
+			var waitingToBeDeleted = new Waiting()
+			{
+				WaitingId = 2,
+				OrganId = 1
+			};
+
+			mockOrganMatchFinderService.Verify(o => o.RemoveWaiting(waitingToBeDeleted));
+		}
+
+		[Test]
+		public void ExecuteMatch_CallsIOrganMatchFinderServiceDeleteWaiting_Once()
+		{
+			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
+			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
+				.Returns(new Waiting() { OrganId = 1 });
+			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
+				.Returns(new Organ() { IsAgeChecked = false });
+			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
+				.Returns(new Patient() { BloodType = "A" });
+			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
+				.Returns(new List<DonatedOrgan>()
+				{
+					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
+					new DonatedOrgan() { OrganId = 3 }
+				});
+
+			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
+			organMatchFinder.ExecuteMatch(It.IsAny<int>(), It.IsAny<int>());
+
+			mockOrganMatchFinderService.Verify(o => o.RemoveWaiting(It.IsAny<Waiting>()), Times.Once);
+		}
 	}
 }
