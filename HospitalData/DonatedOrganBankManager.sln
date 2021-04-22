@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagement", "..\Ho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalTests", "..\HospitalTests\HospitalTests.csproj", "{B3DA9E4E-4ED7-47FC-98F2-B2605833BE95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalWPF", "..\HospitalWPF\HospitalWPF.csproj", "{83C6AF4F-53E4-4F70-8CE2-510CF86E6A87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalWPF", "..\HospitalWPF\HospitalWPF.csproj", "{83C6AF4F-53E4-4F70-8CE2-510CF86E6A87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
