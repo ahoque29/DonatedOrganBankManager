@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="HospitalData.DonatedOrgan">
-    <Position X="4.75" Y="4" Width="2.25" />
+    <Position X="5.25" Y="4" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAFAAAAUgFAAQAAAAACAAIAABAAAAAABAAA=</HashCode>
       <FileName>ClassCustomisation\ClassAdditions.cs</FileName>
@@ -11,7 +11,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="HospitalData.MatchedDonation">
-    <Position X="0.75" Y="4.75" Width="2.5" />
+    <Position X="1.25" Y="4.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAUgEAAAAAACAAAAIAAAAAgAAAQCAA=</HashCode>
       <FileName>ClassCustomisation\ClassAdditions.cs</FileName>
@@ -47,6 +47,54 @@
     <ShowAsAssociation>
       <Property Name="Organ" />
     </ShowAsAssociation>
+  </Class>
+  <Class Name="HospitalData.Services.DonatedOrganService" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IAAQAAAAAAAAJAAAAAAAAABAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Services\DonatedOrganService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HospitalData.Services.MatchedDonationService" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="3" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAABAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\MatchedDonationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HospitalData.Services.OrganMatchFinderService" BaseTypeListCollapsed="true">
+    <Position X="12" Y="3" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAEAAABAAQAABAAAAAAAAAAAAAAAAAAAAAAEAAEgACA=</HashCode>
+      <FileName>Services\OrganMatchFinderService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HospitalData.Services.OrganService" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\OrganService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HospitalData.Services.WaitingListService" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAABgAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Services\WaitingListService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HospitalData.Services.PatientService">
+    <Position X="8.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAEAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\PatientService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
