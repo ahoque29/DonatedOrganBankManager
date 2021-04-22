@@ -8,24 +8,24 @@ namespace HospitalManagement
 {
 	public class OrganMatchFinder
 	{
-		private readonly IOrganMatchFinderService _service;
+		private readonly IOrganMatchFinderService _organMatchFinderService;
 		private readonly IDateTimeService _dateTimeService;
 
 		public OrganMatchFinder()
 		{
-			_service = new OrganMatchFinderService();
+			_organMatchFinderService = new OrganMatchFinderService();
 			_dateTimeService = new DateTimeService();
 		}
 
 		public OrganMatchFinder(IOrganMatchFinderService service)
 		{
-			_service = service;
+			_organMatchFinderService = service;
 			_dateTimeService = new DateTimeService();
 		}
 
 		public OrganMatchFinder(IOrganMatchFinderService service, IDateTimeService dateTimeService)
 		{
-			_service = service;
+			_organMatchFinderService = service;
 			_dateTimeService = dateTimeService;
 		}
 
@@ -52,10 +52,10 @@ namespace HospitalManagement
 		/// </param>
 		private void SetFields(int waitingId)
 		{
-			_waiting = _service.GetWaiting(waitingId);
-			_organ = _service.GetOrgan(_waiting);
-			_patient = _service.GetPatient(_waiting);
-			_donationCandidates = _service.GetDonatedOrgans();
+			_waiting = _organMatchFinderService.GetWaiting(waitingId);
+			_organ = _organMatchFinderService.GetOrgan(_waiting);
+			_patient = _organMatchFinderService.GetPatient(_waiting);
+			_donationCandidates = _organMatchFinderService.GetDonatedOrgans();
 		}
 
 		/// <summary>
@@ -189,6 +189,17 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
+		/// Sets a donated organ as matched.
+		/// </summary>
+		/// <param name="donatedOrganId">
+		/// Id of the donated organ to be matched.
+		/// </param>
+		private void MarkAsMatched(int donatedOrganId)
+		{
+			_organMatchFinderService.MarkDonatedOrganAsMatched(donatedOrganId);
+		}
+
+		/// <summary>
 		/// Creates a new matched donation.
 		/// This is invoked when a match between patient and donated organ is executed.
 		/// </summary>
@@ -212,7 +223,7 @@ namespace HospitalManagement
 				DateOfMatch = dateOfMatch
 			};
 
-			_service.AddMatchedDonation(newMatchedDonation);
+			_organMatchFinderService.AddMatchedDonation(newMatchedDonation);
 		}
 
 		/// <summary>
@@ -224,7 +235,7 @@ namespace HospitalManagement
 		/// </param>
 		private void DeleteWaiting(Waiting waiting)
 		{
-			_service.RemoveWaiting(waiting);
+			_organMatchFinderService.RemoveWaiting(waiting);
 		}
 
 		/// <summary>
@@ -263,10 +274,8 @@ namespace HospitalManagement
 		{
 			if (ListCompatibleOrgans(waitingId).Any())
 			{
-				_service.MarkDonatedOrganAsMatched(donatedOrganId);
-
+				MarkAsMatched(donatedOrganId);
 				CreateMatchedDonation(_waiting.PatientId, donatedOrganId, _dateTimeService.GetNow());
-
 				DeleteWaiting(_waiting);
 			}
 		}
