@@ -101,7 +101,7 @@ namespace HospitalManagement
 		/// </returns>
 		private string AgeRangeFinder(DateTime dateOfBirth)
 		{
-			int age = _dateTimeService.GetToday().Year - dateOfBirth.Year;
+			int age = _dateTimeService.GetNow().Year - dateOfBirth.Year;
 			return AgeRangeFinder(age);
 		}
 
@@ -265,7 +265,7 @@ namespace HospitalManagement
 			{
 				_service.MarkDonatedOrganAsMatched(donatedOrganId);
 
-				CreateMatchedDonation(_waiting.PatientId, donatedOrganId, DateTime.Now);
+				CreateMatchedDonation(_waiting.PatientId, donatedOrganId, _dateTimeService.GetNow());
 
 				DeleteWaiting(_waiting);
 			}

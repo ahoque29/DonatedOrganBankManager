@@ -4,7 +4,7 @@ namespace HospitalManagement
 {
 	public class DateTimeService : IDateTimeService
 	{
-		public DateTime GetToday()
+		public DateTime GetNow()
 		{
 			return DateTime.Now;
 		}

@@ -211,7 +211,7 @@ namespace HospitalTests.ManagerTests
 				});
 
 			var mockDateTimeService = new Mock<IDateTimeService>(MockBehavior.Strict);
-			mockDateTimeService.Setup(d => d.GetToday())
+			mockDateTimeService.Setup(d => d.GetNow())
 				.Returns(new DateTime(2021, 04, 17));
 
 			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object, mockDateTimeService.Object);
