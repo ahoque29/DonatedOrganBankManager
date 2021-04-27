@@ -1,6 +1,7 @@
 ﻿using HospitalManagement;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace HospitalWPF
 {
@@ -33,7 +34,7 @@ namespace HospitalWPF
 			PopulateListBoxMatchedDonations();
 		}
 
-		#endregion Initialization
+		#endregion
 
 		#region Patient Manager Tab
 
@@ -81,7 +82,7 @@ namespace HospitalWPF
 			}
 		}
 
-		#endregion Patient Manager Tab
+		#endregion
 
 		#region Donated Organ Manager Tab
 
@@ -123,7 +124,7 @@ namespace HospitalWPF
 			}
 		}
 
-		private void ListBoxDonatedOrgans_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		private void ListBoxDonatedOrgans_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (ListBoxDonatedOrgans.SelectedItem != null)
 			{
@@ -146,7 +147,7 @@ namespace HospitalWPF
 			}
 		}
 
-		#endregion Donated Organ Manager Tab
+		#endregion
 
 		#region Waiting List Manager Tab
 
@@ -160,7 +161,7 @@ namespace HospitalWPF
 			ListBoxWaitingWM.ItemsSource = _waitingListManager.RetrieveWaitingList();
 		}
 
-		private void ListBoxPatientsWM_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		private void ListBoxPatientsWM_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (ListBoxPatientsWM.SelectedItem != null)
 			{
@@ -168,7 +169,7 @@ namespace HospitalWPF
 			}
 		}
 
-		private void OrganNameComboBoxWM_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		private void OrganNameComboBoxWM_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (OrganNameComboBoxWM.SelectedItem != null)
 			{
@@ -219,7 +220,7 @@ namespace HospitalWPF
 			}
 		}
 
-		private void ListBoxWaitingMF_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		private void ListBoxWaitingMF_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (ListBoxWaitingMF.SelectedItem != null)
 			{
@@ -228,7 +229,7 @@ namespace HospitalWPF
 			}
 		}
 
-		private void ListBoxMatchedOrgans_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		private void ListBoxMatchedOrgans_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (ListBoxMatchedOrgans.SelectedItem != null)
 			{
@@ -256,6 +257,6 @@ namespace HospitalWPF
 			}
 		}
 
-		#endregion Organ Match Finder Tab
+		#endregion
 	}
 }

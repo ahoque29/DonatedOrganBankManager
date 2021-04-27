@@ -37,8 +37,8 @@
       <FileName>OrganMatchFinder.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="_dateTimeService" />
       <Field Name="_organMatchFinderService" />
+      <Field Name="_dateTimeService" />
     </ShowAsAssociation>
   </Class>
   <Class Name="HospitalManagement.PatientManager">
@@ -62,7 +62,7 @@
     </ShowAsAssociation>
   </Class>
   <Interface Name="HospitalManagement.IDateTimeService">
-    <Position X="4.5" Y="7.75" Width="1.5" />
+    <Position X="4.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Services\IDateTimeService.cs</FileName>
@@ -85,11 +85,11 @@
     <TypeIdentifier />
   </Interface>
   <Interface Name="HospitalData.Services.IMatchedDonationService">
-    <Position X="9.25" Y="3.25" Width="2" />
+    <Position X="9.25" Y="3" Width="2" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="HospitalData.Services.IOrganMatchFinderService">
-    <Position X="5" Y="5.25" Width="2.5" />
+    <Position X="5" Y="5" Width="2.5" />
     <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
