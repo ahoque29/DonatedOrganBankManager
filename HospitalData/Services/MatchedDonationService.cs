@@ -18,10 +18,10 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database context to return a list of all the matched donations.
+		///     Calls the database context to return a list of all the matched donations.
 		/// </summary>
 		/// <returns>
-		/// List of all matched donations.
+		///     List of all matched donations.
 		/// </returns>
 		public List<MatchedDonation> GetMatchedDonationsList()
 		{
@@ -29,22 +29,25 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database and formats the ToString().
+		///     Calls the database and formats the ToString().
 		/// </summary>
 		/// <param name="matchedDonationId">
-		/// Id of the matched donation.
+		///     Id of the matched donation.
 		/// </param>
 		/// <returns>
-		/// ToString().
+		///     ToString().
 		/// </returns>
 		public string GetToString(int matchedDonationId)
 		{
-			var matchedDonation = _context.MatchedDonations.Where(m => m.MatchedDonationId == matchedDonationId).FirstOrDefault();
-			var patient = _context.Patients.Where(p => p.PatientId == matchedDonation.PatientId).FirstOrDefault();
-			var donatedOrgan = _context.DonatedOrgans.Where(d => d.DonatedOrganId == matchedDonation.DonatedOrganId).FirstOrDefault();
-			var organ = _context.Organs.Where(o => o.OrganId == donatedOrgan.OrganId).FirstOrDefault();
+			var matchedDonation =
+				_context.MatchedDonations.FirstOrDefault(m => m.MatchedDonationId == matchedDonationId);
+			var patient = _context.Patients.FirstOrDefault(p => p.PatientId == matchedDonation.PatientId);
+			var donatedOrgan =
+				_context.DonatedOrgans.FirstOrDefault(d => d.DonatedOrganId == matchedDonation.DonatedOrganId);
+			var organ = _context.Organs.FirstOrDefault(o => o.OrganId == donatedOrgan.OrganId);
 
-			return $"{matchedDonationId} - {patient.FirstName} {patient.LastName} has received {organ.Name} on {matchedDonation.DateOfMatch:dd/MM/yyyy}.";
+			return
+				$"{matchedDonationId} - {patient.FirstName} {patient.LastName} has received {organ.Name} on {matchedDonation.DateOfMatch:dd/MM/yyyy}.";
 		}
 	}
 }

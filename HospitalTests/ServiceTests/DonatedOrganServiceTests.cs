@@ -1,22 +1,20 @@
-﻿using HospitalData;
+﻿using System.Collections.Generic;
+using System.Linq;
+using HospitalData;
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HospitalTests.ServiceTests
 {
 	[TestFixture]
 	public class DonatedOrganServiceTests
 	{
-		private HospitalContext _context;
-		private DonatedOrganService _donatedOrganService;
 		[OneTimeSetUp]
 		public void OneTimeSetup()
 		{
 			var options = new DbContextOptionsBuilder<HospitalContext>()
-				.UseInMemoryDatabase(databaseName: "Hospital_Fake")
+				.UseInMemoryDatabase("Hospital_Fake")
 				.Options;
 
 			_context = new HospitalContext(options);
@@ -43,10 +41,10 @@ namespace HospitalTests.ServiceTests
 			{
 				OrganId = 101,
 				BloodType = "TestSeedBloodType3",
-				DonorAge = 31,
+				DonorAge = 31
 			});
 
-			_context.Add(new Organ()
+			_context.Add(new Organ
 			{
 				OrganId = 101,
 				Name = "TestOrgan"
@@ -55,6 +53,15 @@ namespace HospitalTests.ServiceTests
 
 			#endregion
 		}
+
+		[OneTimeTearDown]
+		public void TearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
+
+		private HospitalContext _context;
+		private DonatedOrganService _donatedOrganService;
 
 		[Test]
 		public void GetOrganId_ReturnsCorrectOrganId()
@@ -89,20 +96,21 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void RemoveDonatedOrgan_ThatIsAlreadyDonated_DoesNotRemoveOrgan()
 		{
-			var donatedOrgan = _context.DonatedOrgans.Where(d => d.OrganId == 2).FirstOrDefault();
+			var donatedOrgan = _context.DonatedOrgans.FirstOrDefault(d => d.OrganId == 2);
 			_donatedOrganService.RemoveDonatedOrgan(donatedOrgan.DonatedOrganId);
 
-			var query = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrgan.DonatedOrganId).Any();
+			var query = _context.DonatedOrgans.Any(d => d.DonatedOrganId == donatedOrgan.DonatedOrganId);
 			Assert.That(query, Is.True);
 		}
 
 		[Test]
 		public void RemoveDonatedOrgan_MakesQueryThatSearchesTheOrgan_ReturnFalse()
 		{
-			var donatedOrganToBeDeleted = _context.DonatedOrgans.Where(d => d.OrganId == 101).FirstOrDefault();
+			var donatedOrganToBeDeleted = _context.DonatedOrgans.FirstOrDefault(d => d.OrganId == 101);
 			_donatedOrganService.RemoveDonatedOrgan(donatedOrganToBeDeleted.DonatedOrganId);
 
-			var query = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganToBeDeleted.DonatedOrganId).Any();
+			var query = _context.DonatedOrgans
+				.Any(d => d.DonatedOrganId == donatedOrganToBeDeleted.DonatedOrganId);
 			Assert.That(query, Is.False);
 
 			// Add the entry back
@@ -110,14 +118,14 @@ namespace HospitalTests.ServiceTests
 			{
 				OrganId = 101,
 				BloodType = "TestSeedBloodType3",
-				DonorAge = 31,
+				DonorAge = 31
 			});
 		}
 
 		[Test]
 		public void GetDonatedOrgansList_ReturnsCorrectNumberOfDonatedOrgans()
 		{
-			Assert.That(_donatedOrganService.GetDonatedOrgansList().Count(), Is.EqualTo(3));
+			Assert.That(_donatedOrganService.GetDonatedOrgansList().Count, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -142,7 +150,7 @@ namespace HospitalTests.ServiceTests
 				{
 					OrganId = 101,
 					BloodType = "TestSeedBloodType3",
-					DonorAge = 31,
+					DonorAge = 31
 				}
 			};
 
@@ -154,16 +162,12 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetToString_ReturnsCorrectString()
 		{
-			var donatedOrgan = _context.DonatedOrgans.Where(w => w.OrganId == 101).FirstOrDefault();
+			var donatedOrgan = _context.DonatedOrgans.FirstOrDefault(w => w.OrganId == 101);
 			var result = _donatedOrganService.GetToString(donatedOrgan.DonatedOrganId);
 
-			Assert.That(result, Is.EqualTo("Id: 3 - Availability: Yes - Organ: TestOrgan - Blood Type: TestSeedBloodType3 - Age at Donation: 31 - Donated on: 01/01/0001"));
-		}
-
-		[OneTimeTearDown]
-		public void TearDown()
-		{
-			_context.Database.EnsureDeleted();
+			Assert.That(result,
+				Is.EqualTo(
+					"Id: 3 - Availability: Yes - Organ: TestOrgan - Blood Type: TestSeedBloodType3 - Age at Donation: 31 - Donated on: 01/01/0001"));
 		}
 	}
 }

@@ -1,9 +1,9 @@
-﻿using HospitalData;
+﻿using System.Collections.Generic;
+using HospitalData;
 using HospitalData.Services;
 using HospitalManagement;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace HospitalTests.ManagerTests
 {
@@ -22,7 +22,7 @@ namespace HospitalTests.ManagerTests
 		}
 
 		[Test]
-		public void RetriveAllOrgans_ReturnsAListOfOrgans()
+		public void RetrieveAllOrgans_ReturnsAListOfOrgans()
 		{
 			var mockOrganService = new Mock<IOrganService>(MockBehavior.Strict);
 			mockOrganService.Setup(o => o.GetOrganList())

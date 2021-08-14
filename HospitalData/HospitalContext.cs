@@ -2,7 +2,7 @@
 
 namespace HospitalData
 {
-	public partial class HospitalContext : DbContext
+	public class HospitalContext : DbContext
 	{
 		public HospitalContext()
 		{

@@ -1,14 +1,12 @@
-﻿using HospitalData;
+﻿using System.Collections.Generic;
+using HospitalData;
 using HospitalData.Services;
-using System.Collections.Generic;
 
 namespace HospitalManagement
 {
 	public class OrganManager
 	{
 		private readonly IOrganService _service;
-
-		public Organ SelectedOrgan { get; set; }
 
 		public OrganManager()
 		{
@@ -20,11 +18,13 @@ namespace HospitalManagement
 			_service = service;
 		}
 
+		public Organ SelectedOrgan { get; set; }
+
 		/// <summary>
-		/// Retrieve a list of all the organs stored in the database.
+		///     Retrieve a list of all the organs stored in the database.
 		/// </summary>
 		/// <returns>
-		/// List of all organs.
+		///     List of all organs.
 		/// </returns>
 		public List<Organ> RetrieveAllOrgans()
 		{
@@ -32,15 +32,15 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Sets a given object as an organ
-		/// Used for front-end.
+		///     Sets a given object as an organ
+		///     Used for front-end.
 		/// </summary>
 		/// <param name="selectedItem">
-		/// Object to be set as organ.
+		///     Object to be set as organ.
 		/// </param>
 		public void SetSelectedOrgan(object selectedItem)
 		{
-			SelectedOrgan = (Organ)selectedItem;
+			SelectedOrgan = (Organ) selectedItem;
 		}
 	}
 }

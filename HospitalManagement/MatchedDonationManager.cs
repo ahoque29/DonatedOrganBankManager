@@ -1,6 +1,6 @@
-﻿using HospitalData;
+﻿using System.Collections.Generic;
+using HospitalData;
 using HospitalData.Services;
-using System.Collections.Generic;
 
 namespace HospitalManagement
 {
@@ -19,10 +19,10 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Retrieves a list of all the mathched donations stored in the database.
+		///     Retrieves a list of all the mathched donations stored in the database.
 		/// </summary>
 		/// <returns>
-		/// List of all matched donations.
+		///     List of all matched donations.
 		/// </returns>
 		public List<MatchedDonation> RetrieveAllMatchedDonations()
 		{

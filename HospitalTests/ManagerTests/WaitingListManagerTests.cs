@@ -1,10 +1,10 @@
-﻿using HospitalData;
+﻿using System;
+using System.Collections.Generic;
+using HospitalData;
 using HospitalData.Services;
 using HospitalManagement;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 
 namespace HospitalTests.ManagerTests
 {
@@ -21,7 +21,7 @@ namespace HospitalTests.ManagerTests
 				5,
 				new DateTime(1999, 02, 05));
 
-			var waitingToBeAdded = new Waiting()
+			var waitingToBeAdded = new Waiting
 			{
 				PatientId = 3,
 				OrganId = 5,
@@ -62,8 +62,8 @@ namespace HospitalTests.ManagerTests
 			mockWaitingService.Setup(w => w.GetWaitingList())
 				.Returns(new List<Waiting>());
 
-			var _waitingListManager = new WaitingListManager(mockWaitingService.Object);
-			var result = _waitingListManager.RetrieveWaitingList();
+			var waitingListManager = new WaitingListManager(mockWaitingService.Object);
+			var result = waitingListManager.RetrieveWaitingList();
 
 			Assert.That(result, Is.TypeOf<List<Waiting>>());
 		}

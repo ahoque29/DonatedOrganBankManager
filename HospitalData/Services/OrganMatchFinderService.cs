@@ -18,52 +18,52 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Returns the waiting list entry corresponding to the given Id.
+		///     Returns the waiting list entry corresponding to the given Id.
 		/// </summary>
 		/// <param name="waitingId">
-		/// Id of the waiting list entry.
+		///     Id of the waiting list entry.
 		/// </param>
 		/// <returns>
-		/// Waiting list entry.
+		///     Waiting list entry.
 		/// </returns>
 		public Waiting GetWaiting(int waitingId)
 		{
-			return _context.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
+			return _context.Waitings.FirstOrDefault(w => w.WaitingId == waitingId);
 		}
 
 		/// <summary>
-		/// Returns the organ in the waiting list entry.
+		///     Returns the organ in the waiting list entry.
 		/// </summary>
 		/// <param name="waiting">
-		/// Waiting list entry.
+		///     Waiting list entry.
 		/// </param>
 		/// <returns>
-		/// Organ.
+		///     Organ.
 		/// </returns>
 		public Organ GetOrgan(Waiting waiting)
 		{
-			return _context.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
+			return _context.Organs.FirstOrDefault(o => o.OrganId == waiting.OrganId);
 		}
 
 		/// <summary>
-		/// Returns the patient in the waiting list entry.
+		///     Returns the patient in the waiting list entry.
 		/// </summary>
 		/// <param name="waiting">
-		/// Waiting list entry.
+		///     Waiting list entry.
 		/// </param>
 		/// <returns>
-		/// Patient.
+		///     Patient.
 		/// </returns>
 		public Patient GetPatient(Waiting waiting)
 		{
-			return _context.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
+			return _context.Patients.FirstOrDefault(p => p.PatientId == waiting.PatientId);
 		}
 
 		/// <summary>
-		/// Returns a list of donated organs that have not been matched.
+		///     Returns a list of donated organs that have not been matched.
 		/// </summary>
 		/// <returns>
-		/// List of donated organs.
+		///     List of donated organs.
 		/// </returns>
 		public List<DonatedOrgan> GetDonatedOrgans()
 		{
@@ -71,23 +71,23 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Marks the given donated organ as matched then saves.
+		///     Marks the given donated organ as matched then saves.
 		/// </summary>
 		/// <param name="donatedOrganId">
-		/// Id of the donated organ.
+		///     Id of the donated organ.
 		/// </param>
 		public void MarkDonatedOrganAsMatched(int donatedOrganId)
 		{
-			var matchedDonatedOrgan = _context.DonatedOrgans.Where(d => d.DonatedOrganId == donatedOrganId).FirstOrDefault();
+			var matchedDonatedOrgan = _context.DonatedOrgans.FirstOrDefault(d => d.DonatedOrganId == donatedOrganId);
 			matchedDonatedOrgan.IsMatched = true;
 			_context.SaveChanges();
 		}
 
 		/// <summary>
-		/// Removes the waiting list entry from the database.
+		///     Removes the waiting list entry from the database.
 		/// </summary>
-		/// <param name="waitingId">
-		/// Id of the waiting to be removed.
+		/// <param name="waiting">
+		///     Waiting to be removed.
 		/// </param>
 		public void RemoveWaiting(Waiting waiting)
 		{
@@ -96,10 +96,10 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Adds the matched donation entry into the database and saves.
+		///     Adds the matched donation entry into the database and saves.
 		/// </summary>
 		/// <param name="matchedDonation">
-		/// Matched donation to be added to the database.
+		///     Matched donation to be added to the database.
 		/// </param>
 		public void AddMatchedDonation(MatchedDonation matchedDonation)
 		{

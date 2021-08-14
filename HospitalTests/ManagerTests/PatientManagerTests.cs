@@ -1,10 +1,10 @@
+using System;
+using System.Collections.Generic;
 using HospitalData;
 using HospitalData.Services;
 using HospitalManagement;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 
 namespace HospitalTests.ManagerTests
 {
@@ -27,7 +27,7 @@ namespace HospitalTests.ManagerTests
 				"TestPhone",
 				"TestBloodType");
 
-			var patientToBeAdded = new Patient()
+			var patientToBeAdded = new Patient
 			{
 				Title = "Mr",
 				LastName = "GuyTest",
@@ -65,18 +65,19 @@ namespace HospitalTests.ManagerTests
 		[Test]
 		public void CreatePatient_WithADobInTheFuture_ThrowsArgumentException_WithCorrectMessage()
 		{
-			var mockPatientServive = new Mock<IPatientService>();
-			var patientManager = new PatientManager(mockPatientServive.Object);
+			var mockPatientService = new Mock<IPatientService>();
+			var patientManager = new PatientManager(mockPatientService.Object);
 
 			Assert.That(() => patientManager.CreatePatient(It.IsAny<string>(),
-			It.IsAny<string>(),
-			It.IsAny<string>(),
-			new DateTime(3000, 01, 01),
-			It.IsAny<string>(),
-			It.IsAny<string>(),
-			It.IsAny<string>(),
-			It.IsAny<string>(),
-			It.IsAny<string>()), Throws.ArgumentException.With.Message.EqualTo("Date of Birth cannot be in the future!"));
+					It.IsAny<string>(),
+					It.IsAny<string>(),
+					new DateTime(3000, 01, 01),
+					It.IsAny<string>(),
+					It.IsAny<string>(),
+					It.IsAny<string>(),
+					It.IsAny<string>(),
+					It.IsAny<string>()),
+				Throws.ArgumentException.With.Message.EqualTo("Date of Birth cannot be in the future!"));
 		}
 
 		[Test]

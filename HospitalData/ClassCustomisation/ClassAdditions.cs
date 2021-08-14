@@ -1,4 +1,5 @@
-﻿using HospitalData.Services;
+﻿using System;
+using HospitalData.Services;
 
 namespace HospitalData
 {
@@ -24,14 +25,14 @@ namespace HospitalData
 		public override bool Equals(object obj)
 		{
 			return obj is Waiting waiting &&
-				   PatientId == waiting.PatientId &&
-				   OrganId == waiting.OrganId &&
-				   DateOfEntry == waiting.DateOfEntry;
+			       PatientId == waiting.PatientId &&
+			       OrganId == waiting.OrganId &&
+			       DateOfEntry == waiting.DateOfEntry;
 		}
 
 		public override int GetHashCode()
 		{
-			return System.HashCode.Combine(WaitingId, PatientId, OrganId, DateOfEntry);
+			return HashCode.Combine(WaitingId, PatientId, OrganId, DateOfEntry);
 		}
 	}
 
@@ -52,15 +53,15 @@ namespace HospitalData
 		public override bool Equals(object obj)
 		{
 			return obj is DonatedOrgan organ &&
-				   OrganId == organ.OrganId &&
-				   BloodType == organ.BloodType &&
-				   DonorAge == organ.DonorAge &&
-				   IsMatched == organ.IsMatched;
+			       OrganId == organ.OrganId &&
+			       BloodType == organ.BloodType &&
+			       DonorAge == organ.DonorAge &&
+			       IsMatched == organ.IsMatched;
 		}
 
 		public override int GetHashCode()
 		{
-			return System.HashCode.Combine(DonatedOrganId, OrganId, BloodType, DonorAge, IsMatched);
+			return HashCode.Combine(DonatedOrganId, OrganId, BloodType, DonorAge, IsMatched);
 		}
 	}
 
@@ -68,26 +69,27 @@ namespace HospitalData
 	{
 		public override string ToString()
 		{
-			return $"{PatientId} - {Title} {LastName} {FirstName} - Blood Type: {BloodType} - {DateOfBirth:dd/MM/yyyy} - {Address}, {City}, {PostCode}";
+			return
+				$"{PatientId} - {Title} {LastName} {FirstName} - Blood Type: {BloodType} - {DateOfBirth:dd/MM/yyyy} - {Address}, {City}, {PostCode}";
 		}
 
 		public override bool Equals(object obj)
 		{
 			return obj is Patient patient &&
-				   Title == patient.Title &&
-				   LastName == patient.LastName &&
-				   FirstName == patient.FirstName &&
-				   DateOfBirth == patient.DateOfBirth &&
-				   Address == patient.Address &&
-				   City == patient.City &&
-				   PostCode == patient.PostCode &&
-				   Phone == patient.Phone &&
-				   BloodType == patient.BloodType;
+			       Title == patient.Title &&
+			       LastName == patient.LastName &&
+			       FirstName == patient.FirstName &&
+			       DateOfBirth == patient.DateOfBirth &&
+			       Address == patient.Address &&
+			       City == patient.City &&
+			       PostCode == patient.PostCode &&
+			       Phone == patient.Phone &&
+			       BloodType == patient.BloodType;
 		}
 
 		public override int GetHashCode()
 		{
-			System.HashCode hash = new System.HashCode();
+			var hash = new HashCode();
 			hash.Add(PatientId);
 			hash.Add(Title);
 			hash.Add(LastName);
@@ -113,14 +115,14 @@ namespace HospitalData
 		public override bool Equals(object obj)
 		{
 			return obj is Organ organ &&
-				   Name == organ.Name &&
-				   Type == organ.Type &&
-				   IsAgeChecked == organ.IsAgeChecked;
+			       Name == organ.Name &&
+			       Type == organ.Type &&
+			       IsAgeChecked == organ.IsAgeChecked;
 		}
 
 		public override int GetHashCode()
 		{
-			return System.HashCode.Combine(OrganId, Name, Type, IsAgeChecked);
+			return HashCode.Combine(OrganId, Name, Type, IsAgeChecked);
 		}
 	}
 
@@ -146,14 +148,14 @@ namespace HospitalData
 		public override bool Equals(object obj)
 		{
 			return obj is MatchedDonation donation &&
-				   PatientId == donation.PatientId &&
-				   DonatedOrganId == donation.DonatedOrganId &&
-				   DateOfMatch == donation.DateOfMatch;
+			       PatientId == donation.PatientId &&
+			       DonatedOrganId == donation.DonatedOrganId &&
+			       DateOfMatch == donation.DateOfMatch;
 		}
 
 		public override int GetHashCode()
 		{
-			return System.HashCode.Combine(MatchedDonationId, PatientId, DonatedOrganId, DateOfMatch);
+			return HashCode.Combine(MatchedDonationId, PatientId, DonatedOrganId, DateOfMatch);
 		}
 	}
 }

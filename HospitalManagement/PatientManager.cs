@@ -1,15 +1,13 @@
-﻿using HospitalData;
-using HospitalData.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using HospitalData;
+using HospitalData.Services;
 
 namespace HospitalManagement
 {
 	public class PatientManager
 	{
 		private readonly IPatientService _service;
-
-		public Patient SelectedPatient { get; set; }
 
 		public PatientManager()
 		{
@@ -21,35 +19,37 @@ namespace HospitalManagement
 			_service = service;
 		}
 
+		public Patient SelectedPatient { get; set; }
+
 		/// <summary>
-		/// Creates a new patient.
+		///     Creates a new patient.
 		/// </summary>
 		/// <param name="title">
-		/// Patien's Title (Mr, Mrs etc).
+		///     Patien's Title (Mr, Mrs etc).
 		/// </param>
 		/// <param name="lastName">
-		/// Patient's last name.
+		///     Patient's last name.
 		/// </param>
 		/// <param name="firstName">
-		/// Patient's first name.
+		///     Patient's first name.
 		/// </param>
 		/// <param name="dateOfBirth">
-		/// Patient's date of birth.
+		///     Patient's date of birth.
 		/// </param>
 		/// <param name="address">
-		/// Patient's house name and street.
+		///     Patient's house name and street.
 		/// </param>
 		/// <param name="city">
-		/// Patient's city.
+		///     Patient's city.
 		/// </param>
 		/// <param name="postCode">
-		/// Patient's postcode.
+		///     Patient's postcode.
 		/// </param>
 		/// <param name="phone">
-		/// Patient's phone number.
+		///     Patient's phone number.
 		/// </param>
 		/// <param name="bloodType">
-		/// Patient's blood type (no rhesus factor).
+		///     Patient's blood type (no rhesus factor).
 		/// </param>
 		public void CreatePatient(string title,
 			string lastName,
@@ -66,7 +66,7 @@ namespace HospitalManagement
 				throw new ArgumentException("Date of Birth cannot be in the future!");
 			}
 
-			var newPatient = new Patient()
+			var newPatient = new Patient
 			{
 				Title = title,
 				LastName = lastName,
@@ -83,10 +83,10 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Retrieves a list of all the patients stored in the database.
+		///     Retrieves a list of all the patients stored in the database.
 		/// </summary>
 		/// <returns>
-		/// List of all patients.
+		///     List of all patients.
 		/// </returns>
 		public List<Patient> RetrieveAllPatients()
 		{
@@ -94,15 +94,15 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Sets a given object as a patient.
-		/// Used for front-end.
+		///     Sets a given object as a patient.
+		///     Used for front-end.
 		/// </summary>
 		/// <param name="selectedItem">
-		/// Object to be set as patient.
+		///     Object to be set as patient.
 		/// </param>
 		public void SetSelectedPatient(object selectedItem)
 		{
-			SelectedPatient = (Patient)selectedItem;
+			SelectedPatient = (Patient) selectedItem;
 		}
 	}
 }

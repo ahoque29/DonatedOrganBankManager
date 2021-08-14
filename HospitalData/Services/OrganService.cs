@@ -18,10 +18,10 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database context to return a list of all the organs.
+		///     Calls the database context to return a list of all the organs.
 		/// </summary>
 		/// <returns>
-		/// List of all organs.
+		///     List of all organs.
 		/// </returns>
 		public List<Organ> GetOrganList()
 		{

@@ -1,28 +1,21 @@
-﻿using HospitalData;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HospitalData;
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HospitalTests.ServiceTests
 {
 	[TestFixture]
 	public class OrganMatchFinderServiceTests
 	{
-		private HospitalContext _context;
-		private OrganMatchFinderService _organMatchFinderService;
-		private WaitingListService _waitingListService;
-		private PatientService _patientService;
-		private DonatedOrganService _donatedOrganService;
-		private MatchedDonationService _matchedDonationService;
-
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
 		{
 			var options = new DbContextOptionsBuilder<HospitalContext>()
-				.UseInMemoryDatabase(databaseName: "Hospital_Fake")
+				.UseInMemoryDatabase("Hospital_Fake")
 				.Options;
 
 			_context = new HospitalContext(options);
@@ -42,13 +35,13 @@ namespace HospitalTests.ServiceTests
 				DateOfEntry = new DateTime(2021, 01, 02)
 			});
 
-			_context.Add(new Organ()
+			_context.Add(new Organ
 			{
 				OrganId = 8
 			});
 			_context.SaveChanges();
 
-			_patientService.AddPatient(new Patient()
+			_patientService.AddPatient(new Patient
 			{
 				PatientId = 1
 			});
@@ -90,10 +83,23 @@ namespace HospitalTests.ServiceTests
 			#endregion
 		}
 
+		[OneTimeTearDown]
+		public void OneTimeTearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
+
+		private HospitalContext _context;
+		private OrganMatchFinderService _organMatchFinderService;
+		private WaitingListService _waitingListService;
+		private PatientService _patientService;
+		private DonatedOrganService _donatedOrganService;
+		private MatchedDonationService _matchedDonationService;
+
 		[Test]
 		public void GetWaiting_ReturnsCorrectWaitingListEntry()
 		{
-			var waitingToBeFetched = new Waiting()
+			var waitingToBeFetched = new Waiting
 			{
 				WaitingId = 230,
 				OrganId = 8,
@@ -109,7 +115,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetOrgan_ReturnsCorrectOrgan()
 		{
-			var waiting = new Waiting()
+			var waiting = new Waiting
 			{
 				WaitingId = 230,
 				OrganId = 8,
@@ -117,20 +123,20 @@ namespace HospitalTests.ServiceTests
 				DateOfEntry = new DateTime(2021, 01, 02)
 			};
 
-			var organToBeFetched = new Organ()
+			var organToBeFetched = new Organ
 			{
 				OrganId = 8
 			};
 
 			var result = _organMatchFinderService.GetOrgan(waiting);
 
-			Assert.That(result, Is.EqualTo(organToBeFetched));		
+			Assert.That(result, Is.EqualTo(organToBeFetched));
 		}
 
 		[Test]
 		public void GetPatient_ReturnsCorrectPatient()
 		{
-			var waiting = new Waiting()
+			var waiting = new Waiting
 			{
 				WaitingId = 230,
 				OrganId = 8,
@@ -138,7 +144,7 @@ namespace HospitalTests.ServiceTests
 				DateOfEntry = new DateTime(2021, 01, 02)
 			};
 
-			var patientToBeFetched = new Patient()
+			var patientToBeFetched = new Patient
 			{
 				PatientId = 1
 			};
@@ -151,11 +157,11 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetDonatedOrgans_ReturnsCorrectNumberOfDonatedOrgans()
 		{
-			Assert.That(_organMatchFinderService.GetDonatedOrgans().Count(), Is.EqualTo(3));
+			Assert.That(_organMatchFinderService.GetDonatedOrgans().Count, Is.EqualTo(3));
 		}
 
 		[Test]
-		public void GetDonatedORgans_ReturnsCorrectListOfDonatedOrgans()
+		public void GetDonatedOrgans_ReturnsCorrectListOfDonatedOrgans()
 		{
 			var manualDonatedOrgansList = new List<DonatedOrgan>
 			{
@@ -193,7 +199,7 @@ namespace HospitalTests.ServiceTests
 		{
 			_organMatchFinderService.MarkDonatedOrganAsMatched(360);
 
-			var matchedDonatedOrganMarked = _context.DonatedOrgans.Where(d => d.DonatedOrganId == 360).FirstOrDefault();
+			var matchedDonatedOrganMarked = _context.DonatedOrgans.FirstOrDefault(d => d.DonatedOrganId == 360);
 
 			Assert.That(matchedDonatedOrganMarked.IsMatched, Is.True);
 
@@ -205,10 +211,10 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void RemoveWaiting_MakesQueryThatSearchesTheWaitingListEntry_ReturnFalse()
 		{
-			var waitingToBeRemoved = _context.Waitings.Where(w => w.WaitingId == 230).FirstOrDefault();
+			var waitingToBeRemoved = _context.Waitings.FirstOrDefault(w => w.WaitingId == 230);
 			_organMatchFinderService.RemoveWaiting(waitingToBeRemoved);
 
-			var query = _context.Waitings.Where(w => w.WaitingId == waitingToBeRemoved.WaitingId).Any();
+			var query = _context.Waitings.Any(w => w.WaitingId == waitingToBeRemoved.WaitingId);
 			Assert.That(query, Is.False);
 
 			// Add the entry back
@@ -242,12 +248,6 @@ namespace HospitalTests.ServiceTests
 			var testMatchedDonation = _context.MatchedDonations.Where(m => m.MatchedDonationId == 25);
 			_context.RemoveRange(testMatchedDonation);
 			_context.SaveChanges();
-		}
-
-		[OneTimeTearDown]
-		public void OneTimeTearDown()
-		{
-			_context.Database.EnsureDeleted();
 		}
 	}
 }

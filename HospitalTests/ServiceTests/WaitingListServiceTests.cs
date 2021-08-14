@@ -1,25 +1,21 @@
-﻿using HospitalData;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HospitalData;
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HospitalTests.ServiceTests
 {
 	[TestFixture]
 	public class WaitingListServiceTests
 	{
-		private HospitalContext _context;
-		private WaitingListService _waitingListService;
-		private PatientService _patientService;
-
 		[OneTimeSetUp]
 		public void OneTimeSetUp()
 		{
 			var options = new DbContextOptionsBuilder<HospitalContext>()
-				.UseInMemoryDatabase(databaseName: "Hospital_Fake")
+				.UseInMemoryDatabase("Hospital_Fake")
 				.Options;
 
 			_context = new HospitalContext(options);
@@ -50,16 +46,16 @@ namespace HospitalTests.ServiceTests
 				DateOfEntry = new DateTime(2021, 02, 15)
 			});
 
-			_patientService.AddPatient(new Patient()
+			_patientService.AddPatient(new Patient
 			{
 				PatientId = 2,
 				Title = "TestTitle",
 				LastName = "TestLastName",
 				FirstName = "TestFirstName",
-				BloodType = "O",
+				BloodType = "O"
 			});
 
-			_context.Add(new Organ()
+			_context.Add(new Organ
 			{
 				OrganId = 1,
 				Name = "TestOrgan"
@@ -69,6 +65,16 @@ namespace HospitalTests.ServiceTests
 
 			#endregion Populate the InMemoryDatabase
 		}
+
+		[OneTimeTearDown]
+		public void OneTimeTearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
+
+		private HospitalContext _context;
+		private WaitingListService _waitingListService;
+		private PatientService _patientService;
 
 		[Test]
 		public void AddWaiting_IncreasesNumberOfWaitings_ByOne()
@@ -95,7 +101,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetWaitingList_ReturnsCorrectNumberOfPatients()
 		{
-			Assert.That(_waitingListService.GetWaitingList().Count(), Is.EqualTo(3));
+			Assert.That(_waitingListService.GetWaitingList().Count, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -131,16 +137,11 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetToString_ReturnsCorrectString()
 		{
-			var waiting = _context.Waitings.Where(w => w.DateOfEntry == new DateTime(2021, 02, 15)).FirstOrDefault();
+			var waiting = _context.Waitings.FirstOrDefault(w => w.DateOfEntry == new DateTime(2021, 02, 15));
 			var result = _waitingListService.GetToString(waiting.WaitingId);
 
-			Assert.That(result, Is.EqualTo("Id: 232 - TestTitle TestFirstName TestLastName of Blood Type O needs TestOrgan"));
-		}
-
-		[OneTimeTearDown]
-		public void OneTimeTearDown()
-		{
-			_context.Database.EnsureDeleted();
+			Assert.That(result,
+				Is.EqualTo("Id: 232 - TestTitle TestFirstName TestLastName of Blood Type O needs TestOrgan"));
 		}
 	}
 }

@@ -1,15 +1,13 @@
-﻿using HospitalData;
-using HospitalData.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using HospitalData;
+using HospitalData.Services;
 
 namespace HospitalManagement
 {
 	public class DonatedOrganManager
 	{
 		private readonly IDonatedOrganService _service;
-
-		public DonatedOrgan SelectedDonatedOrgan { get; set; }
 
 		public DonatedOrganManager()
 		{
@@ -21,20 +19,22 @@ namespace HospitalManagement
 			_service = service;
 		}
 
+		public DonatedOrgan SelectedDonatedOrgan { get; set; }
+
 		/// <summary>
-		/// Creates a new donated organ.
+		///     Creates a new donated organ.
 		/// </summary>
 		/// <param name="organName">
-		/// Name of the organ.
+		///     Name of the organ.
 		/// </param>
 		/// <param name="bloodType">
-		/// Blood type of the donated organ (no rhesus factor).
+		///     Blood type of the donated organ (no rhesus factor).
 		/// </param>
 		/// <param name="donorAge">
-		/// Age of the donor when the organ was donated.
+		///     Age of the donor when the organ was donated.
 		/// </param>
 		/// <param name="donationDate">
-		/// Date the donation was made.
+		///     Date the donation was made.
 		/// </param>
 		public void CreateDonatedOrgan(string organName,
 			string bloodType,
@@ -48,22 +48,22 @@ namespace HospitalManagement
 
 			var organId = _service.GetOrganId(organName);
 
-			var newDonatedOrgan = new DonatedOrgan()
+			var newDonatedOrgan = new DonatedOrgan
 			{
 				OrganId = organId,
 				BloodType = bloodType,
 				DonorAge = donorAge,
-				DonationDate = donationDate,
+				DonationDate = donationDate
 			};
 
 			_service.AddDonatedOrgan(newDonatedOrgan);
 		}
 
 		/// <summary>
-		/// Retrieves all donated organs.
+		///     Retrieves all donated organs.
 		/// </summary>
 		/// <returns>
-		/// List of all donated organs.
+		///     List of all donated organs.
 		/// </returns>
 		public List<DonatedOrgan> RetrieveAllDonatedOrgans()
 		{
@@ -71,10 +71,10 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Deletes a donated organ entry.
+		///     Deletes a donated organ entry.
 		/// </summary>
 		/// <param name="donatedOrganId">
-		/// Id of the donated organ to be removed
+		///     Id of the donated organ to be removed
 		/// </param>
 		public void DeleteDonatedOrgan(int donatedOrganId)
 		{
@@ -82,15 +82,15 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Sets a given object as a donated organ.
-		/// Used for front-end
+		///     Sets a given object as a donated organ.
+		///     Used for front-end
 		/// </summary>
 		/// <param name="selectedItem">
-		/// Object to be set as donated organ
+		///     Object to be set as donated organ
 		/// </param>
 		public void SetSelectedDonatedOrgan(object selectedItem)
 		{
-			SelectedDonatedOrgan = (DonatedOrgan)selectedItem;
+			SelectedDonatedOrgan = (DonatedOrgan) selectedItem;
 		}
 	}
 }

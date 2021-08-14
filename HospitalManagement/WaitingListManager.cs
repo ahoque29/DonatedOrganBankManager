@@ -1,14 +1,13 @@
-﻿using HospitalData;
-using HospitalData.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using HospitalData;
+using HospitalData.Services;
 
 namespace HospitalManagement
 {
 	public class WaitingListManager
 	{
 		private readonly IWaitingListService _service;
-		public Waiting SelectedWaiting { get; set; }
 
 		public WaitingListManager()
 		{
@@ -20,23 +19,25 @@ namespace HospitalManagement
 			_service = service;
 		}
 
+		public Waiting SelectedWaiting { get; set; }
+
 		/// <summary>
-		/// Creates a new waiting list entry.
+		///     Creates a new waiting list entry.
 		/// </summary>
 		/// <param name="patientId">
-		/// Patient Id
+		///     Patient Id
 		/// </param>
 		/// <param name="organId">
-		/// Organ Id
+		///     Organ Id
 		/// </param>
 		/// <param name="dateOfEntry">
-		/// Date of when the enty was added.
+		///     Date of when the enty was added.
 		/// </param>
 		public void CreateWaiting(int patientId,
 			int organId,
 			DateTime dateOfEntry)
 		{
-			var newWaiting = new Waiting()
+			var newWaiting = new Waiting
 			{
 				OrganId = organId,
 				PatientId = patientId,
@@ -47,10 +48,10 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Retrieves the waiting list stored in the database.
+		///     Retrieves the waiting list stored in the database.
 		/// </summary>
 		/// <returns>
-		/// Waiting list.
+		///     Waiting list.
 		/// </returns>
 		public List<Waiting> RetrieveWaitingList()
 		{
@@ -58,15 +59,15 @@ namespace HospitalManagement
 		}
 
 		/// <summary>
-		/// Sets a given object as a waiting.
-		/// Used for front-end
+		///     Sets a given object as a waiting.
+		///     Used for front-end
 		/// </summary>
 		/// <param name="selectedItem">
-		/// Object to be set as waiting.
+		///     Object to be set as waiting.
 		/// </param>
 		public void SetSelectedWaiting(object selectedItem)
 		{
-			SelectedWaiting = (Waiting)selectedItem;
+			SelectedWaiting = (Waiting) selectedItem;
 		}
 	}
 }

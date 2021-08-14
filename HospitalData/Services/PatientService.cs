@@ -18,10 +18,10 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Adds the patient entry into the database and saves.
+		///     Adds the patient entry into the database and saves.
 		/// </summary>
 		/// <param name="patient">
-		/// Patient to be added to the database.
+		///     Patient to be added to the database.
 		/// </param>
 		public void AddPatient(Patient patient)
 		{
@@ -30,10 +30,10 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database context to return a list of all the patients.
+		///     Calls the database context to return a list of all the patients.
 		/// </summary>
 		/// <returns>
-		/// List of all patients.
+		///     List of all patients.
 		/// </returns>
 		public List<Patient> GetPatientList()
 		{

@@ -1,10 +1,10 @@
-﻿using HospitalData;
+﻿using System;
+using System.Collections.Generic;
+using HospitalData;
 using HospitalData.Services;
 using HospitalManagement;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 
 namespace HospitalTests.ManagerTests
 {
@@ -53,7 +53,7 @@ namespace HospitalTests.ManagerTests
 				26,
 				new DateTime(1900, 01, 01));
 
-			var donatedOrganToBeAdded = new DonatedOrgan()
+			var donatedOrganToBeAdded = new DonatedOrgan
 			{
 				OrganId = 5,
 				BloodType = "TestBloodType",
@@ -85,9 +85,9 @@ namespace HospitalTests.ManagerTests
 		public void CreateDonatedOrgan_WithNegativeAge_ThrowsArgumentExceptionWithCorrectMessage()
 		{
 			var mockDonatedOrganService = new Mock<IDonatedOrganService>(MockBehavior.Strict);
-			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
 
-			Assert.That(() => _donatedOrganManager.CreateDonatedOrgan(It.IsAny<string>(),
+			Assert.That(() => donatedOrganManager.CreateDonatedOrgan(It.IsAny<string>(),
 				It.IsAny<string>(),
 				-6,
 				It.IsAny<DateTime>()), Throws.ArgumentException.With.Message.EqualTo("Age cannot be negative!"));
@@ -111,8 +111,8 @@ namespace HospitalTests.ManagerTests
 			mockDonatedOrganService.Setup(d => d.GetDonatedOrgansList())
 				.Returns(new List<DonatedOrgan>());
 
-			var _donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
-			var result = _donatedOrganManager.RetrieveAllDonatedOrgans();
+			var donatedOrganManager = new DonatedOrganManager(mockDonatedOrganService.Object);
+			var result = donatedOrganManager.RetrieveAllDonatedOrgans();
 
 			Assert.That(result, Is.TypeOf<List<DonatedOrgan>>());
 		}

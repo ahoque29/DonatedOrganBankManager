@@ -1,11 +1,11 @@
-﻿using HospitalData;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HospitalData;
 using HospitalData.Services;
 using HospitalManagement;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HospitalTests.ManagerTests
 {
@@ -121,36 +121,37 @@ namespace HospitalTests.ManagerTests
 		}
 
 		/// <summary>
-		/// Tests the filters and the appropriate response.<br/>
-		/// Organ filter passes when waitingOrganId == organId.<br/>
-		/// Age filter passes when isAgeChecked == false OR isAgeChecked == true and the age of the patient (calculated from patientDob) is comparable to donorAge.<br/>
-		/// Blood type filter passes when patientBloodType and DonorBloodType are compatible.<br/>
-		/// <br/>
-		/// expectedResult is true when all filters pass.
+		///     Tests the filters and the appropriate response.<br />
+		///     Organ filter passes when waitingOrganId == organId.<br />
+		///     Age filter passes when isAgeChecked == false OR isAgeChecked == true and the age of the patient (calculated from
+		///     patientDob) is comparable to donorAge.<br />
+		///     Blood type filter passes when patientBloodType and DonorBloodType are compatible.<br />
+		///     <br />
+		///     expectedResult is true when all filters pass.
 		/// </summary>
 		/// <param name="waitingOrganId">
-		/// Organ id of waiting list entry.
+		///     Organ id of waiting list entry.
 		/// </param>
 		/// <param name="organId">
-		/// Organ Id of donated organ candidate.
+		///     Organ Id of donated organ candidate.
 		/// </param>
 		/// <param name="isAgeChecked">
-		/// Bool that checks if Age filter is used or not.
+		///     Bool that checks if Age filter is used or not.
 		/// </param>
 		/// <param name="patientDob">
-		/// Date of birth of patient.
+		///     Date of birth of patient.
 		/// </param>
 		/// <param name="donorAge">
-		/// Age of donor at time of donation.
+		///     Age of donor at time of donation.
 		/// </param>
 		/// <param name="patientBloodType">
-		/// Blood type of patient.
+		///     Blood type of patient.
 		/// </param>
 		/// <param name="donorBloodType">
-		/// Blood type of donor.
+		///     Blood type of donor.
 		/// </param>
 		/// <param name="expectedResult">
-		/// Expected result.
+		///     Expected result.
 		/// </param>
 		[TestCase(1, 2, true, "2011-04-16", 90, "A", "B", false)] // No filters pass
 		[TestCase(1, 1, true, "2011-04-16", 90, "A", "B", false)] // Organ filter passes, rest fails
@@ -158,12 +159,18 @@ namespace HospitalTests.ManagerTests
 		[TestCase(1, 2, true, "2011-04-16", 10, "A", "B", false)] // Age filter passes, rest fails
 		[TestCase(1, 1, false, "2011-04-16", 90, "A", "B", false)] // Organ and age filter pass, blood type filter fails
 		[TestCase(1, 1, true, "2011-04-16", 10, "A", "B", false)] // Organ and age filter pass, blood type filter fails
-		[TestCase(1, 1, true, "2011-04-16", 10, "O", "A", false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
-		[TestCase(1, 1, true, "2011-04-16", 10, "B", "A", false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
-		[TestCase(1, 1, true, "2011-04-16", 10, "O", "B", false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
-		[TestCase(1, 1, true, "2011-04-16", 10, "O", "AB", false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
-		[TestCase(1, 1, true, "2011-04-16", 10, "A", "AB", false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
-		[TestCase(1, 1, true, "2011-04-16", 10, "B", "AB", false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
+		[TestCase(1, 1, true, "2011-04-16", 10, "O", "A",
+			false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
+		[TestCase(1, 1, true, "2011-04-16", 10, "B", "A",
+			false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
+		[TestCase(1, 1, true, "2011-04-16", 10, "O", "B",
+			false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
+		[TestCase(1, 1, true, "2011-04-16", 10, "O", "AB",
+			false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
+		[TestCase(1, 1, true, "2011-04-16", 10, "A", "AB",
+			false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
+		[TestCase(1, 1, true, "2011-04-16", 10, "B", "AB",
+			false)] // Organ and age filter pass, blood type filter fails (testing different blood types)
 		[TestCase(1, 2, true, "2011-04-16", 90, "A", "A", false)] // Blood type filter passes, rest fails
 		[TestCase(1, 1, true, "2011-04-16", 90, "A", "A", false)] // Organ and blood type filter pass, age filter fails
 		[TestCase(1, 2, false, "2011-04-16", 90, "A", "A", false)] // Age and blood type filter pass, organ filter fails
@@ -198,16 +205,16 @@ namespace HospitalTests.ManagerTests
 			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Strict);
 
 			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
-				.Returns(new Waiting() { OrganId = waitingOrganId });
+				.Returns(new Waiting {OrganId = waitingOrganId});
 			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
-				.Returns(new Organ() { OrganId = waitingOrganId, IsAgeChecked = isAgeChecked });
+				.Returns(new Organ {OrganId = waitingOrganId, IsAgeChecked = isAgeChecked});
 			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
-				.Returns(new Patient() { DateOfBirth = patientDob, BloodType = patientBloodType });
+				.Returns(new Patient {DateOfBirth = patientDob, BloodType = patientBloodType});
 			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
-				.Returns(new List<DonatedOrgan>()
+				.Returns(new List<DonatedOrgan>
 				{
-					new DonatedOrgan() { OrganId = organId, DonorAge = donorAge, BloodType = donorBloodType },
-					new DonatedOrgan() { OrganId = 3 }
+					new DonatedOrgan {OrganId = organId, DonorAge = donorAge, BloodType = donorBloodType},
+					new DonatedOrgan {OrganId = 3}
 				});
 
 			var mockDateTimeService = new Mock<IDateTimeService>(MockBehavior.Strict);
@@ -226,16 +233,16 @@ namespace HospitalTests.ManagerTests
 			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
 
 			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
-				.Returns(new Waiting() { OrganId = 1 });
+				.Returns(new Waiting {OrganId = 1});
 			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
-				.Returns(new Organ() { IsAgeChecked = false });
+				.Returns(new Organ {IsAgeChecked = false});
 			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
-				.Returns(new Patient() { BloodType = "A" });
+				.Returns(new Patient {BloodType = "A"});
 			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
-				.Returns(new List<DonatedOrgan>()
+				.Returns(new List<DonatedOrgan>
 				{
-					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
-					new DonatedOrgan() { OrganId = 3 }
+					new DonatedOrgan {OrganId = 1, BloodType = "A"},
+					new DonatedOrgan {OrganId = 3}
 				});
 
 			var mockDateTimeService = new Mock<IDateTimeService>(MockBehavior.Strict);
@@ -254,16 +261,16 @@ namespace HospitalTests.ManagerTests
 			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
 
 			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
-				.Returns(new Waiting() { OrganId = 1 });
+				.Returns(new Waiting {OrganId = 1});
 			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
-				.Returns(new Organ() { IsAgeChecked = false });
+				.Returns(new Organ {IsAgeChecked = false});
 			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
-				.Returns(new Patient() { BloodType = "A" });
+				.Returns(new Patient {BloodType = "A"});
 			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
-				.Returns(new List<DonatedOrgan>()
+				.Returns(new List<DonatedOrgan>
 				{
-					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
-					new DonatedOrgan() { OrganId = 3 }
+					new DonatedOrgan {OrganId = 1, BloodType = "A"},
+					new DonatedOrgan {OrganId = 3}
 				});
 
 			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
@@ -278,16 +285,16 @@ namespace HospitalTests.ManagerTests
 			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
 
 			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
-				.Returns(new Waiting() { PatientId = 5, OrganId = 1 });
+				.Returns(new Waiting {PatientId = 5, OrganId = 1});
 			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
-				.Returns(new Organ() { IsAgeChecked = false });
+				.Returns(new Organ {IsAgeChecked = false});
 			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
-				.Returns(new Patient() { BloodType = "A" });
+				.Returns(new Patient {BloodType = "A"});
 			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
-				.Returns(new List<DonatedOrgan>()
+				.Returns(new List<DonatedOrgan>
 				{
-					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
-					new DonatedOrgan() { OrganId = 3 }
+					new DonatedOrgan {OrganId = 1, BloodType = "A"},
+					new DonatedOrgan {OrganId = 3}
 				});
 
 			var mockDateTimeService = new Mock<IDateTimeService>(MockBehavior.Strict);
@@ -297,7 +304,7 @@ namespace HospitalTests.ManagerTests
 			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object, mockDateTimeService.Object);
 			organMatchFinder.ExecuteMatch(It.IsAny<int>(), 3);
 
-			var matchedDonationToBeAdded = new MatchedDonation()
+			var matchedDonationToBeAdded = new MatchedDonation
 			{
 				PatientId = 5,
 				DonatedOrganId = 3,
@@ -313,16 +320,16 @@ namespace HospitalTests.ManagerTests
 			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
 
 			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
-				.Returns(new Waiting() { OrganId = 1 });
+				.Returns(new Waiting {OrganId = 1});
 			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
-				.Returns(new Organ() { IsAgeChecked = false });
+				.Returns(new Organ {IsAgeChecked = false});
 			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
-				.Returns(new Patient() { BloodType = "A" });
+				.Returns(new Patient {BloodType = "A"});
 			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
-				.Returns(new List<DonatedOrgan>()
+				.Returns(new List<DonatedOrgan>
 				{
-					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
-					new DonatedOrgan() { OrganId = 3 }
+					new DonatedOrgan {OrganId = 1, BloodType = "A"},
+					new DonatedOrgan {OrganId = 3}
 				});
 
 			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
@@ -336,22 +343,22 @@ namespace HospitalTests.ManagerTests
 		{
 			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
 			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
-				.Returns(new Waiting() { WaitingId = 2, OrganId = 1 });
+				.Returns(new Waiting {WaitingId = 2, OrganId = 1});
 			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
-				.Returns(new Organ() { IsAgeChecked = false });
+				.Returns(new Organ {IsAgeChecked = false});
 			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
-				.Returns(new Patient() { BloodType = "A" });
+				.Returns(new Patient {BloodType = "A"});
 			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
-				.Returns(new List<DonatedOrgan>()
+				.Returns(new List<DonatedOrgan>
 				{
-					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
-					new DonatedOrgan() { OrganId = 3 }
+					new DonatedOrgan {OrganId = 1, BloodType = "A"},
+					new DonatedOrgan {OrganId = 3}
 				});
 
 			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);
 			organMatchFinder.ExecuteMatch(It.IsAny<int>(), It.IsAny<int>());
 
-			var waitingToBeDeleted = new Waiting()
+			var waitingToBeDeleted = new Waiting
 			{
 				WaitingId = 2,
 				OrganId = 1
@@ -365,16 +372,16 @@ namespace HospitalTests.ManagerTests
 		{
 			var mockOrganMatchFinderService = new Mock<IOrganMatchFinderService>(MockBehavior.Loose);
 			mockOrganMatchFinderService.Setup(o => o.GetWaiting(It.IsAny<int>()))
-				.Returns(new Waiting() { OrganId = 1 });
+				.Returns(new Waiting {OrganId = 1});
 			mockOrganMatchFinderService.Setup(o => o.GetOrgan(It.IsAny<Waiting>()))
-				.Returns(new Organ() { IsAgeChecked = false });
+				.Returns(new Organ {IsAgeChecked = false});
 			mockOrganMatchFinderService.Setup(o => o.GetPatient(It.IsAny<Waiting>()))
-				.Returns(new Patient() { BloodType = "A" });
+				.Returns(new Patient {BloodType = "A"});
 			mockOrganMatchFinderService.Setup(o => o.GetDonatedOrgans())
-				.Returns(new List<DonatedOrgan>()
+				.Returns(new List<DonatedOrgan>
 				{
-					new DonatedOrgan() { OrganId = 1, BloodType = "A" },
-					new DonatedOrgan() { OrganId = 3 }
+					new DonatedOrgan {OrganId = 1, BloodType = "A"},
+					new DonatedOrgan {OrganId = 3}
 				});
 
 			var organMatchFinder = new OrganMatchFinder(mockOrganMatchFinderService.Object);

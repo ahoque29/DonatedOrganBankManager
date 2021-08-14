@@ -1,9 +1,9 @@
-﻿using HospitalData;
+﻿using System.Collections.Generic;
+using System.Linq;
+using HospitalData;
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HospitalTests.ServiceTests
 {
@@ -16,7 +16,7 @@ namespace HospitalTests.ServiceTests
 		public void OneTimeSetup()
 		{
 			var options = new DbContextOptionsBuilder<HospitalContext>()
-				.UseInMemoryDatabase(databaseName: "Hospital_Fake")
+				.UseInMemoryDatabase("Hospital_Fake")
 				.Options;
 
 			_context = new HospitalContext(options);
@@ -24,23 +24,23 @@ namespace HospitalTests.ServiceTests
 
 			#region Populate the InMemoryDatabase
 
-			_context.Add(new Organ()
+			_context.Add(new Organ
 			{
 				Name = "TestSeedName1",
-				Type = "TestSeedType1",
+				Type = "TestSeedType1"
 			});
 
-			_context.Add(new Organ()
+			_context.Add(new Organ
 			{
 				Name = "TestSeedName2",
 				Type = "TestSeedType2",
 				IsAgeChecked = false
 			});
 
-			_context.Add(new Organ()
+			_context.Add(new Organ
 			{
 				Name = "TestSeedName3",
-				Type = "TestSeedType3",
+				Type = "TestSeedType3"
 			});
 
 			_context.SaveChanges();
@@ -51,7 +51,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetOrganList_ReturnsCorrectNumberOfOrgans()
 		{
-			Assert.That(_organService.GetOrganList().Count(), Is.EqualTo(3));
+			Assert.That(_organService.GetOrganList().Count, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -59,21 +59,21 @@ namespace HospitalTests.ServiceTests
 		{
 			var manualListOfOrgans = new List<Organ>
 			{
-				new Organ()
+				new Organ
 				{
 					Name = "TestSeedName1",
-					Type = "TestSeedType1",
+					Type = "TestSeedType1"
 				},
-				new Organ()
+				new Organ
 				{
 					Name = "TestSeedName2",
 					Type = "TestSeedType2",
 					IsAgeChecked = false
 				},
-				new Organ()
+				new Organ
 				{
 					Name = "TestSeedName3",
-					Type = "TestSeedType3",
+					Type = "TestSeedType3"
 				}
 			};
 

@@ -1,11 +1,11 @@
-﻿using HospitalManagement;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using HospitalManagement;
 
 namespace HospitalWPF
 {
-	public partial class MainWindow : Window
+	public partial class MainWindow
 	{
 		#region Initialization
 
@@ -51,7 +51,7 @@ namespace HospitalWPF
 				_patientManager.CreatePatient(TitleTextBox.Text,
 					LastNameTextBox.Text,
 					FirstNameTextBox.Text,
-					(DateTime)DobCalendar.SelectedDate,
+					(DateTime) DobCalendar.SelectedDate,
 					AddressTextBox.Text,
 					CityTextBox.Text,
 					PostCodeTextBox.Text,
@@ -62,19 +62,19 @@ namespace HospitalWPF
 				// clear the list box
 				ListBoxPatientsPM.ItemsSource = null;
 
-				// repopulate the textbox with the new patient
+				// repopulate the text boxes with the new patient
 				PopulateListBoxPatients();
 				PopulateListBoxPatientsWM();
 
-				// reinitialise the textboxes
+				// re-initialise the textboxes
 				TitleTextBox.Text =
 					LastNameTextBox.Text =
-					FirstNameTextBox.Text =
-					AddressTextBox.Text =
-					CityTextBox.Text =
-					PostCodeTextBox.Text =
-					PhoneTextBox.Text =
-					BloodTypeComboBoxPM.Text = null;
+						FirstNameTextBox.Text =
+							AddressTextBox.Text =
+								CityTextBox.Text =
+									PostCodeTextBox.Text =
+										PhoneTextBox.Text =
+											BloodTypeComboBoxPM.Text = null;
 			}
 			catch (ArgumentException)
 			{
@@ -103,8 +103,8 @@ namespace HospitalWPF
 				// create new organ
 				_donatedOrganManager.CreateDonatedOrgan(OrganNameComboBoxDOM.Text,
 					BloodTypeComboBoxDOM.Text,
-					Int32.Parse(DonorAgeTextBox.Text),
-					(DateTime)DonationDateCalendar.SelectedDate);
+					int.Parse(DonorAgeTextBox.Text),
+					(DateTime) DonationDateCalendar.SelectedDate);
 
 				// clear the list box
 				ListBoxDonatedOrgans.ItemsSource = null;
@@ -116,7 +116,7 @@ namespace HospitalWPF
 				//reinitialise the textboxes
 				OrganNameComboBoxDOM.Text =
 					BloodTypeComboBoxDOM.Text =
-					DonorAgeTextBox.Text = null;
+						DonorAgeTextBox.Text = null;
 			}
 			catch (ArgumentException)
 			{
@@ -216,7 +216,8 @@ namespace HospitalWPF
 		{
 			if (ListBoxWaitingMF.SelectedItem != null)
 			{
-				ListBoxMatchedOrgans.ItemsSource = _organMatchFinder.ListCompatibleOrgans(_waitingListManager.SelectedWaiting.WaitingId);
+				ListBoxMatchedOrgans.ItemsSource =
+					_organMatchFinder.ListCompatibleOrgans(_waitingListManager.SelectedWaiting.WaitingId);
 			}
 		}
 

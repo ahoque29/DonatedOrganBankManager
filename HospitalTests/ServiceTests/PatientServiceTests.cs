@@ -1,24 +1,21 @@
-﻿using HospitalData;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HospitalData;
 using HospitalData.Services;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HospitalTests.ServiceTests
 {
 	[TestFixture]
 	public class PatientServiceTests
 	{
-		private HospitalContext _context;
-		private PatientService _patientService;
-
 		[OneTimeSetUp]
 		public void OneTimeSetup()
 		{
 			var options = new DbContextOptionsBuilder<HospitalContext>()
-				.UseInMemoryDatabase(databaseName: "Hospital_Fake")
+				.UseInMemoryDatabase("Hospital_Fake")
 				.Options;
 
 			_context = new HospitalContext(options);
@@ -26,7 +23,7 @@ namespace HospitalTests.ServiceTests
 
 			#region Populate the InMemory Database
 
-			_patientService.AddPatient(new Patient()
+			_patientService.AddPatient(new Patient
 			{
 				Title = "TestSeedTitle1",
 				LastName = "TestSeedLastName1",
@@ -39,7 +36,7 @@ namespace HospitalTests.ServiceTests
 				BloodType = "TestSeedBloodType1"
 			});
 
-			_patientService.AddPatient(new Patient()
+			_patientService.AddPatient(new Patient
 			{
 				Title = "TestSeedTitle2",
 				LastName = "TestSeedLastName2",
@@ -52,7 +49,7 @@ namespace HospitalTests.ServiceTests
 				BloodType = "TestSeedBloodType2"
 			});
 
-			_patientService.AddPatient(new Patient()
+			_patientService.AddPatient(new Patient
 			{
 				Title = "TestSeedTitle3",
 				LastName = "TestSeedLastName3",
@@ -68,12 +65,21 @@ namespace HospitalTests.ServiceTests
 			#endregion
 		}
 
+		[OneTimeTearDown]
+		public void TearDown()
+		{
+			_context.Database.EnsureDeleted();
+		}
+
+		private HospitalContext _context;
+		private PatientService _patientService;
+
 		[Test]
 		public void AddPatient_IncreasesNumberOfPatients_ByOne()
 		{
 			var numberOfPatientsBefore = _context.Patients.Count();
 
-			_patientService.AddPatient(new Patient()
+			_patientService.AddPatient(new Patient
 			{
 				Title = "TestTitle",
 				LastName = "GuyTest",
@@ -99,7 +105,7 @@ namespace HospitalTests.ServiceTests
 		[Test]
 		public void GetPatientList_ReturnsCorrectNumberOfPatients()
 		{
-			Assert.That(_patientService.GetPatientList().Count(), Is.EqualTo(3));
+			Assert.That(_patientService.GetPatientList().Count, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -107,7 +113,7 @@ namespace HospitalTests.ServiceTests
 		{
 			var manualListOfPatients = new List<Patient>
 			{
-				new Patient()
+				new Patient
 				{
 					Title = "TestSeedTitle1",
 					LastName = "TestSeedLastName1",
@@ -119,7 +125,7 @@ namespace HospitalTests.ServiceTests
 					Phone = "TestSeedPhone1",
 					BloodType = "TestSeedBloodType1"
 				},
-				new Patient()
+				new Patient
 				{
 					Title = "TestSeedTitle2",
 					LastName = "TestSeedLastName2",
@@ -131,7 +137,7 @@ namespace HospitalTests.ServiceTests
 					Phone = "TestSeedPhone2",
 					BloodType = "TestSeedBloodType2"
 				},
-				new Patient()
+				new Patient
 				{
 					Title = "TestSeedTitle3",
 					LastName = "TestSeedLastName3",
@@ -148,12 +154,6 @@ namespace HospitalTests.ServiceTests
 			var result = _patientService.GetPatientList();
 
 			Assert.That(result, Is.EquivalentTo(manualListOfPatients));
-		}
-
-		[OneTimeTearDown]
-		public void TearDown()
-		{
-			_context.Database.EnsureDeleted();
 		}
 	}
 }

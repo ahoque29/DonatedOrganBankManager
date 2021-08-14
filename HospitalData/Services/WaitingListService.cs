@@ -18,10 +18,10 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Adds the waiting list entry into the database and saves.
+		///     Adds the waiting list entry into the database and saves.
 		/// </summary>
 		/// <param name="waiting">
-		/// Waiting to be added to the database.
+		///     Waiting to be added to the database.
 		/// </param>
 		public void AddWaiting(Waiting waiting)
 		{
@@ -30,10 +30,10 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database context to return the waiting list.
+		///     Calls the database context to return the waiting list.
 		/// </summary>
 		/// <returns>
-		/// Waiting list.
+		///     Waiting list.
 		/// </returns>
 		public List<Waiting> GetWaitingList()
 		{
@@ -41,21 +41,22 @@ namespace HospitalData.Services
 		}
 
 		/// <summary>
-		/// Calls the database and formats the ToString().
+		///     Calls the database and formats the ToString().
 		/// </summary>
 		/// <param name="waitingId">
-		/// Id of the waiting list entry.
+		///     Id of the waiting list entry.
 		/// </param>
 		/// <returns>
-		/// ToString().
+		///     ToString().
 		/// </returns>
 		public string GetToString(int waitingId)
 		{
-			var waiting = _context.Waitings.Where(w => w.WaitingId == waitingId).FirstOrDefault();
-			var patient = _context.Patients.Where(p => p.PatientId == waiting.PatientId).FirstOrDefault();
-			var organ = _context.Organs.Where(o => o.OrganId == waiting.OrganId).FirstOrDefault();
+			var waiting = _context.Waitings.FirstOrDefault(w => w.WaitingId == waitingId);
+			var patient = _context.Patients.FirstOrDefault(p => p.PatientId == waiting.PatientId);
+			var organ = _context.Organs.FirstOrDefault(o => o.OrganId == waiting.OrganId);
 
-			return $"Id: {waitingId} - {patient.Title} {patient.FirstName} {patient.LastName} of Blood Type {patient.BloodType} needs {organ.Name}";
+			return
+				$"Id: {waitingId} - {patient.Title} {patient.FirstName} {patient.LastName} of Blood Type {patient.BloodType} needs {organ.Name}";
 		}
 	}
 }
